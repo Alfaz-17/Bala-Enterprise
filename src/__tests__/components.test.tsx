@@ -34,7 +34,7 @@ describe('Public Layout Components', () => {
   it('should render Footer correctly', () => {
     render(<Footer />);
     expect(screen.getByAltText('Bala Enterprise Logo')).toBeInTheDocument();
-    expect(screen.getByText('Premium manufacturer of high-quality Single/Double Girder EOT Cranes, Gantry Cranes, Jib Cranes, and custom industrial material handling equipment.')).toBeInTheDocument();
+    expect(screen.getByText('Premium manufacturer of high-quality Manual Hydraulic Stackers, Hand Pallet Trucks, Jib Cranes, Winches, and custom material handling equipment.')).toBeInTheDocument();
     expect(screen.getByText('Quick Links')).toBeInTheDocument();
     expect(screen.getByText('Contact us')).toBeInTheDocument();
   });
