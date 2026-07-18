@@ -69,8 +69,26 @@ export default async function ProjectDetailPage({ params }: PageProps) {
   }
 
   return (
-    <div className="bg-white min-h-screen py-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="bg-white min-h-screen">
+      {/* Page Header (Slanted High-Contrast Style) */}
+      <div className="relative bg-[#1A1A18] text-white overflow-hidden py-16 md:py-20 border-b border-[#2A2A28]">
+        {/* Slanted Design Background shape */}
+        <div className="absolute top-0 right-0 h-full w-[45%] bg-[#D85A30] origin-top-right transform skew-x-[-15deg] translate-x-[15%] z-0 hidden lg:block" />
+        <div className="absolute inset-0 bg-[#D85A30] z-0 lg:hidden opacity-90" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 items-center">
+          <div className="lg:col-span-8 space-y-3">
+            <span className="text-[#D85A30] lg:text-primary text-xs uppercase tracking-[0.2em] font-bold block">
+              Case Study Installation
+            </span>
+            <h1 className="font-heading text-3xl sm:text-4xl font-black tracking-tight leading-none text-white">
+              {project.title}
+            </h1>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Back Link */}
         <Link
           href="/projects"
@@ -79,11 +97,6 @@ export default async function ProjectDetailPage({ params }: PageProps) {
           <ArrowLeft className="h-3.5 w-3.5" />
           Back to Projects
         </Link>
-
-        {/* Title */}
-        <h1 className="font-heading text-3xl sm:text-4xl font-bold text-[#1A1A18] mb-8 max-w-4xl">
-          {project.title}
-        </h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Images Section */}
@@ -103,12 +116,12 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
           {/* Details Panel */}
           <div className="lg:col-span-4 space-y-6">
-            <div className="bg-[#F5F4F0] border border-border p-6 space-y-4">
+            <div className="bg-[#F5F4F0] border border-border p-6 space-y-4 rounded-md">
               <h3 className="font-heading text-lg font-bold text-[#1A1A18] border-b border-border pb-2">
                 Project Details
               </h3>
 
-              <ul className="space-y-4 text-xs">
+              <ul className="space-y-4 text-sm">
                 {project.clientName && (
                   <li className="flex items-start gap-3">
                     <Building className="h-4 w-4 text-[#D85A30] flex-shrink-0 mt-0.5" />
@@ -171,14 +184,14 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               </ul>
             </div>
 
-            <div className="bg-[#1A1A18] text-white p-6 space-y-4">
+            <div className="bg-[#1A1A18] text-white p-6 space-y-4 rounded-md">
               <h4 className="font-heading text-base font-bold text-white">Need a Similar Setup?</h4>
-              <p className="text-xs text-[#888780] leading-relaxed">
+              <p className="text-sm text-[#888780] leading-relaxed">
                 Contact our factory for customized industrial material handling setups to suit your factory specifications.
               </p>
               <Link
                 href="/#enquire"
-                className="block w-full text-center py-2.5 bg-[#D85A30] text-white text-xs font-semibold hover:opacity-90 transition-opacity"
+                className="block w-full text-center py-2.5 bg-[#D85A30] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#c24a24] transition-colors rounded-sm"
               >
                 Request Quotation
               </Link>
