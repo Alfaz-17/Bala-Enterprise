@@ -70,8 +70,29 @@ export default async function ProductDetailPage({ params }: PageProps) {
   }
 
   return (
-    <div className="bg-white min-h-screen py-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="bg-white min-h-screen">
+      {/* Page Header (Slanted High-Contrast Style) */}
+      <div className="relative bg-[#1A1A18] text-white overflow-hidden py-16 md:py-20 border-b border-[#2A2A28]">
+        {/* Slanted Design Background shape */}
+        <div className="absolute top-0 right-0 h-full w-[45%] bg-[#D85A30] origin-top-right transform skew-x-[-15deg] translate-x-[15%] z-0 hidden lg:block" />
+        <div className="absolute inset-0 bg-[#D85A30] z-0 lg:hidden opacity-90" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 items-center">
+          <div className="lg:col-span-8 space-y-3">
+            <span className="text-[#D85A30] lg:text-primary text-xs uppercase tracking-[0.2em] font-bold block">
+              {product.category?.name || 'Equipment Specifications'}
+            </span>
+            <h1 className="font-heading text-4xl sm:text-5xl font-black tracking-tight leading-none text-white">
+              {product.name}
+            </h1>
+            {product.modelNumber && (
+              <p className="text-sm text-white/80 max-w-xl">Model Number: {product.modelNumber}</p>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Breadcrumb Bar */}
         <nav className="flex items-center gap-2 text-[13px] text-[#888780] mb-8 font-medium">
           <Link href="/" className="hover:text-primary transition-colors">
@@ -104,15 +125,12 @@ export default async function ProductDetailPage({ params }: PageProps) {
           {/* Details Section */}
           <div className="lg:col-span-6 space-y-6">
             <div>
-              <span className="text-[#D85A30] text-xs uppercase tracking-wider font-semibold">
-                {product.category?.name}
+              <span className="text-[10px] uppercase tracking-wider text-[#D85A30] font-bold">
+                Equipment Summary
               </span>
-              <h1 className="font-heading text-3xl font-bold text-[#1A1A18] mt-1">
-                {product.name}
-              </h1>
-              {product.modelNumber && (
-                <p className="text-xs text-[#888780] mt-1">Model: {product.modelNumber}</p>
-              )}
+              <h2 className="font-heading text-2xl font-bold text-[#1A1A18] mt-1">
+                Engineering Specifications
+              </h2>
             </div>
 
             <div className="flex flex-wrap gap-3">
