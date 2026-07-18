@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { ArrowRight } from 'lucide-react';
 
 interface ProductCardProps {
   product: {
@@ -15,7 +16,10 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   return (
-    <div className="bg-white border border-border shadow-[0_3px_6px_0_rgba(51,51,51,0.05)] hover:shadow-[0_8px_16px_0_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col group h-full relative overflow-hidden rounded-md">
+    <Link
+      href={`/products/${product.slug}`}
+      className="transition-all duration-300 flex flex-col group relative h-[400px] cursor-pointer"
+    >
       {/* Upper Tag (Best Seller / Capacity) */}
       <div className="absolute top-3 left-3 z-10 flex flex-col gap-1">
         {product.capacity && (
@@ -28,66 +32,64 @@ export default function ProductCard({ product }: ProductCardProps) {
         </span>
       </div>
 
-      {/* Product Image Area */}
-      <div className="relative h-56 w-full bg-[#F5F4F0] overflow-hidden flex items-center justify-center p-6">
-        {product.thumbnail ? (
-          <div className="relative w-full h-full group-hover:scale-105 transition-transform duration-500">
-            <Image
-              src={product.thumbnail}
-              alt={product.name}
-              fill
-              sizes="(max-w-768px) 100vw, 33vw"
-              className="object-contain"
-            />
-          </div>
-        ) : (
-          <div className="text-zinc-400 text-xs font-medium">No Image Available</div>
-        )}
+      {/* Product Image Area (70% height) */}
+      <div className="relative h-[70%] w-full bg-[#F5F4F0] rounded-md overflow-hidden flex items-center justify-center p-4 sm:p-6">
+        {(() => {
+          const imgUrl = product.thumbnail || (() => {
+            const name = product.name.toLowerCase();
+            if (name.includes('stacker')) return '/Categories_3d/Stacker.png';
+            if (name.includes('hoist')) return '/Categories_3d/0a4d7a0d-e724-4c3d-b5e3-d3020ba287bf.png';
+            if (name.includes('winch')) return '/Categories_3d/837efcf2-bdd8-4892-8868-267e6b22ca49.png';
+            if (name.includes('pallet')) return '/hero_pallet.png';
+            if (name.includes('crane') || name.includes('gantry') || name.includes('jib')) {
+              return '/Categories_3d/0a4d7a0d-e724-4c3d-b5e3-d3020ba287bf.png';
+            }
+            return null;
+          })();
+
+          if (imgUrl) {
+            return (
+              <div className="relative w-full h-full group-hover:scale-105 transition-transform duration-500">
+                <Image
+                  src={imgUrl}
+                  alt={product.name}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-contain"
+                  style={{ mixBlendMode: 'multiply' }}
+                />
+              </div>
+            );
+          }
+
+          return <div className="text-zinc-400 text-xs font-medium">No Image Available</div>;
+        })()}
       </div>
 
-      {/* Product Info Area */}
-      <div className="p-5 flex-1 flex flex-col justify-between">
-        <div className="space-y-2">
+      {/* Product Info Area (30% height) */}
+      <div className="h-[30%] pt-3 pb-1 flex flex-col justify-between">
+        <div className="space-y-1">
           {/* Brand/Subtitle */}
           <span className="text-[10px] uppercase tracking-wider font-bold text-[#888780]">
             Bala Enterprise
           </span>
           {/* Name */}
-          <h3 className="font-heading text-sm font-bold text-[#1A1A18] group-hover:text-[#D85A30] transition-colors leading-tight line-clamp-2 h-10">
+          <h3 className="font-heading text-sm font-bold text-[#1A1A18] group-hover:text-[#D85A30] transition-colors leading-tight line-clamp-2">
             {product.name}
           </h3>
-          {/* Short Description */}
-          {product.shortDescription && (
-            <p className="text-[11px] text-[#888780] line-clamp-2 leading-relaxed">
-              {product.shortDescription}
-            </p>
+          {/* Price (Only if it's NOT 'Price on Request') */}
+          {product.priceDisplay && product.priceDisplay !== 'Price on Request' && (
+            <span className="text-xs font-bold text-[#D85A30] block mt-1">
+              {product.priceDisplay}
+            </span>
           )}
         </div>
 
-        {/* Pricing & CTA Actions */}
-        <div className="mt-4 pt-4 border-t border-border space-y-3">
-          <div className="flex items-baseline gap-2">
-            <span className="text-sm font-bold text-[#D85A30]">
-              {product.priceDisplay || 'Price on Request'}
-            </span>
-          </div>
-
-          <div className="grid grid-cols-2 gap-2">
-            <Link
-              href={`/products/${product.slug}`}
-              className="block w-full text-center py-2 bg-transparent border border-[#1A1A18] text-[#1A1A18] text-[10px] uppercase tracking-wider font-bold hover:bg-[#1A1A18] hover:text-white transition-colors rounded-sm"
-            >
-              Specs
-            </Link>
-            <Link
-              href={`/products/${product.slug}#enquire`}
-              className="block w-full text-center py-2 bg-[#D85A30] text-white text-[10px] uppercase tracking-wider font-bold hover:bg-[#1A1A18] transition-colors rounded-sm"
-            >
-              Enquire
-            </Link>
-          </div>
-        </div>
+        <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#D85A30] inline-flex items-center gap-1 border-b border-[#D85A30] pb-0.5 hover:border-transparent transition-colors duration-300 w-fit">
+          View Specs & Enquire
+          <ArrowRight className="h-3 w-3 group-hover:translate-x-1 transition-transform" />
+        </span>
       </div>
-    </div>
+    </Link>
   );
 }

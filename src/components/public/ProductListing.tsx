@@ -1,7 +1,5 @@
 'use client';
 
-import Link from 'next/link';
-import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { SlidersHorizontal } from 'lucide-react';
 
@@ -56,20 +54,20 @@ export default function ProductListing({
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
       {/* Sidebar Filters */}
-      <div className="space-y-6">
-        <div className="flex items-center gap-2 border-b border-[#888780]/20 pb-4">
+      <div className="space-y-4 lg:space-y-6">
+        <div className="flex items-center gap-2 border-b border-[#888780]/20 pb-3 lg:pb-4">
           <SlidersHorizontal className="h-4 w-4 text-[#D85A30]" />
           <h2 className="text-xs font-semibold uppercase tracking-wider text-[#1A1A18]">
             Filter Categories
           </h2>
         </div>
 
-        <div className="flex flex-wrap gap-2 lg:flex-col lg:gap-1">
+        <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap lg:flex-col lg:gap-1">
           <button
             onClick={() => handleCategorySelect('')}
-            className={`px-3 py-2 text-left text-xs font-medium transition-colors ${
+            className={`min-h-11 shrink-0 rounded-sm px-4 py-2 text-left text-xs font-medium transition-colors ${
               activeCategory === ''
                 ? 'bg-[#D85A30] text-white'
                 : 'text-[#888780] bg-[#F5F4F0] hover:bg-zinc-200 hover:text-[#1A1A18] lg:bg-transparent'
@@ -82,7 +80,7 @@ export default function ProductListing({
             <button
               key={cat._id}
               onClick={() => handleCategorySelect(cat.slug)}
-              className={`px-3 py-2 text-left text-xs font-medium transition-colors ${
+              className={`min-h-11 shrink-0 rounded-sm px-4 py-2 text-left text-xs font-medium transition-colors whitespace-nowrap lg:whitespace-normal ${
                 activeCategory === cat.slug
                   ? 'bg-[#D85A30] text-white'
                   : 'text-[#888780] bg-[#F5F4F0] hover:bg-zinc-200 hover:text-[#1A1A18] lg:bg-transparent'
@@ -97,13 +95,18 @@ export default function ProductListing({
       {/* Product Grid */}
       <div className="lg:col-span-3">
         {filteredProducts.length === 0 ? (
-          <div className="text-center py-20 bg-[#F5F4F0] border border-[#888780]/20">
+          <div className="text-center py-12 sm:py-20 bg-[#F5F4F0] border border-[#888780]/20 rounded-md">
             <p className="text-[#888780] text-sm">No items found in this section.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {filteredProducts.map((prod) => (
-              <ProductCard key={prod._id} product={prod} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-10 pb-20 sm:pb-24">
+            {filteredProducts.map((prod, idx) => (
+              <div 
+                key={prod._id}
+                className={idx % 3 === 0 ? 'lg:translate-y-4' : idx % 3 === 2 ? 'lg:translate-y-8' : ''}
+              >
+                <ProductCard product={prod} />
+              </div>
             ))}
           </div>
         )}
