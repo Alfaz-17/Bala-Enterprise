@@ -66,8 +66,9 @@ export default function EnquiryForm({
             id="form-name"
             name="name"
             required
+            suppressHydrationWarning
             placeholder="e.g. Rakesh Patel"
-            className="w-full px-3 py-2 border border-[#888780] bg-white text-[#1A1A18] text-sm focus:outline-none focus:ring-1 focus:ring-[#D85A30]"
+            className="w-full min-h-12 px-3 py-2 border border-border bg-white text-[#1A1A18] text-base sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#D85A30] focus:border-[#D85A30] rounded-sm"
           />
         </div>
 
@@ -78,8 +79,9 @@ export default function EnquiryForm({
           <input
             id="form-company"
             name="companyName"
+            suppressHydrationWarning
             placeholder="e.g. ABC Industries"
-            className="w-full px-3 py-2 border border-[#888780] bg-white text-[#1A1A18] text-sm focus:outline-none focus:ring-1 focus:ring-[#D85A30]"
+            className="w-full min-h-12 px-3 py-2 border border-border bg-white text-[#1A1A18] text-base sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#D85A30] focus:border-[#D85A30] rounded-sm"
           />
         </div>
 
@@ -91,9 +93,10 @@ export default function EnquiryForm({
             id="form-phone"
             name="phone"
             required
+            suppressHydrationWarning
             type="tel"
             placeholder="e.g. 98765 43210"
-            className="w-full px-3 py-2 border border-[#888780] bg-white text-[#1A1A18] text-sm focus:outline-none focus:ring-1 focus:ring-[#D85A30]"
+            className="w-full min-h-12 px-3 py-2 border border-border bg-white text-[#1A1A18] text-base sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#D85A30] focus:border-[#D85A30] rounded-sm"
           />
         </div>
 
@@ -105,8 +108,9 @@ export default function EnquiryForm({
             id="form-email"
             name="email"
             type="email"
+            suppressHydrationWarning
             placeholder="e.g. info@abcindustries.com"
-            className="w-full px-3 py-2 border border-[#888780] bg-white text-[#1A1A18] text-sm focus:outline-none focus:ring-1 focus:ring-[#D85A30]"
+            className="w-full min-h-12 px-3 py-2 border border-border bg-white text-[#1A1A18] text-base sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#D85A30] focus:border-[#D85A30] rounded-sm"
           />
         </div>
       </div>
@@ -119,10 +123,11 @@ export default function EnquiryForm({
           id="form-message"
           name="message"
           required
+          suppressHydrationWarning
           rows={4}
           defaultValue={defaultMessage}
           placeholder="e.g. We need a 10-ton EOT crane with 18 meters span for our workshop in Gujarat."
-          className="w-full px-3 py-2 border border-[#888780] bg-white text-[#1A1A18] text-sm focus:outline-none focus:ring-1 focus:ring-[#D85A30] resize-y"
+          className="w-full px-3 py-2 border border-border bg-white text-[#1A1A18] text-base sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#D85A30] focus:border-[#D85A30] rounded-sm resize-y"
         />
       </div>
 
@@ -130,7 +135,8 @@ export default function EnquiryForm({
         <button
           type="submit"
           disabled={loading}
-          className="w-full sm:w-auto px-8 py-3 bg-[#D85A30] text-white text-xs font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+          suppressHydrationWarning
+          className="w-full sm:w-auto min-h-12 px-8 py-3 bg-[#D85A30] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#c24a24] transition-colors disabled:opacity-50 rounded-sm shadow-sm"
         >
           {loading ? 'Submitting...' : 'Send Enquiry'}
         </button>
