@@ -77,15 +77,13 @@ export default async function HomePage() {
         {/* Full-bleed Loop Video Background */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <video
+            src="/hero.webm"
             autoPlay
             loop
             muted
             playsInline
             className="w-full h-full object-cover opacity-65 filter brightness-90 contrast-105 pointer-events-none"
-          >
-            <source src="/hero.webm" type="video/webm" />
-            <source src="/hero.MP4" type="video/mp4" />
-          </video>
+          />
           {/* Gradient overlays to match style and make text readable */}
           <div className="absolute inset-0 bg-[#D85A30]/3 mix-blend-multiply pointer-events-none" />
           <div className="absolute inset-0 bg-gradient-to-b from-[#131312]/15 via-transparent to-[#131312]/50 pointer-events-none" />

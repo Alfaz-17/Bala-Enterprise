@@ -221,6 +221,7 @@ export default function AboutPage() {
 
           <div className="relative aspect-[16/9] w-full rounded-md overflow-hidden shadow-2xl border border-border bg-[#1A1A18]">
             <video
+              src="/products_showcase.webm"
               poster="/Images_Factory/factory_hangar_refined.png"
               autoPlay
               muted
@@ -229,8 +230,6 @@ export default function AboutPage() {
               controls
               className="w-full h-full object-cover"
             >
-              <source src="/products_showcase.webm" type="video/webm" />
-              <source src="/products_showcase.MP4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>

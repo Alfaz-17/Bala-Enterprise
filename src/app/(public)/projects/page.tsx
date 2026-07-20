@@ -112,6 +112,7 @@ export default async function FactoryTourPage() {
             <div className="absolute top-0 left-0 w-1.5 h-6 bg-[#D85A30]" />
             <div className="relative aspect-video w-full bg-[#1A1A18]">
               <video 
+                src="/Factory_visit.webm"
                 autoPlay
                 muted
                 loop
@@ -121,8 +122,6 @@ export default async function FactoryTourPage() {
                 preload="metadata"
                 poster="/Images_Factory/factory_hangar_refined.png"
               >
-                <source src="/Factory_visit.webm" type="video/webm" />
-                <source src="/Factory_visit.MP4" type="video/mp4" />
                 Your browser does not support playing videos.
               </video>
             </div>
@@ -142,6 +141,7 @@ export default async function FactoryTourPage() {
             <div className="absolute top-0 left-0 w-1.5 h-6 bg-[#D85A30]" />
             <div className="relative aspect-video w-full bg-[#1A1A18]">
               <video 
+                src="/Costomer_review.webm"
                 autoPlay
                 muted
                 loop
@@ -151,8 +151,6 @@ export default async function FactoryTourPage() {
                 preload="metadata"
                 poster="/Images_Factory/chain_hoists_refined.png"
               >
-                <source src="/Costomer_review.webm" type="video/webm" />
-                <source src="/Costomer_review.MP4" type="video/mp4" />
                 Your browser does not support playing videos.
               </video>
             </div>
