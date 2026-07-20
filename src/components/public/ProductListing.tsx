@@ -64,13 +64,38 @@ export default function ProductListing({
           </h2>
         </div>
 
-        <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap lg:flex-col lg:gap-1">
+        {/* Mobile Dropdown Selector (visible on mobile/tablet screens) */}
+        <div className="block lg:hidden">
+          <div className="relative">
+            <select
+              value={activeCategory}
+              onChange={(e) => handleCategorySelect(e.target.value)}
+              className="w-full min-h-11 bg-[#F5F4F0] border border-[#888780]/25 rounded-md px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#1A1A18] appearance-none focus:outline-none focus:ring-1 focus:ring-[#D85A30] focus:border-[#D85A30]"
+            >
+              <option value="">All Equipment</option>
+              {categories.map((cat) => (
+                <option key={cat._id} value={cat.slug}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
+            {/* Custom arrow icon */}
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-[#888780]">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop Sidebar Filter List (hidden on mobile/tablet) */}
+        <div className="hidden lg:flex flex-col gap-1">
           <button
             onClick={() => handleCategorySelect('')}
             className={`min-h-11 shrink-0 rounded-sm px-4 py-2 text-left text-xs font-medium transition-colors ${
               activeCategory === ''
                 ? 'bg-[#D85A30] text-white'
-                : 'text-[#888780] bg-[#F5F4F0] hover:bg-zinc-200 hover:text-[#1A1A18] lg:bg-transparent'
+                : 'text-[#888780] hover:bg-zinc-200 hover:text-[#1A1A18] lg:bg-transparent'
             }`}
           >
             All Equipment
@@ -83,7 +108,7 @@ export default function ProductListing({
               className={`min-h-11 shrink-0 rounded-sm px-4 py-2 text-left text-xs font-medium transition-colors whitespace-nowrap lg:whitespace-normal ${
                 activeCategory === cat.slug
                   ? 'bg-[#D85A30] text-white'
-                  : 'text-[#888780] bg-[#F5F4F0] hover:bg-zinc-200 hover:text-[#1A1A18] lg:bg-transparent'
+                  : 'text-[#888780] hover:bg-zinc-200 hover:text-[#1A1A18] lg:bg-transparent'
               }`}
             >
               {cat.name}
@@ -99,14 +124,9 @@ export default function ProductListing({
             <p className="text-[#888780] text-sm">No items found in this section.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-10 pb-20 sm:pb-24">
-            {filteredProducts.map((prod, idx) => (
-              <div 
-                key={prod._id}
-                className={idx % 3 === 0 ? 'lg:translate-y-4' : idx % 3 === 2 ? 'lg:translate-y-8' : ''}
-              >
-                <ProductCard product={prod} />
-              </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6 lg:gap-8 pb-20 sm:pb-24">
+            {filteredProducts.map((prod) => (
+              <ProductCard key={prod._id} product={prod} />
             ))}
           </div>
         )}

@@ -19,6 +19,9 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: "Bala Enterprise",
   description: "Heavy lifting industrial cranes and equipment",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({

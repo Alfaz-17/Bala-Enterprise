@@ -28,22 +28,35 @@ export default function AboutPage() {
 
 
   return (
-    <div className="bg-[#F5F4F0] min-h-screen text-[#1A1A18]">
-      {/* Page Header (Slanted High-Contrast Style) */}
-      <div className="relative bg-[#1A1A18] text-white overflow-hidden py-16 md:py-20 border-b border-[#2A2A28]">
-        {/* Slanted Design Background shape */}
-        <div className="absolute top-0 right-0 h-full w-[45%] bg-[#D85A30] origin-top-right transform skew-x-[-15deg] translate-x-[15%] z-0 hidden lg:block" />
-        <div className="absolute inset-0 bg-[#D85A30] z-0 lg:hidden opacity-90" />
+    <div className="bg-[#FAF9F6] min-h-screen text-[#1A1A18] relative overflow-hidden">
+      {/* Engineering blueprint dot grid */}
+      <div className="absolute inset-0 bg-[radial-gradient(#E5E4DE_1px,transparent_1px)] [background-size:20px_20px] opacity-40 pointer-events-none" />
+      {/* Page Header — Side-by-side text + image on ALL screens */}
+      <div className="relative bg-[#1A1A18] text-white overflow-hidden py-8 sm:py-12 md:py-16 lg:py-20 border-b border-[#2A2A28]">
+        {/* Slanted Image Block — visible on ALL screen sizes */}
+        <div className="absolute top-0 right-0 h-full w-[42%] sm:w-[45%] lg:w-[50%] bg-[#1A1A18] origin-top-right transform skew-x-[-12deg] sm:skew-x-[-15deg] translate-x-[8%] sm:translate-x-[10%] z-0 overflow-hidden border-l border-white/10">
+          <div className="absolute inset-0 transform skew-x-[12deg] sm:skew-x-[15deg] -translate-x-[8%] sm:-translate-x-[10%] w-[130%] h-full">
+            <Image
+              src="/Image_from_internet/pexels-cmrcn-29224563.jpg"
+              alt="About Bala Enterprise"
+              fill
+              priority
+              className="object-cover object-center opacity-60 sm:opacity-70 hover:scale-105 transition-transform duration-700"
+            />
+            <div className="absolute inset-0 bg-[#D85A30]/30 mix-blend-multiply" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A18] via-[#1A1A18]/40 to-transparent" />
+          </div>
+        </div>
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 items-center">
-          <div className="lg:col-span-8 space-y-3">
-            <span className="text-[#D85A30] lg:text-primary text-xs uppercase tracking-[0.2em] font-bold block">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+          <div className="max-w-[55%] sm:max-w-[50%] lg:max-w-[60%] space-y-2 sm:space-y-3">
+            <span className="text-[#D85A30] text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-[0.2em] font-bold block">
               Quality Lifting Engineering
             </span>
-            <h1 className="font-heading text-4xl sm:text-5xl font-black tracking-tight leading-none text-white">
+            <h1 className="font-heading text-xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-[1.1] text-white">
               About Bala Enterprise
             </h1>
-            <p className="text-sm text-white/80 max-w-xl">
+            <p className="text-[11px] sm:text-sm text-white/80 max-w-xl leading-relaxed">
               Learn about our 15+ years journey of fabricating, safety testing, and commissioning industrial material handling machinery in Gujarat.
             </p>
           </div>
@@ -51,7 +64,25 @@ export default function AboutPage() {
       </div>
 
       {/* Main Content (Story & Left Border Style) */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-gradient-to-b from-[#FAF9F6] to-[#E3E2DA] relative overflow-hidden border-b border-border/10">
+        {/* Engineering blueprint dot grid */}
+        <div className="absolute inset-0 bg-[radial-gradient(#E5E4DE_1px,transparent_1px)] [background-size:20px_20px] opacity-40 pointer-events-none" />
+
+        {/* Giant Rotating Mechanical Cog Silhouette */}
+        <div className="absolute -right-20 -bottom-20 w-96 h-96 text-black/[0.015] pointer-events-none select-none z-0">
+          <svg
+            className="w-full h-full animate-[spin_100s_linear_infinite]"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="0.35"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="12" cy="12" r="3" />
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+          </svg>
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             {/* Story text */}
@@ -92,35 +123,38 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* Certifications and GST sidebar */}
-            <div className="lg:col-span-5 bg-[#F5F4F0] border border-border p-8 rounded-md space-y-6">
-              <div className="flex items-center gap-3">
-                <ShieldCheck className="h-6 w-6 text-[#D85A30] flex-shrink-0" />
-                <h3 className="font-heading text-base font-bold text-[#1A1A18]">
-                  Compliance & Verification
-                </h3>
-              </div>
-              <div className="space-y-4 text-xs text-[#888780] leading-relaxed">
-                <div>
-                  <h4 className="font-bold text-[#1A1A18] uppercase tracking-wider text-[10px]">Registered GST Identification</h4>
-                  <p className="mt-0.5 font-mono text-sm font-semibold text-[#D85A30]">GSTIN: 24AIVPM3595R2Z1</p>
-                </div>
-                <div>
-                  <h4 className="font-bold text-[#1A1A18] uppercase tracking-wider text-[10px]">Manufacturing Certification</h4>
-                  <p className="mt-0.5">ISO 9001:2015 Certified Management and structural welding standards compliance.</p>
-                </div>
-                <div>
-                  <h4 className="font-bold text-[#1A1A18] uppercase tracking-wider text-[10px]">Safety Overload Verification</h4>
-                  <p className="mt-0.5">Every hoister hook, gear pulley block, and manual stacker cylinder is tested to 125% of its rated lifting capacity before shipping.</p>
+            {/* Right Column: Factory Image & Compliance Info */}
+            <div className="lg:col-span-5 space-y-6">
+              <div className="relative h-[280px] sm:h-[340px] w-full rounded-md overflow-hidden shadow-md border border-border">
+                <Image
+                  src="/Images_Factory/factory_hangar_refined.png"
+                  alt="Bala Enterprise Factory Hangar"
+                  fill
+                  className="object-cover hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute bottom-4 left-4 bg-[#1A1A18]/85 border border-white/10 px-3 py-1.5 rounded text-[10px] font-bold uppercase tracking-wider text-white shadow-lg">
+                  Bala Workshop Hangar Tour
                 </div>
               </div>
-              <div className="border-t border-border pt-6">
-                <Link
-                  href="/contact"
-                  className="w-full block text-center py-3 bg-[#1A1A18] text-white hover:bg-[#D85A30] text-xs font-bold uppercase tracking-wider transition-colors rounded-sm"
-                >
-                  Contact Engineering Desk
-                </Link>
+
+              {/* Compliance Box */}
+              <div className="bg-[#F5F4F0] border border-border p-6 rounded-md space-y-4">
+                <div className="flex items-center gap-3">
+                  <ShieldCheck className="h-5 w-5 text-[#D85A30] flex-shrink-0" />
+                  <h3 className="font-heading text-sm font-bold text-[#1A1A18]">
+                    Compliance & Verification
+                  </h3>
+                </div>
+                <div className="space-y-3 text-xs text-[#888780] leading-relaxed">
+                  <div>
+                    <h4 className="font-bold text-[#1A1A18] uppercase tracking-wider text-[9px]">Registered GST Identification</h4>
+                    <p className="mt-0.5 font-mono text-sm font-semibold text-[#D85A30]">GSTIN: 24AIVPM3595R2Z1</p>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[#1A1A18] uppercase tracking-wider text-[9px]">Manufacturing Certification</h4>
+                    <p className="mt-0.5">ISO 9001:2015 Certified Management and structural welding standards compliance.</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -128,7 +162,7 @@ export default function AboutPage() {
       </section>
 
       {/* Trust Stats Bar */}
-      <section className="bg-[#F5F4F0] py-16 border-t border-b border-border">
+      <section className="bg-gradient-to-b from-[#E6E5DF] to-[#D1CFC6] py-16 border-t border-b border-border/40 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {stats.map((stat, idx) => (
             <div key={idx} className="space-y-1">
@@ -138,6 +172,67 @@ export default function AboutPage() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Why Choose Us Video Section */}
+      <section className="py-20 bg-gradient-to-b from-[#FAF9F6] to-[#E5E4DD] relative overflow-hidden border-b border-border/10">
+        {/* Engineering blueprint dot grid */}
+        <div className="absolute inset-0 bg-[radial-gradient(#E5E4DE_1px,transparent_1px)] [background-size:20px_20px] opacity-40 pointer-events-none" />
+
+        {/* Interlocking Gear Mechanism Silhouette Backdrop */}
+        <div className="absolute -left-16 -top-16 w-80 h-80 text-black/[0.012] pointer-events-none select-none z-0">
+          <svg
+            className="w-full h-full animate-[spin_120s_linear_infinite]"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="0.35"
+          >
+            <circle cx="12" cy="12" r="3" />
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+          </svg>
+        </div>
+        <div className="absolute left-48 -top-8 w-44 h-44 text-black/[0.01] pointer-events-none select-none z-0">
+          <svg
+            className="w-full h-full animate-[spin_70s_linear_infinite_reverse]"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="0.4"
+          >
+            <circle cx="12" cy="12" r="3" />
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+          </svg>
+        </div>
+        <div className="max-w-4xl mx-auto px-4 text-center space-y-8">
+          <div className="space-y-3">
+            <span className="text-[#D85A30] text-xs uppercase tracking-[0.2em] font-semibold block">
+              Why Choose Us
+            </span>
+            <h2 className="font-heading text-3xl sm:text-4xl font-black text-[#1A1A18]">
+              Why Factories Trust Bala Enterprise
+            </h2>
+            <div className="h-0.5 w-12 bg-[#D85A30] mx-auto" />
+            <p className="text-sm text-[#888780] max-w-xl mx-auto leading-relaxed">
+              Practical engineering guidance, highly durable hoisting gear, and fast turnaround response for factories that cannot afford operational downtime. We build for performance and long service life.
+            </p>
+          </div>
+
+          <div className="relative aspect-[16/9] w-full rounded-md overflow-hidden shadow-2xl border border-border bg-[#1A1A18]">
+            <video
+              src="/products_showcase.MP4"
+              poster="/Images_Factory/factory_hangar_refined.png"
+              autoPlay
+              muted
+              loop
+              playsInline
+              controls
+              className="w-full h-full object-cover"
+            >
+              Your browser does not support the video tag.
+            </video>
+          </div>
         </div>
       </section>
 

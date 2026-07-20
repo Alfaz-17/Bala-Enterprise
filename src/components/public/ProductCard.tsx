@@ -18,22 +18,22 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="transition-all duration-300 flex flex-col group relative h-[400px] cursor-pointer"
+      className="transition-all duration-300 flex flex-col group relative h-[280px] sm:h-[400px] cursor-pointer"
     >
       {/* Upper Tag (Best Seller / Capacity) */}
-      <div className="absolute top-3 left-3 z-10 flex flex-col gap-1">
+      <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10 flex flex-col gap-1">
         {product.capacity && (
-          <span className="bg-[#1A1A18] text-white text-[9px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-sm">
+          <span className="bg-[#1A1A18] text-white text-[7px] sm:text-[9px] uppercase tracking-wider font-bold px-1.5 sm:px-2 py-0.5 rounded-sm">
             {product.capacity}
           </span>
         )}
-        <span className="bg-[#D85A30] text-white text-[9px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-sm">
+        <span className="bg-[#D85A30] text-white text-[7px] sm:text-[9px] uppercase tracking-wider font-bold px-1.5 sm:px-2 py-0.5 rounded-sm">
           Best Seller
         </span>
       </div>
 
       {/* Product Image Area (70% height) */}
-      <div className="relative h-[70%] w-full bg-[#F5F4F0] rounded-md overflow-hidden flex items-center justify-center p-4 sm:p-6">
+      <div className="relative h-[70%] w-full bg-[#F5F4F0] rounded-md overflow-hidden flex items-center justify-center p-2 sm:p-4 md:p-6">
         {(() => {
           const imgUrl = product.thumbnail || (() => {
             const name = product.name.toLowerCase();
@@ -54,7 +54,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                   src={imgUrl}
                   alt={product.name}
                   fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                   className="object-contain"
                   style={{ mixBlendMode: 'multiply' }}
                 />
@@ -67,27 +67,21 @@ export default function ProductCard({ product }: ProductCardProps) {
       </div>
 
       {/* Product Info Area (30% height) */}
-      <div className="h-[30%] pt-3 pb-1 flex flex-col justify-between">
-        <div className="space-y-1">
+      <div className="h-[30%] pt-2 sm:pt-3 pb-1 flex flex-col justify-between">
+        <div className="space-y-0.5 sm:space-y-1">
           {/* Brand/Subtitle */}
-          <span className="text-[10px] uppercase tracking-wider font-bold text-[#888780]">
+          <span className="text-[8px] sm:text-[10px] uppercase tracking-wider font-bold text-[#888780]">
             Bala Enterprise
           </span>
           {/* Name */}
-          <h3 className="font-heading text-sm font-bold text-[#1A1A18] group-hover:text-[#D85A30] transition-colors leading-tight line-clamp-2">
+          <h3 className="font-heading text-xs sm:text-sm font-bold text-[#1A1A18] group-hover:text-[#D85A30] transition-colors leading-tight line-clamp-2">
             {product.name}
           </h3>
-          {/* Price (Only if it's NOT 'Price on Request') */}
-          {product.priceDisplay && product.priceDisplay !== 'Price on Request' && (
-            <span className="text-xs font-bold text-[#D85A30] block mt-1">
-              {product.priceDisplay}
-            </span>
-          )}
         </div>
 
-        <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#D85A30] inline-flex items-center gap-1 border-b border-[#D85A30] pb-0.5 hover:border-transparent transition-colors duration-300 w-fit">
+        <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-[0.12em] sm:tracking-[0.15em] text-[#D85A30] inline-flex items-center gap-1 border-b border-[#D85A30] pb-0.5 hover:border-transparent transition-colors duration-300 w-fit">
           View Specs & Enquire
-          <ArrowRight className="h-3 w-3 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="h-2.5 w-2.5 sm:h-3 sm:w-3 group-hover:translate-x-1 transition-transform" />
         </span>
       </div>
     </Link>

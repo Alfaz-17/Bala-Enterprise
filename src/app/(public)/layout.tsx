@@ -1,6 +1,5 @@
 import Header from '@/components/public/Header';
 import Footer from '@/components/public/Footer';
-import StickyMobileCTA from '@/components/public/StickyMobileCTA';
 
 export default function PublicLayout({
   children,
@@ -8,13 +7,12 @@ export default function PublicLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex flex-col pb-[76px] md:pb-0">
+    <div className="min-h-screen flex flex-col">
       <Header />
       <div className="flex-1 flex flex-col">
         {children}
       </div>
       <Footer />
-      <StickyMobileCTA />
     </div>
   );
 }

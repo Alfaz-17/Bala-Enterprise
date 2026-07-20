@@ -50,8 +50,11 @@ const galleryImages = [
 
 export default function FactoryGallery() {
   return (
-    <section className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-[#F5F4F0] border-t border-b border-border">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-[#1A1A18] border-t border-b border-white/5 relative overflow-hidden">
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#D85A30]/5 blur-[150px] pointer-events-none rounded-full" />
+      
+      <div className="max-w-7xl mx-auto relative z-10">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -63,11 +66,11 @@ export default function FactoryGallery() {
           <span className="text-xs tracking-[0.4em] uppercase text-[#D85A30] font-bold block">
             Our Space
           </span>
-          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black text-[#1A1A18]">
+          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black text-white">
             Inside Our Factory
           </h2>
           <div className="h-0.5 w-12 bg-[#D85A30] mx-auto" />
-          <p className="text-sm text-[#888780] tracking-wide max-w-lg mx-auto pt-1 leading-relaxed">
+          <p className="text-sm text-white/70 tracking-wide max-w-lg mx-auto pt-1 leading-relaxed">
             Step inside our GIDC Bhavnagar manufacturing facility — equipped with industrial assembly rigs, overhead cranes, and rigorous safety testing fields.
           </p>
         </motion.div>
@@ -85,7 +88,7 @@ export default function FactoryGallery() {
                 delay: index * 0.1,
                 ease: 'easeOut',
               }}
-              className={`${image.span} relative group overflow-hidden border border-border bg-white rounded-md`}
+              className={`${image.span} relative group overflow-hidden border border-white/10 bg-white/5 rounded-md`}
             >
               <Image
                 src={image.src}

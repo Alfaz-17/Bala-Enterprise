@@ -48,33 +48,45 @@ export default async function BlogDetailPage({ params }: PageProps) {
   }
 
   return (
-    <div className="bg-white min-h-screen">
-      {/* Page Header (Slanted High-Contrast Style) */}
-      <div className="relative bg-[#1A1A18] text-white overflow-hidden py-16 md:py-20 border-b border-[#2A2A28]">
-        {/* Slanted Design Background shape */}
-        <div className="absolute top-0 right-0 h-full w-[45%] bg-[#D85A30] origin-top-right transform skew-x-[-15deg] translate-x-[15%] z-0 hidden lg:block" />
-        <div className="absolute inset-0 bg-[#D85A30] z-0 lg:hidden opacity-90" />
+    <div className="bg-[#FAF9F6] min-h-screen text-[#1A1A18] relative overflow-hidden">
+      {/* Engineering blueprint dot grid */}
+      <div className="absolute inset-0 bg-[radial-gradient(#E5E4DE_1px,transparent_1px)] [background-size:20px_20px] opacity-40 pointer-events-none" />
+      {/* Page Header — Side-by-side text + image on ALL screens */}
+      <div className="relative bg-[#1A1A18] text-white overflow-hidden py-8 sm:py-12 md:py-16 lg:py-20 border-b border-[#2A2A28]">
+        <div className="absolute top-0 right-0 h-full w-[42%] sm:w-[45%] lg:w-[50%] bg-[#1A1A18] origin-top-right transform skew-x-[-12deg] sm:skew-x-[-15deg] translate-x-[8%] sm:translate-x-[10%] z-0 overflow-hidden border-l border-white/10">
+          <div className="absolute inset-0 transform skew-x-[12deg] sm:skew-x-[15deg] -translate-x-[8%] sm:-translate-x-[10%] w-[130%] h-full">
+            <Image
+              src="/Image_from_internet/pexels-pixabay-236709.jpg"
+              alt={post.title}
+              fill
+              priority
+              className="object-cover object-center opacity-60 sm:opacity-70 hover:scale-105 transition-transform duration-700"
+            />
+            <div className="absolute inset-0 bg-[#D85A30]/30 mix-blend-multiply" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A18] via-[#1A1A18]/40 to-transparent" />
+          </div>
+        </div>
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 items-center">
-          <div className="lg:col-span-8 space-y-3">
-            <div className="flex items-center gap-4 text-[10px] text-[#D85A30] uppercase tracking-wider">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+          <div className="max-w-[55%] sm:max-w-[50%] lg:max-w-[60%] space-y-2 sm:space-y-3">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-[8px] sm:text-[10px] text-[#D85A30] uppercase tracking-wider">
               <span className="flex items-center gap-1 font-bold">
-                <Calendar className="h-3.5 w-3.5 text-[#D85A30]" />
+                <Calendar className="h-3 sm:h-3.5 w-3 sm:w-3.5 text-[#D85A30]" />
                 {new Date(post.publishedAt).toLocaleDateString()}
               </span>
               <span className="flex items-center gap-1 font-bold">
-                <User className="h-3.5 w-3.5 text-[#D85A30]" />
+                <User className="h-3 sm:h-3.5 w-3 sm:w-3.5 text-[#D85A30]" />
                 Admin Author
               </span>
             </div>
-            <h1 className="font-heading text-3xl sm:text-4xl font-black tracking-tight leading-tight text-white mt-2">
+            <h1 className="font-heading text-xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-[1.1] text-white mt-1 sm:mt-2">
               {post.title}
             </h1>
           </div>
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative z-10">
         {/* Back Link */}
         <Link
           href="/blog"
@@ -104,7 +116,9 @@ export default async function BlogDetailPage({ params }: PageProps) {
         </article>
 
         {/* Quote CTA */}
-        <div className="border-t border-border mt-16 pt-8 text-center space-y-4">
+        <div className="bg-white/40 backdrop-blur-sm border border-black/5 p-6 rounded-lg mt-16 text-center space-y-4 relative overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.01)]">
+          {/* Corner Tag Accent */}
+          <div className="absolute top-0 left-0 w-1.5 h-4 bg-[#D85A30]" />
           <h3 className="font-heading text-xl sm:text-2xl font-black text-[#1A1A18]">Need Customized Lifting Equipment Advice?</h3>
           <p className="text-sm text-[#888780] max-w-md mx-auto leading-relaxed">
             Get in touch with our factory experts today for tailored technical crane specifications and price quotes.
