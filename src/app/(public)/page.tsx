@@ -69,7 +69,7 @@ async function getHomePageData() {
 }
 
 export default async function HomePage() {
-  const { categories, products, projects, testimonials } = await getHomePageData();
+  const { categories, products, testimonials } = await getHomePageData();
 
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden">
@@ -77,13 +77,15 @@ export default async function HomePage() {
         {/* Full-bleed Loop Video Background */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <video
-            src="/hero.MP4"
             autoPlay
             loop
             muted
             playsInline
             className="w-full h-full object-cover opacity-65 filter brightness-90 contrast-105 pointer-events-none"
-          />
+          >
+            <source src="/hero.webm" type="video/webm" />
+            <source src="/hero.MP4" type="video/mp4" />
+          </video>
           {/* Gradient overlays to match style and make text readable */}
           <div className="absolute inset-0 bg-[#D85A30]/3 mix-blend-multiply pointer-events-none" />
           <div className="absolute inset-0 bg-gradient-to-b from-[#131312]/15 via-transparent to-[#131312]/50 pointer-events-none" />
@@ -307,110 +309,7 @@ export default async function HomePage() {
       {/* Our Manufacturing Facility Showcase */}
       <FactoryGallery />
 
-      {/* Completed installations */}
-      <section className="py-12 sm:py-16 lg:py-24 lg:pb-32 bg-gradient-to-b from-[#FAF9F6] to-[#E5E4DD] relative overflow-hidden border-t border-border/10">
-        {/* Interlocking Gear Mechanism Silhouette Backdrop */}
-        <div className="absolute -right-16 -top-16 w-80 h-80 text-black/[0.015] pointer-events-none select-none z-0">
-          <svg
-            className="w-full h-full animate-[spin_120s_linear_infinite]"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="0.35"
-          >
-            <circle cx="12" cy="12" r="3" />
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
-          </svg>
-        </div>
-        <div className="absolute right-48 -top-8 w-44 h-44 text-black/[0.012] pointer-events-none select-none z-0">
-          <svg
-            className="w-full h-full animate-[spin_70s_linear_infinite_reverse]"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="0.4"
-          >
-            <circle cx="12" cy="12" r="3" />
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
-          </svg>
-        </div>
 
-        {/* Engineering Dot Grid Pattern */}
-        <div className="absolute inset-0 bg-[radial-gradient(#E5E4DE_1px,transparent_1px)] [background-size:24px_24px] opacity-50 pointer-events-none" />
-        
-        {/* Soft background ambient glow */}
-        <div className="absolute top-1/4 left-1/3 w-80 h-80 bg-[#D85A30]/3 blur-[100px] pointer-events-none rounded-full" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4 mb-8 sm:mb-12 lg:mb-20">
-            <div className="space-y-3">
-              <span className="text-[#D85A30] text-xs uppercase tracking-[0.2em] font-semibold">Manufacturing Hub</span>
-              <h2 className="font-heading text-2xl sm:text-4xl font-black text-[#1A1A18]">Workshop & Factory Tour</h2>
-              <p className="text-sm text-[#888780] max-w-xl leading-relaxed">
-                Take a virtual tour of our heavy-duty manufacturing plant and see our production machinery in action.
-              </p>
-              <div className="h-0.5 w-12 bg-[#D85A30]" />
-            </div>
-            <Link
-              href="/projects"
-              className="text-xs font-semibold hover:text-[#D85A30] transition-colors flex items-center gap-1 group border-b border-[#1A1A18]/25 pb-0.5 hover:border-transparent duration-300"
-            >
-              Explore Factory Gallery & Videos
-              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
- 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5 lg:gap-8">
-            {projects.length === 0 ? (
-              <div className="sm:col-span-2 lg:col-span-3 text-center text-sm text-[#888780] py-10 px-4 bg-[#F5F4F0] border border-border rounded-md">
-                Project photos are being added soon. For now, contact us for recent installation references.
-              </div>
-            ) : (
-              projects.map((proj, idx) => (
-                <Link
-                  key={proj._id}
-                  href={`/projects/${proj.slug}`}
-                  className="group flex flex-col transition-all duration-300 h-[260px] sm:h-[360px] lg:h-[400px]"
-                >
-                  {/* Project Image Area (70% height) */}
-                  <div className="relative h-[70%] w-full bg-[#F5F4F0] rounded-md overflow-hidden flex items-center justify-center p-2 sm:p-4">
-                    {proj.thumbnail ? (
-                      <Image
-                        src={proj.thumbnail}
-                        alt={proj.title}
-                        fill
-                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center bg-[#F5F4F0] text-[#888780] text-sm font-bold text-center p-6">
-                        {proj.title}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Project Info Area (30% height) */}
-                  <div className="h-[30%] pt-2 sm:pt-3 pb-1 flex flex-col justify-between">
-                    <div className="space-y-1">
-                      <h3 className="font-heading text-xs sm:text-sm font-bold text-[#1A1A18] group-hover:text-[#D85A30] transition-colors leading-tight line-clamp-2 h-8 sm:h-10">
-                        {proj.title}
-                      </h3>
-                      {proj.location && (
-                        <span className="text-[8px] sm:text-[10px] text-[#888780] font-semibold uppercase tracking-wider block mt-0.5 sm:mt-1">
-                          {proj.location}
-                        </span>
-                      )}
-                    </div>
-                    <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-[0.12em] sm:tracking-[0.15em] text-[#D85A30] inline-flex items-center gap-1 border-b border-[#D85A30] pb-0.5 hover:border-transparent transition-colors duration-300 w-fit">
-                      View Project Details
-                      <ArrowRight className="h-2.5 w-2.5 sm:h-3 sm:w-3 group-hover:translate-x-1 transition-transform" />
-                    </span>
-                  </div>
-                </Link>
-              ))
-            )}
-          </div>
-        </div>
-      </section>
 
       {/* Testimonials */}
       {testimonials.length > 0 && (

@@ -121,8 +121,9 @@ export default async function FactoryTourPage() {
                 preload="metadata"
                 poster="/Images_Factory/factory_hangar_refined.png"
               >
+                <source src="/Factory_visit.webm" type="video/webm" />
                 <source src="/Factory_visit.MP4" type="video/mp4" />
-                Your browser does not support playing MP4 videos.
+                Your browser does not support playing videos.
               </video>
             </div>
             <div className="p-5 sm:p-6 space-y-2">
@@ -150,8 +151,9 @@ export default async function FactoryTourPage() {
                 preload="metadata"
                 poster="/Images_Factory/chain_hoists_refined.png"
               >
+                <source src="/Costomer_review.webm" type="video/webm" />
                 <source src="/Costomer_review.MP4" type="video/mp4" />
-                Your browser does not support playing MP4 videos.
+                Your browser does not support playing videos.
               </video>
             </div>
             <div className="p-5 sm:p-6 space-y-2">
