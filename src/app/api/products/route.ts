@@ -6,6 +6,7 @@ import { ProductImage } from '@/models/ProductImage';
 import { createProductSchema } from '@/lib/validations';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { revalidatePath } from 'next/cache';
 import {
   successResponse,
   createdResponse,
@@ -114,6 +115,14 @@ export async function POST(request: NextRequest) {
           product: product._id,
         }))
       );
+    }
+
+    // Trigger on-demand revalidation of catalog and detail page
+    try {
+      revalidatePath('/products');
+      revalidatePath(`/products/${product.slug}`);
+    } catch (revalError) {
+      console.error('Revalidation error after product creation:', revalError);
     }
 
     return createdResponse(product);

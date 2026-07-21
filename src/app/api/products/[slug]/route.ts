@@ -6,6 +6,7 @@ import { ProductImage } from '@/models/ProductImage';
 import { updateProductSchema } from '@/lib/validations';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { revalidatePath } from 'next/cache';
 import {
   successResponse,
   notFoundError,
@@ -100,6 +101,14 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
       );
     }
 
+    // Trigger on-demand revalidation of catalog and detail page
+    try {
+      revalidatePath('/products');
+      revalidatePath(`/products/${product.slug}`);
+    } catch (revalError) {
+      console.error('Revalidation error after product update:', revalError);
+    }
+
     return successResponse(product);
   } catch (error) {
     console.error('PUT /api/products/[slug] error:', error);
@@ -127,6 +136,14 @@ export async function DELETE(_request: NextRequest, { params }: RouteParams) {
 
     if (!product) {
       return notFoundError('Product not found');
+    }
+
+    // Trigger on-demand revalidation of catalog and detail page
+    try {
+      revalidatePath('/products');
+      revalidatePath(`/products/${product.slug}`);
+    } catch (revalError) {
+      console.error('Revalidation error after product deactivation:', revalError);
     }
 
     return successResponse({ message: 'Product deactivated' });

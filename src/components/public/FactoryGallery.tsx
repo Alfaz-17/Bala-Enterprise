@@ -47,6 +47,28 @@ const galleryImages = [
     span: 'md:col-span-2 md:row-span-1 col-span-2 row-span-1',
   },
 ];
+// Container variants for stagger animation
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.05,
+    },
+  },
+};
+
+// Item variants for simple slide-up
+const itemVariants = {
+  hidden: { opacity: 0, y: 15 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.4,
+      ease: 'easeOut',
+    },
+  },
+};
 
 export default function FactoryGallery() {
   return (
@@ -57,10 +79,10 @@ export default function FactoryGallery() {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
           className="text-center mb-16 lg:mb-20 space-y-3"
         >
           <span className="text-xs tracking-[0.4em] uppercase text-[#D85A30] font-bold block">
@@ -76,18 +98,17 @@ export default function FactoryGallery() {
         </motion.div>
 
         {/* Bento grid gallery */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 auto-rows-[160px] sm:auto-rows-[200px] md:auto-rows-[240px]">
-          {galleryImages.map((image, index) => (
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-50px' }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 auto-rows-[160px] sm:auto-rows-[200px] md:auto-rows-[240px]"
+        >
+          {galleryImages.map((image) => (
             <motion.div
               key={image.src}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{
-                duration: 0.6,
-                delay: index * 0.1,
-                ease: 'easeOut',
-              }}
+              variants={itemVariants}
               className={`${image.span} relative group overflow-hidden border border-white/10 bg-white/5 rounded-md`}
             >
               <Image
@@ -115,7 +136,7 @@ export default function FactoryGallery() {
               <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-[3px] bg-[#D85A30] transition-all duration-700 ease-out z-20" />
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

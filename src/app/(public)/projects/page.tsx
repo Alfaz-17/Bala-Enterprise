@@ -113,13 +113,12 @@ export default async function FactoryTourPage() {
             <div className="relative aspect-video w-full bg-[#1A1A18]">
               <video 
                 src="/Factory_visit.webm"
-                autoPlay
                 muted
                 loop
                 playsInline
                 controls 
                 className="w-full h-full object-cover" 
-                preload="metadata"
+                preload="none"
                 poster="/Images_Factory/factory_hangar_refined.png"
               >
                 Your browser does not support playing videos.
@@ -142,13 +141,12 @@ export default async function FactoryTourPage() {
             <div className="relative aspect-video w-full bg-[#1A1A18]">
               <video 
                 src="/Costomer_review.webm"
-                autoPlay
                 muted
                 loop
                 playsInline
                 controls 
                 className="w-full h-full object-cover" 
-                preload="metadata"
+                preload="none"
                 poster="/Images_Factory/chain_hoists_refined.png"
               >
                 Your browser does not support playing videos.

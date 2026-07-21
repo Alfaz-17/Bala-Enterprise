@@ -43,6 +43,8 @@ async function getProductDetails(slug: string) {
   };
 }
 
+export const revalidate = 3600; // Hourly regeneration
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const product = await getProductDetails(slug);
@@ -53,12 +55,32 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const capacityInfo = product.capacity ? ` (${product.capacity})` : '';
+  const capacityInfo = product.capacity ? ` - ${product.capacity}` : '';
+  const title = `${product.name}${capacityInfo} | Bala Enterprise`;
+  const description =
+    product.shortDescription ||
+    `Get price quotes, dimensions, drawing layouts and engineering details for the ${product.name} industrial lift system.`;
+  const imageUrls = product.images?.map((img) => img.url) || [];
+
   return {
-    title: `${product.name}${capacityInfo} Specifications | Bala Enterprise`,
-    description:
-      product.shortDescription ||
-      `Get price quotes, dimensions, drawing layouts and engineering details for the ${product.name} industrial lift system.`,
+    title,
+    description,
+    alternates: {
+      canonical: `https://balaenterprise.com/products/${product.slug}`,
+    },
+    openGraph: {
+      title: product.name,
+      description,
+      images: imageUrls.map((url) => ({
+        url,
+        width: 1200,
+        height: 1200,
+        alt: `${product.name}${capacityInfo} - Bala Enterprise`,
+      })),
+      type: 'website',
+      url: `https://balaenterprise.com/products/${product.slug}`,
+      siteName: 'Bala Enterprise',
+    },
   };
 }
 
@@ -70,8 +92,95 @@ export default async function ProductDetailPage({ params }: PageProps) {
     notFound();
   }
 
+  const capacityInfo = product.capacity ? ` - ${product.capacity}` : '';
+  const currentUrl = `https://balaenterprise.com/products/${product.slug}`;
+
+  // Product schema
+  const productSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    description: product.fullDescription || product.shortDescription || '',
+    image: product.images?.map((img) => img.url) || [],
+    brand: { '@type': 'Brand', name: 'Bala Enterprise' },
+    sku: product.modelNumber || product.slug,
+    offers: {
+      '@type': 'Offer',
+      url: currentUrl,
+      priceCurrency: 'INR',
+      price: product.priceMin || 0,
+      availability: 'https://schema.org/InStock',
+      itemCondition: 'https://schema.org/NewCondition',
+      seller: { '@type': 'Organization', name: 'Bala Enterprise' },
+    },
+    manufacturer: { '@type': 'Organization', name: 'Bala Enterprise' },
+  };
+
+  // ImageObject schema (for Google Images search eligibility)
+  const imageSchemas = (product.images || []).map((img) => ({
+    '@context': 'https://schema.org',
+    '@type': 'ImageObject',
+    contentUrl: img.url,
+    license: 'https://balaenterprise.com/terms',
+    acquireLicensePage: 'https://balaenterprise.com/contact',
+    creditText: 'Bala Enterprise',
+    creator: { '@type': 'Organization', name: 'Bala Enterprise' },
+    copyrightNotice: 'Bala Enterprise',
+  }));
+
+  // Breadcrumb schema
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://balaenterprise.com',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Products',
+        item: 'https://balaenterprise.com/products',
+      },
+      ...(product.category
+        ? [
+            {
+              '@type': 'ListItem',
+              position: 3,
+              name: product.category.name,
+              item: `https://balaenterprise.com/products?category=${product.category.slug}`,
+            },
+          ]
+        : []),
+      {
+        '@type': 'ListItem',
+        position: product.category ? 4 : 3,
+        name: product.name,
+        item: currentUrl,
+      },
+    ],
+  };
+
   return (
     <div className="bg-[#FAF9F6] min-h-screen text-[#1A1A18] relative overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      {imageSchemas.map((imgSchema, idx) => (
+        <script
+          key={`image-schema-${idx}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(imgSchema) }}
+        />
+      ))}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       {/* Engineering blueprint dot grid */}
       <div className="absolute inset-0 bg-[radial-gradient(#E5E4DE_1px,transparent_1px)] [background-size:20px_20px] opacity-40 pointer-events-none" />
       {/* Page Header — Side-by-side text + image on ALL screens */}
@@ -132,7 +241,10 @@ export default async function ProductDetailPage({ params }: PageProps) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Images Section */}
           <div className="lg:col-span-6">
-            <ImageGallery images={product.images || []} title={product.name} />
+            <ImageGallery
+              images={product.images || []}
+              title={`${product.name}${product.capacity ? ` - ${product.capacity}` : ''} - Bala Enterprise`}
+            />
           </div>
 
           {/* Details Section */}

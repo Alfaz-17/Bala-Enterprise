@@ -223,12 +223,12 @@ export default function AboutPage() {
             <video
               src="/products_showcase.webm"
               poster="/Images_Factory/factory_hangar_refined.png"
-              autoPlay
               muted
               loop
               playsInline
               controls
               className="w-full h-full object-cover"
+              preload="none"
             >
               Your browser does not support the video tag.
             </video>

@@ -27,15 +27,15 @@ describe('Public Layout Components', () => {
     expect(screen.getByAltText('Bala Enterprise Logo')).toBeInTheDocument();
     expect(screen.getByText('Home')).toBeInTheDocument();
     expect(screen.getByText('Products')).toBeInTheDocument();
-    expect(screen.getByText('Projects')).toBeInTheDocument();
+    expect(screen.getByText('Factory Tour')).toBeInTheDocument();
     expect(screen.getByText('Blog')).toBeInTheDocument();
   });
 
   it('should render Footer correctly', () => {
     render(<Footer />);
     expect(screen.getByAltText('Bala Enterprise Logo')).toBeInTheDocument();
-    expect(screen.getByText('Premium manufacturer of high-quality Manual Hydraulic Stackers, Hand Pallet Trucks, Jib Cranes, Winches, and custom material handling equipment.')).toBeInTheDocument();
+    expect(screen.getByText('GST certified manufacturer of cranes, hoists, winches, stackers, pallet trucks, and custom material handling equipment for factories across Gujarat.')).toBeInTheDocument();
     expect(screen.getByText('Quick Links')).toBeInTheDocument();
-    expect(screen.getByText('Contact us')).toBeInTheDocument();
+    expect(screen.getAllByText('Contact Us').length).toBeGreaterThan(0);
   });
 });
