@@ -44,7 +44,7 @@ export default async function FactoryTourPage() {
       {/* Interlocking Gear Mechanism Silhouette Backdrop */}
       <div className="absolute -right-16 -top-16 w-80 h-80 text-black/[0.012] pointer-events-none select-none z-0">
         <svg
-          className="w-full h-full animate-[spin_120s_linear_infinite]"
+          className="w-full h-full"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -56,7 +56,7 @@ export default async function FactoryTourPage() {
       </div>
       <div className="absolute left-48 -top-8 w-44 h-44 text-black/[0.008] pointer-events-none select-none z-0">
         <svg
-          className="w-full h-full animate-[spin_70s_linear_infinite_reverse]"
+          className="w-full h-full"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -176,7 +176,7 @@ export default async function FactoryTourPage() {
           {/* Giant Rotating Mechanical Cog Silhouette */}
           <div className="absolute -left-20 -bottom-20 w-80 h-80 text-black/[0.012] pointer-events-none select-none z-0">
             <svg
-              className="w-full h-full animate-[spin_100s_linear_infinite]"
+              className="w-full h-full"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"

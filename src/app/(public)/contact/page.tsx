@@ -83,7 +83,7 @@ export default function ContactPage() {
         {/* Giant Rotating Mechanical Cog Silhouette */}
         <div className="absolute -right-20 -bottom-20 w-96 h-96 text-black/[0.015] pointer-events-none select-none z-0">
           <svg
-            className="w-full h-full animate-[spin_100s_linear_infinite]"
+            className="w-full h-full"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"

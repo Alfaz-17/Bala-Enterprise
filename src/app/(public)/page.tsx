@@ -164,7 +164,7 @@ export default async function HomePage() {
         {/* Giant Rotating Mechanical Cog Silhouette */}
         <div className="absolute -right-20 -bottom-20 w-96 h-96 text-black/[0.015] pointer-events-none select-none z-0">
           <svg
-            className="w-full h-full animate-[spin_100s_linear_infinite]"
+            className="w-full h-full"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -275,7 +275,7 @@ export default async function HomePage() {
       {/* Featured Products */}
       <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-[#E6E5DF] to-[#D1CFC6] border-t border-b border-border/40 relative overflow-hidden">
         {/* Soft reflection light gradient */}
-        <div className="absolute inset-0 bg-white/20 pointer-events-none bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.15)_50%,transparent_75%)] bg-[length:250px_250px] animate-[pulse_6s_infinite]" />
+        <div className="absolute inset-0 bg-white/20 pointer-events-none bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.15)_50%,transparent_75%)] bg-[length:250px_250px]" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4 mb-8 sm:mb-12">
             <div className="space-y-3">
