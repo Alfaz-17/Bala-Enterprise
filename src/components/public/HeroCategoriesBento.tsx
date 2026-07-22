@@ -11,7 +11,6 @@ const category3DImages: Record<string, string> = {
   'manual-stacker': '/Categories_3d/Stacker.png',
   'hand-pallet-truck': '/Categories_3d/35e73dd5-60db-4891-8715-b6c2ed715917.png',
   'manual-geared-trolley': '/Categories_3d/Geared_Trolley.png',
-  'hydraulic-scissor-lift-table': '/Categories_3d/Scissor Lift Table.png',
   'hydraulic-floor-crane': '/Categories_3d/Floor crane.png',
   'electric-winch': '/Categories_3d/837efcf2-bdd8-4892-8868-267e6b22ca49.png',
   'hand-winch': '/Categories_3d/Hand_winch.png',
@@ -35,7 +34,6 @@ export default function HeroCategoriesBento({ categories }: HeroCategoriesBentoP
     'manual-stacker',
     'hand-pallet-truck',
     'manual-geared-trolley',
-    'hydraulic-scissor-lift-table',
     'hydraulic-floor-crane',
     'electric-winch',
     'hand-winch'
