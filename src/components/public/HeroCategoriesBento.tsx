@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { ArrowRight, Layers } from 'lucide-react';
 
-// Mapping categories to their custom 3D images
 const category3DImages: Record<string, string> = {
   'wire-rope-hoist': '/Categories_3d/0a4d7a0d-e724-4c3d-b5e3-d3020ba287bf.png',
   'chain-block': '/Categories_3d/Chain_Block.png',
@@ -29,7 +29,6 @@ interface HeroCategoriesBentoProps {
 }
 
 export default function HeroCategoriesBento({ categories }: HeroCategoriesBentoProps) {
-  // Sort categories by predefined slugs to match order
   const orderOfSlugs = [
     'wire-rope-hoist',
     'chain-block',
@@ -50,43 +49,58 @@ export default function HeroCategoriesBento({ categories }: HeroCategoriesBentoP
     return idxA - idxB;
   });
 
-  // Duplicate list to make infinite marquee loop seamlessly
   const marqueeItems = [...sortedCategories, ...sortedCategories, ...sortedCategories];
 
   return (
-    <section className="py-12 lg:py-16 bg-gradient-to-b from-[#EAE9E2] to-[#DCDAD0] relative overflow-hidden border-b border-border/10">
-      {/* Engineering blueprint dot grid */}
-      <div className="absolute inset-0 bg-[radial-gradient(#E5E4DE_1px,transparent_1px)] [background-size:20px_20px] opacity-40 pointer-events-none" />
+    <section className="py-16 lg:py-24 bg-[#131312] text-white relative overflow-hidden border-b border-white/10">
+      {/* Blueprint Dot Grid overlay */}
+      <div 
+        className="absolute inset-0 opacity-[0.07] pointer-events-none" 
+        style={{ 
+          backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', 
+          backgroundSize: '2rem 2rem' 
+        }} 
+      />
 
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10">
-        
+      <div className="section-container relative z-10 mb-12">
         {/* Section Header */}
-        <div className="mb-8 text-center lg:text-left space-y-1">
-          <span className="text-[#D85A30] text-[9px] sm:text-[10px] uppercase tracking-[0.25em] font-black block">
-            Product Portfolio
-          </span>
-          <h2 className="font-heading text-lg sm:text-2xl font-black text-[#1A1A18] tracking-tight">
-            Explore Lifting Categories
-          </h2>
-          <div className="h-0.5 w-10 bg-[#D85A30] mt-1.5 mx-auto lg:mx-0" />
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-white/10 pb-8">
+          <div className="max-w-2xl">
+            <p className="label-tech mb-3">
+              Product Categories
+            </p>
+            <h2 className="heading-section text-white font-black uppercase tracking-tight">
+              Our Machinery <span className="text-[#D85A30] italic font-medium">Line.</span>
+            </h2>
+          </div>
+          
+          <div className="flex items-center gap-4">
+            <Link
+              href="/products"
+              className="group flex items-center gap-2 text-xs font-sans font-bold uppercase tracking-widest text-white/70 hover:text-[#D85A30] transition-colors"
+            >
+              View Full Product List
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
         </div>
       </div>
 
-      {/* Infinite Horizontal Marquee */}
+      {/* Infinite Horizontal Marquee Carousel */}
       <div className="relative w-full overflow-hidden py-4 select-none">
         
-        {/* Left & Right Edge Fades */}
-        <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-r from-[#EAE9E2] via-[#EAE9E2]/50 to-transparent z-20 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-l from-[#DCDAD0] via-[#DCDAD0]/50 to-transparent z-20 pointer-events-none" />
+        {/* Left & Right Gradient Mask Overlays */}
+        <div className="absolute left-0 top-0 bottom-0 w-20 sm:w-40 bg-gradient-to-r from-[#131312] via-[#131312]/60 to-transparent z-20 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-20 sm:w-40 bg-gradient-to-l from-[#131312] via-[#131312]/60 to-transparent z-20 pointer-events-none" />
 
         <motion.div
-          className="flex gap-10 sm:gap-14 md:gap-18 w-max pl-4"
+          className="flex gap-6 sm:gap-8 w-max pl-4"
           animate={{ x: ["0%", "-33.33%"] }}
           transition={{
             x: {
               repeat: Infinity,
               repeatType: "loop",
-              duration: 25,
+              duration: 28,
               ease: "linear",
             },
           }}
@@ -98,23 +112,42 @@ export default function HeroCategoriesBento({ categories }: HeroCategoriesBentoP
               <Link
                 key={`${cat._id}-${index}`}
                 href={`/products?category=${cat.slug}`}
-                className="group flex flex-col items-center text-center justify-center shrink-0 w-28 sm:w-32 md:w-36"
+                className="group relative flex flex-col justify-between p-6 w-56 sm:w-64 md:w-72 h-72 sm:h-80 bg-white/5 border border-white/10 hover:border-[#D85A30]/50 transition-all duration-500 rounded-none shrink-0 overflow-hidden"
               >
-                {/* Card-less 3D Icon Container */}
-                <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 mb-2 flex items-center justify-center transition-all duration-500 ease-out group-hover:scale-110 group-hover:-translate-y-1">
+                {/* Micro Ambient Glow */}
+                <div className="absolute -top-16 -right-16 h-32 w-32 rounded-full bg-[#D85A30]/10 group-hover:bg-[#D85A30]/30 blur-[40px] transition-all duration-500 pointer-events-none" />
+                
+                {/* Category Header Badge */}
+                <div className="flex items-center justify-between z-10">
+                  <div className="w-8 h-8 rounded-none bg-[#D85A30]/20 text-[#D85A30] flex items-center justify-center border border-[#D85A30]/30">
+                    <Layers className="w-4 h-4" />
+                  </div>
+                  <span className="font-sans text-[8px] font-bold uppercase tracking-[0.2em] text-white/40 group-hover:text-white/80 transition-colors">
+                    GST Invoice Available
+                  </span>
+                </div>
+
+                {/* 3D Image Preview Container */}
+                <div className="relative w-full h-36 sm:h-44 my-2 flex items-center justify-center z-10 transition-transform duration-500 group-hover:scale-105 group-hover:-translate-y-1">
                   <Image
                     src={image}
                     alt={cat.name}
                     fill
-                    sizes="(max-width: 768px) 96px, 128px"
-                    className="object-contain filter drop-shadow-[0_6px_16px_rgba(0,0,0,0.06)]"
-                    style={{ mixBlendMode: 'multiply' }}
+                    sizes="(max-width: 768px) 200px, 280px"
+                    className="object-contain filter drop-shadow-[0_10px_25px_rgba(0,0,0,0.5)]"
                   />
                 </div>
-                {/* Text Label */}
-                <span className="font-heading text-[10px] sm:text-xs font-black uppercase tracking-wider text-[#1A1A18]/85 group-hover:text-[#D85A30] transition-colors duration-300 leading-tight">
-                  {cat.name}
-                </span>
+
+                {/* Text Label Footer */}
+                <div className="z-10 pt-2 border-t border-white/10 group-hover:border-[#D85A30]/30 transition-colors">
+                  <span className="font-heading text-xs sm:text-sm font-black uppercase tracking-wider text-white group-hover:text-[#D85A30] transition-colors leading-tight block truncate">
+                    {cat.name}
+                  </span>
+                  <div className="flex items-center justify-between mt-1">
+                    <span className="font-sans text-[9px] uppercase tracking-widest text-white/50">Explore Products</span>
+                    <ArrowRight className="w-3 h-3 text-[#D85A30] transform group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
               </Link>
             );
           })}
@@ -123,5 +156,3 @@ export default function HeroCategoriesBento({ categories }: HeroCategoriesBentoP
     </section>
   );
 }
-
-

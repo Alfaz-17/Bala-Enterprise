@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { SlidersHorizontal } from 'lucide-react';
+import { SlidersHorizontal, ChevronRight } from 'lucide-react';
 
 import ProductCard from './ProductCard';
 
@@ -34,13 +34,8 @@ export default function ProductListing({
   const searchParams = useSearchParams();
   const activeCategory = searchParams.get('category') || '';
 
-  // Filter products locally for instant mobile response times
   const filteredProducts = activeCategory
-    ? initialProducts.filter(
-        // we can either filter client-side or use server rendering,
-        // client-side filter is faster for small-medium lists
-        () => true // actually since we re-fetch in server we can let parent server reload, but local check is fine
-      )
+    ? initialProducts.filter(() => true)
     : initialProducts;
 
   function handleCategorySelect(slug: string) {
@@ -54,83 +49,87 @@ export default function ProductListing({
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
-      {/* Sidebar Filters */}
-      <div className="space-y-4 lg:space-y-6">
-        <div className="flex items-center gap-2 border-b border-[#888780]/20 pb-3 lg:pb-4">
+    <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-10">
+      
+      {/* Sidebar Filters Container */}
+      <div className="space-y-6">
+        <div className="flex items-center gap-3 border-b border-black/10 pb-4">
           <SlidersHorizontal className="h-4 w-4 text-[#D85A30]" />
-          <h2 className="text-xs font-semibold uppercase tracking-wider text-[#1A1A18]">
-            Filter Categories
+          <h2 className="label-tech !text-xs !text-[#131312]">
+            Select Category
           </h2>
         </div>
 
-        {/* Mobile Dropdown Selector (visible on mobile/tablet screens) */}
+        {/* Mobile Dropdown Selector */}
         <div className="block lg:hidden">
           <div className="relative">
             <select
               value={activeCategory}
               onChange={(e) => handleCategorySelect(e.target.value)}
-              className="w-full min-h-11 bg-[#F5F4F0] border border-[#888780]/25 rounded-md px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#1A1A18] appearance-none focus:outline-none focus:ring-1 focus:ring-[#D85A30] focus:border-[#D85A30]"
+              className="w-full min-h-12 bg-white border border-black/10 px-4 py-2 text-xs font-sans font-bold uppercase tracking-wider text-[#131312] appearance-none focus:outline-none focus:border-[#D85A30]"
             >
-              <option value="">All Equipment</option>
+              <option value="">All Machinery</option>
               {categories.map((cat) => (
                 <option key={cat._id} value={cat.slug}>
                   {cat.name}
                 </option>
               ))}
             </select>
-            {/* Custom arrow icon */}
-            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-[#888780]">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
-              </svg>
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-[#D85A30]">
+              <ChevronRight className="w-4 h-4 rotate-90" />
             </div>
           </div>
         </div>
 
-        {/* Desktop Sidebar Filter List (hidden on mobile/tablet) */}
-        <div className="hidden lg:flex flex-col gap-1">
+        {/* Desktop Sidebar Filter List */}
+        <div className="hidden lg:flex flex-col gap-1.5 bg-white p-3 border border-black/10 shadow-sm">
           <button
             onClick={() => handleCategorySelect('')}
-            className={`min-h-11 shrink-0 rounded-sm px-4 py-2 text-left text-xs font-medium transition-colors ${
+            className={`w-full px-4 py-3 text-left font-sans text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-between ${
               activeCategory === ''
-                ? 'bg-[#D85A30] text-white'
-                : 'text-[#888780] hover:bg-zinc-200 hover:text-[#1A1A18] lg:bg-transparent'
+                ? 'bg-[#131312] text-white border-l-4 border-[#D85A30]'
+                : 'text-[#131312]/70 hover:bg-[#FAF9F6] hover:text-[#D85A30]'
             }`}
           >
-            All Equipment
+            <span>All Machinery</span>
+            <ChevronRight className={`w-3.5 h-3.5 ${activeCategory === '' ? 'text-[#D85A30]' : 'opacity-0'}`} />
           </button>
 
-          {categories.map((cat) => (
-            <button
-              key={cat._id}
-              onClick={() => handleCategorySelect(cat.slug)}
-              className={`min-h-11 shrink-0 rounded-sm px-4 py-2 text-left text-xs font-medium transition-colors whitespace-nowrap lg:whitespace-normal ${
-                activeCategory === cat.slug
-                  ? 'bg-[#D85A30] text-white'
-                  : 'text-[#888780] hover:bg-zinc-200 hover:text-[#1A1A18] lg:bg-transparent'
-              }`}
-            >
-              {cat.name}
-            </button>
-          ))}
+          {categories.map((cat) => {
+            const isActive = activeCategory === cat.slug;
+            return (
+              <button
+                key={cat._id}
+                onClick={() => handleCategorySelect(cat.slug)}
+                className={`w-full px-4 py-3 text-left font-sans text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-between ${
+                  isActive
+                    ? 'bg-[#131312] text-white border-l-4 border-[#D85A30]'
+                    : 'text-[#131312]/70 hover:bg-[#FAF9F6] hover:text-[#D85A30]'
+                }`}
+              >
+                <span>{cat.name}</span>
+                <ChevronRight className={`w-3.5 h-3.5 ${isActive ? 'text-[#D85A30]' : 'opacity-0'}`} />
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      {/* Product Grid */}
+      {/* Product Cards Grid */}
       <div className="lg:col-span-3">
         {filteredProducts.length === 0 ? (
-          <div className="text-center py-12 sm:py-20 bg-[#F5F4F0] border border-[#888780]/20 rounded-md">
-            <p className="text-[#888780] text-sm">No items found in this section.</p>
+          <div className="text-center py-20 bg-white border border-dashed border-black/10">
+            <p className="label-tech !text-muted-foreground">No equipment items found in this section.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6 lg:gap-8 pb-20 sm:pb-24">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
             {filteredProducts.map((prod) => (
               <ProductCard key={prod._id} product={prod} />
             ))}
           </div>
         )}
       </div>
+
     </div>
   );
 }

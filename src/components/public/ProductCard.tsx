@@ -11,29 +11,48 @@ interface ProductCardProps {
     shortDescription?: string;
     thumbnail?: string;
     priceDisplay?: string;
+    category?: { name?: string } | string;
   };
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const categoryName = typeof product.category === 'object' && product.category?.name 
+    ? product.category.name 
+    : 'Heavy Machinery';
+
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="transition-all duration-300 flex flex-col group relative h-[280px] sm:h-[400px] cursor-pointer"
+      className="group relative flex flex-col h-[320px] sm:h-[420px] w-full cursor-pointer transition-all duration-300"
     >
-      {/* Upper Tag (Best Seller / Capacity) */}
-      <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10 flex flex-col gap-1">
+      {/* Upper Badges */}
+      <div className="absolute top-3 left-3 z-20 flex flex-col gap-1 pointer-events-none">
         {product.capacity && (
-          <span className="bg-[#1A1A18] text-white text-[7px] sm:text-[9px] uppercase tracking-wider font-bold px-1.5 sm:px-2 py-0.5 rounded-sm">
+          <span className="bg-[#131312] text-white text-[8px] sm:text-[9px] font-sans uppercase tracking-widest font-bold px-2 py-0.5 border border-white/10">
             {product.capacity}
           </span>
         )}
-        <span className="bg-[#D85A30] text-white text-[7px] sm:text-[9px] uppercase tracking-wider font-bold px-1.5 sm:px-2 py-0.5 rounded-sm">
-          Best Seller
+        <span className="bg-[#D85A30] text-white text-[8px] sm:text-[9px] font-sans uppercase tracking-widest font-bold px-2 py-0.5">
+          Heavy Duty
         </span>
       </div>
 
-      {/* Product Image Area (70% height) */}
-      <div className="relative h-[70%] w-full bg-[#F5F4F0] rounded-md overflow-hidden flex items-center justify-center p-2 sm:p-4 md:p-6">
+      {/* Product Image Container (Delta-Impex Card aesthetic) */}
+      <div className="relative h-[68%] w-full bg-[#FCF6ED] border border-black/5 group-hover:border-[#D85A30]/40 overflow-hidden flex items-center justify-center p-4 sm:p-6 transition-all duration-500">
+        
+        {/* Technical Radial Dot Grid Pattern */}
+        <div 
+          className="absolute inset-0 opacity-[0.08] group-hover:opacity-[0.12] transition-opacity duration-500 pointer-events-none" 
+          style={{ 
+            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(0,0,0,0.5) 1px, transparent 0)', 
+            backgroundSize: '1.25rem 1.25rem' 
+          }} 
+        />
+        
+        {/* Ambient Glow Orb */}
+        <div className="absolute -top-20 -right-20 h-40 w-40 rounded-full bg-[#D85A30]/10 group-hover:bg-[#D85A30]/25 blur-[50px] transition-all duration-500 pointer-events-none" />
+
+        {/* Product Image */}
         {(() => {
           const imgUrl = product.thumbnail || (() => {
             const name = product.name.toLowerCase();
@@ -49,12 +68,12 @@ export default function ProductCard({ product }: ProductCardProps) {
 
           if (imgUrl) {
             return (
-              <div className="relative w-full h-full group-hover:scale-105 transition-transform duration-500">
+              <div className="relative w-full h-full transform transition-all duration-700 group-hover:scale-105 group-hover:-translate-y-1 will-change-transform">
                 <Image
                   src={imgUrl}
                   alt={product.name}
                   fill
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  sizes="(max-width: 640px) 80vw, (max-width: 1024px) 40vw, 25vw"
                   className="object-contain"
                   style={{ mixBlendMode: 'multiply' }}
                 />
@@ -62,27 +81,35 @@ export default function ProductCard({ product }: ProductCardProps) {
             );
           }
 
-          return <div className="text-zinc-400 text-xs font-medium">No Image Available</div>;
+          return <div className="text-zinc-400 text-xs font-medium uppercase tracking-widest font-sans">Precision Component</div>;
         })()}
+
+        {/* Glass Bottom Overlay */}
+        <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
       </div>
 
-      {/* Product Info Area (30% height) */}
-      <div className="h-[30%] pt-2 sm:pt-3 pb-1 flex flex-col justify-between">
-        <div className="space-y-0.5 sm:space-y-1">
-          {/* Brand/Subtitle */}
-          <span className="text-[8px] sm:text-[10px] uppercase tracking-wider font-bold text-[#888780]">
-            Bala Enterprise
-          </span>
-          {/* Name */}
-          <h3 className="font-heading text-xs sm:text-sm font-bold text-[#1A1A18] group-hover:text-[#D85A30] transition-colors leading-tight line-clamp-2">
+      {/* Typography & Details Container */}
+      <div className="h-[32%] pt-3 sm:pt-4 pb-1 px-1 flex flex-col justify-between">
+        <div>
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="h-px w-4 bg-[#D85A30]/50" />
+            <p className="font-sans text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.2em] text-[#D85A30]">
+              {categoryName}
+            </p>
+          </div>
+          
+          <h3 className="font-heading text-xs sm:text-sm md:text-base font-bold text-[#131312] group-hover:text-[#D85A30] transition-colors leading-snug line-clamp-2">
             {product.name}
           </h3>
         </div>
 
-        <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-[0.12em] sm:tracking-[0.15em] text-[#D85A30] inline-flex items-center gap-1 border-b border-[#D85A30] pb-0.5 hover:border-transparent transition-colors duration-300 w-fit">
-          View Specs & Enquire
-          <ArrowRight className="h-2.5 w-2.5 sm:h-3 sm:w-3 group-hover:translate-x-1 transition-transform" />
-        </span>
+        {/* Technical Specs Footer Link */}
+        <div className="flex items-center justify-between opacity-70 group-hover:opacity-100 transition-all duration-300 pt-1">
+          <span className="text-[8px] sm:text-[10px] font-sans font-bold uppercase tracking-[0.18em] text-[#131312] group-hover:text-[#D85A30]">
+            View Details & Specs
+          </span>
+          <ArrowRight className="h-3 w-3 text-[#D85A30] transform group-hover:translate-x-1 transition-transform" />
+        </div>
       </div>
     </Link>
   );

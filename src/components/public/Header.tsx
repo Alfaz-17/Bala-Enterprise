@@ -8,11 +8,11 @@ import Image from 'next/image';
 
 const links = [
   { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
+  { label: 'About Us', href: '/about' },
   { label: 'Products', href: '/products' },
-  { label: 'Factory Tour', href: '/projects' },
+  { label: 'Factory Photos', href: '/projects' },
   { label: 'Blog', href: '/blog' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'Contact Us', href: '/contact' },
 ];
 
 export default function Header() {
@@ -66,9 +66,9 @@ export default function Header() {
     <header className={`${
       isHome
         ? isScrolled
-          ? 'fixed top-0 left-0 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.05)] border-b border-black/5 animate-slide-down'
+          ? 'fixed top-0 left-0 bg-[#F7EBDD] shadow-[0_4px_20px_rgba(0,0,0,0.05)] border-b border-black/5 animate-slide-down'
           : 'absolute top-0 left-0 bg-transparent border-b border-transparent'
-        : 'sticky top-0 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.05)] border-b border-black/5'
+        : 'sticky top-0 bg-[#F7EBDD] shadow-[0_4px_20px_rgba(0,0,0,0.05)] border-b border-black/5'
     } w-full transition-all duration-300 z-50`}>
       {/* Premium Top Info Bar (Appears only on scroll / on other pages) */}
       {isScrolled && (
@@ -224,7 +224,7 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden border-t border-border bg-white px-3 py-4 space-y-2 shadow-inner max-h-[calc(100vh-96px)] overflow-y-auto">
+          <div className="md:hidden border-t border-border bg-[#F7EBDD] px-3 py-4 space-y-2 shadow-inner max-h-[calc(100vh-96px)] overflow-y-auto">
             {links.map((link) => {
               if (link.label === 'Products') {
                 return (

@@ -95,7 +95,7 @@ export default function HeroMobileCarousel() {
                 style={{ mixBlendMode: 'multiply' }}
               />
             </div>
-            <div className="mx-auto mt-0.5 w-fit rounded bg-[#1A1A18] px-4 py-1.5 text-center border border-white/5 shadow-sm">
+            <div className="mx-auto mt-0.5 w-fit rounded-none bg-[#1A1A18] px-4 py-1.5 text-center border border-white/5 shadow-sm">
               <p className="text-[9px] font-black uppercase tracking-[0.18em] text-white">
                 {item.name}
               </p>

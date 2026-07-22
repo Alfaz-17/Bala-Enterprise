@@ -56,10 +56,10 @@ export default function EnquiryForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4 font-sans">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label htmlFor="form-name" className="block text-xs font-semibold uppercase tracking-wider text-[#1A1A18] mb-1">
+          <label htmlFor="form-name" className="label-tech !text-white/80 block mb-1.5">
             Your Name *
           </label>
           <input
@@ -68,26 +68,26 @@ export default function EnquiryForm({
             required
             suppressHydrationWarning
             placeholder="e.g. Rakesh Patel"
-            className="w-full min-h-12 px-3 py-2 border border-border bg-white text-[#1A1A18] text-base sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#D85A30] focus:border-[#D85A30] rounded-sm"
+            className="w-full min-h-12 px-4 py-2.5 bg-white/5 border border-white/20 text-white placeholder:text-white/40 text-xs font-sans focus:outline-none focus:border-[#D85A30] transition-colors"
           />
         </div>
 
         <div>
-          <label htmlFor="form-company" className="block text-xs font-semibold uppercase tracking-wider text-[#1A1A18] mb-1">
+          <label htmlFor="form-company" className="label-tech !text-white/80 block mb-1.5">
             Company Name
           </label>
           <input
             id="form-company"
             name="companyName"
             suppressHydrationWarning
-            placeholder="e.g. ABC Industries"
-            className="w-full min-h-12 px-3 py-2 border border-border bg-white text-[#1A1A18] text-base sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#D85A30] focus:border-[#D85A30] rounded-sm"
+            placeholder="e.g. ABC Steel Industries"
+            className="w-full min-h-12 px-4 py-2.5 bg-white/5 border border-white/20 text-white placeholder:text-white/40 text-xs font-sans focus:outline-none focus:border-[#D85A30] transition-colors"
           />
         </div>
 
         <div>
-          <label htmlFor="form-phone" className="block text-xs font-semibold uppercase tracking-wider text-[#1A1A18] mb-1">
-            Phone / Mobile *
+          <label htmlFor="form-phone" className="label-tech !text-white/80 block mb-1.5">
+            Mobile / Phone *
           </label>
           <input
             id="form-phone"
@@ -96,12 +96,12 @@ export default function EnquiryForm({
             suppressHydrationWarning
             type="tel"
             placeholder="e.g. 98765 43210"
-            className="w-full min-h-12 px-3 py-2 border border-border bg-white text-[#1A1A18] text-base sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#D85A30] focus:border-[#D85A30] rounded-sm"
+            className="w-full min-h-12 px-4 py-2.5 bg-white/5 border border-white/20 text-white placeholder:text-white/40 text-xs font-sans focus:outline-none focus:border-[#D85A30] transition-colors"
           />
         </div>
 
         <div>
-          <label htmlFor="form-email" className="block text-xs font-semibold uppercase tracking-wider text-[#1A1A18] mb-1">
+          <label htmlFor="form-email" className="label-tech !text-white/80 block mb-1.5">
             Email Address
           </label>
           <input
@@ -109,15 +109,15 @@ export default function EnquiryForm({
             name="email"
             type="email"
             suppressHydrationWarning
-            placeholder="e.g. info@abcindustries.com"
-            className="w-full min-h-12 px-3 py-2 border border-border bg-white text-[#1A1A18] text-base sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#D85A30] focus:border-[#D85A30] rounded-sm"
+            placeholder="e.g. info@abcsteel.com"
+            className="w-full min-h-12 px-4 py-2.5 bg-white/5 border border-white/20 text-white placeholder:text-white/40 text-xs font-sans focus:outline-none focus:border-[#D85A30] transition-colors"
           />
         </div>
       </div>
 
       <div>
-        <label htmlFor="form-message" className="block text-xs font-semibold uppercase tracking-wider text-[#1A1A18] mb-1">
-          Lifting requirements *
+        <label htmlFor="form-message" className="label-tech !text-white/80 block mb-1.5">
+          Your Requirement / Message *
         </label>
         <textarea
           id="form-message"
@@ -127,7 +127,7 @@ export default function EnquiryForm({
           rows={4}
           defaultValue={defaultMessage}
           placeholder="e.g. We need a 10-ton EOT crane with 18 meters span for our workshop in Gujarat."
-          className="w-full px-3 py-2 border border-border bg-white text-[#1A1A18] text-base sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#D85A30] focus:border-[#D85A30] rounded-sm resize-y"
+          className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder:text-white/40 text-xs font-sans focus:outline-none focus:border-[#D85A30] transition-colors resize-y"
         />
       </div>
 
@@ -136,9 +136,9 @@ export default function EnquiryForm({
           type="submit"
           disabled={loading}
           suppressHydrationWarning
-          className="w-full sm:w-auto min-h-12 px-8 py-3 bg-[#D85A30] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#c24a24] transition-colors disabled:opacity-50 rounded-sm shadow-sm"
+          className="w-full sm:w-auto min-h-12 px-8 py-3 bg-[#D85A30] text-white text-xs font-bold uppercase tracking-widest hover:bg-[#c24a24] transition-colors disabled:opacity-50 shadow-md"
         >
-          {loading ? 'Submitting...' : 'Send Enquiry'}
+          {loading ? 'Submitting...' : 'Submit Price Enquiry'}
         </button>
       </div>
     </form>
