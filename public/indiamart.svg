@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 40" width="160" height="40">
+  <g transform="translate(2, 4)">
+    <!-- Official IndiaMART Hexagon Symbol -->
+    <path d="M16 2L2 10v14l14 8 14-8V10L16 2z" fill="#00A699"/>
+    <path d="M16 5.5l9 5.2v10.4L16 26.3l-9-5.2V10.7L16 5.5z" fill="#005B5C"/>
+    <circle cx="16" cy="16" r="3.2" fill="#FFC107"/>
+    <!-- Official IndiaMART Brand Logotype -->
+    <text x="38" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif" font-weight="900" font-size="21" fill="#2E3192" letter-spacing="-0.5px">india<tspan fill="#00A699">mart</tspan></text>
+  </g>
+</svg>

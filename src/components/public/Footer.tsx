@@ -25,7 +25,7 @@ export default function Footer() {
           {/* Company Brand Column */}
           <div className="md:col-span-5 space-y-6">
             <Link href="/" className="flex items-center gap-3.5 group">
-              <div className="relative h-14 w-14 brightness-0 invert transition-transform group-hover:scale-105 duration-300">
+              <div className="relative h-14 w-14 transition-transform group-hover:scale-105 duration-300">
                 <Image
                   src="/logo.png"
                   alt="Bala Enterprise Logo"
@@ -54,6 +54,41 @@ export default function Footer() {
               <span className="font-mono text-[10px] text-white/60 bg-white/5 border border-white/10 px-3 py-1">
                 GSTIN: 24AIVPM3595R2Z1
               </span>
+            </div>
+
+            {/* Verified B2B Partner Badges */}
+            <div className="flex items-center gap-2.5 pt-2">
+              <a
+                href="https://www.indiamart.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-10 px-3 bg-white hover:bg-slate-50 transition-all duration-300 rounded-md shadow-sm border border-slate-300 hover:scale-105 flex items-center justify-center overflow-hidden"
+                title="Bala Enterprise on IndiaMART"
+              >
+                <Image
+                  src="/indiamart.png"
+                  alt="IndiaMART Logo"
+                  width={110}
+                  height={32}
+                  className="h-8 w-auto object-contain scale-110"
+                />
+              </a>
+
+              <a
+                href="https://www.tradeindia.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-10 px-3 bg-white hover:bg-slate-50 transition-all duration-300 rounded-md shadow-sm border border-slate-300 hover:scale-105 flex items-center justify-center overflow-hidden"
+                title="Bala Enterprise on TradeIndia"
+              >
+                <Image
+                  src="/tradeindia.png"
+                  alt="TradeIndia Logo"
+                  width={110}
+                  height={32}
+                  className="h-8 w-auto object-contain scale-105"
+                />
+              </a>
             </div>
           </div>
 
