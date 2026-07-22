@@ -43,7 +43,7 @@ async function getProductDetails(slug: string) {
   };
 }
 
-export const revalidate = 3600; // Hourly regeneration
+export const revalidate = 3600;
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -92,7 +92,6 @@ export default async function ProductDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  const capacityInfo = product.capacity ? ` - ${product.capacity}` : '';
   const currentUrl = `https://balaenterprise.com/products/${product.slug}`;
 
   // Product schema
@@ -115,18 +114,6 @@ export default async function ProductDetailPage({ params }: PageProps) {
     },
     manufacturer: { '@type': 'Organization', name: 'Bala Enterprise' },
   };
-
-  // ImageObject schema (for Google Images search eligibility)
-  const imageSchemas = (product.images || []).map((img) => ({
-    '@context': 'https://schema.org',
-    '@type': 'ImageObject',
-    contentUrl: img.url,
-    license: 'https://balaenterprise.com/terms',
-    acquireLicensePage: 'https://balaenterprise.com/contact',
-    creditText: 'Bala Enterprise',
-    creator: { '@type': 'Organization', name: 'Bala Enterprise' },
-    copyrightNotice: 'Bala Enterprise',
-  }));
 
   // Breadcrumb schema
   const breadcrumbSchema = {
@@ -165,156 +152,155 @@ export default async function ProductDetailPage({ params }: PageProps) {
   };
 
   return (
-    <div className="bg-[#FAF9F6] min-h-screen text-[#1A1A18] relative overflow-hidden">
+    <div className="bg-background min-h-screen text-foreground relative overflow-hidden">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
       />
-      {imageSchemas.map((imgSchema, idx) => (
-        <script
-          key={`image-schema-${idx}`}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(imgSchema) }}
-        />
-      ))}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      {/* Engineering blueprint dot grid */}
-      <div className="absolute inset-0 bg-[radial-gradient(#E5E4DE_1px,transparent_1px)] [background-size:20px_20px] opacity-40 pointer-events-none" />
-      {/* Page Header — Side-by-side text + image on ALL screens */}
-      <div className="relative bg-[#1A1A18] text-white overflow-hidden py-8 sm:py-12 md:py-16 lg:py-20 border-b border-[#2A2A28]">
-        <div className="absolute top-0 right-0 h-full w-[42%] sm:w-[45%] lg:w-[50%] bg-[#1A1A18] origin-top-right transform skew-x-[-12deg] sm:skew-x-[-15deg] translate-x-[8%] sm:translate-x-[10%] z-0 overflow-hidden border-l border-white/10">
-          <div className="absolute inset-0 transform skew-x-[12deg] sm:skew-x-[15deg] -translate-x-[8%] sm:-translate-x-[10%] w-[130%] h-full">
-            <Image
-              src="/Image_from_internet/pexels-cmrcn-29224588.jpg"
-              alt={product.name}
-              fill
-              priority
-              className="object-cover object-center opacity-60 sm:opacity-70 hover:scale-105 transition-transform duration-700"
-            />
-            <div className="absolute inset-0 bg-[#D85A30]/30 mix-blend-multiply" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A18] via-[#1A1A18]/40 to-transparent" />
-          </div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="max-w-[55%] sm:max-w-[50%] lg:max-w-[60%] space-y-2 sm:space-y-3">
-            <span className="text-[#D85A30] text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-[0.2em] font-bold block">
-              {product.category?.name || 'Equipment Specifications'}
+
+      {/* 01. EDITORIAL HEADER BANNER */}
+      <section className="relative bg-[#131312] text-white overflow-hidden py-16 sm:py-24 border-b border-white/10">
+        <div 
+          className="absolute inset-0 opacity-[0.08] pointer-events-none z-10" 
+          style={{ 
+            backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', 
+            backgroundSize: '2.5rem 2.5rem' 
+          }} 
+        />
+
+        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-96 bg-[#D85A30]/10 blur-[120px] pointer-events-none rounded-full" />
+
+        <div className="section-container relative z-20">
+          <div className="max-w-3xl space-y-3">
+            <span className="label-tech block text-[#D85A30]">
+              {product.category?.name || 'Heavy Machinery'} Specifications
             </span>
-            <h1 className="font-heading text-xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-[1.1] text-white">
+            <h1 className="heading-display uppercase text-white font-black">
               {product.name}
             </h1>
             {product.modelNumber && (
-              <p className="text-[11px] sm:text-sm text-white/80 max-w-xl leading-relaxed">Model Number: {product.modelNumber}</p>
+              <p className="label-tech !text-white/60">Model Reference: {product.modelNumber}</p>
             )}
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative z-10">
-        {/* Breadcrumb Bar */}
-        <nav className="flex items-center gap-2 text-[13px] text-[#888780] mb-8 font-medium">
-          <Link href="/" className="hover:text-primary transition-colors">
-            Home
-          </Link>
-          <span>/</span>
-          <Link href="/products" className="hover:text-primary transition-colors">
-            Products
-          </Link>
-          {product.category && (
-            <>
-              <span>/</span>
-              <Link href={`/products?category=${product.category.slug}`} className="hover:text-primary transition-colors">
-                {product.category.name}
-              </Link>
-            </>
-          )}
-          <span>/</span>
-          <span className="text-[#1A1A18] font-semibold truncate max-w-[200px] md:max-w-none">
-            {product.name}
-          </span>
-        </nav>
+      {/* 02. DETAILS SECTION */}
+      <section className="py-12 sm:py-16 bg-[#FAF9F6] relative z-10 border-b border-black/10">
+        <div 
+          className="absolute inset-0 opacity-[0.06] pointer-events-none" 
+          style={{ 
+            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(0,0,0,0.8) 1px, transparent 0)', 
+            backgroundSize: '2rem 2rem' 
+          }} 
+        />
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Images Section */}
-          <div className="lg:col-span-6">
-            <ImageGallery
-              images={product.images || []}
-              title={`${product.name}${product.capacity ? ` - ${product.capacity}` : ''} - Bala Enterprise`}
-            />
-          </div>
-
-          {/* Details Section */}
-          <div className="lg:col-span-6 space-y-6">
-            <div>
-              <span className="text-[10px] uppercase tracking-wider text-[#D85A30] font-bold">
-                Equipment Summary
-              </span>
-              <h2 className="font-heading text-2xl font-bold text-[#1A1A18] mt-1">
-                Engineering Specifications
-              </h2>
-            </div>
-
-            <div className="flex flex-wrap gap-3">
-              {product.capacity && (
-                <div className="bg-white/50 backdrop-blur-sm border border-black/5 px-3 py-1.5 text-xs font-semibold text-[#1A1A18] rounded-sm">
-                  Capacity: {product.capacity}
-                </div>
-              )}
-              {product.span && (
-                <div className="bg-white/50 backdrop-blur-sm border border-black/5 px-3 py-1.5 text-xs font-semibold text-[#1A1A18] rounded-sm">
-                  Span: {product.span}
-                </div>
-              )}
-            </div>
-
-            {product.fullDescription && (
-              <div className="text-sm text-[#888780] leading-relaxed whitespace-pre-wrap">
-                {product.fullDescription}
-              </div>
+        <div className="section-container relative z-10">
+          {/* Breadcrumb Navigation */}
+          <nav className="flex flex-wrap items-center gap-2 text-xs font-sans font-bold uppercase tracking-wider text-muted-foreground mb-8">
+            <Link href="/" className="hover:text-[#D85A30] transition-colors">
+              Home
+            </Link>
+            <span>/</span>
+            <Link href="/products" className="hover:text-[#D85A30] transition-colors">
+              Products
+            </Link>
+            {product.category && (
+              <>
+                <span>/</span>
+                <Link href={`/products?category=${product.category.slug}`} className="hover:text-[#D85A30] transition-colors">
+                  {product.category.name}
+                </Link>
+              </>
             )}
+            <span>/</span>
+            <span className="text-[#131312] font-black truncate max-w-[200px] md:max-w-none">
+              {product.name}
+            </span>
+          </nav>
 
-            {/* Price Display / CTA */}
-            <div className="border-t border-b border-border py-6 flex items-center justify-between flex-wrap gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            {/* Gallery */}
+            <div className="lg:col-span-6">
+              <div className="bg-white p-4 border border-black/10 shadow-sm">
+                <ImageGallery
+                  images={product.images || []}
+                  title={`${product.name}${product.capacity ? ` - ${product.capacity}` : ''} - Bala Enterprise`}
+                />
+              </div>
+            </div>
+
+            {/* Product Technical Specs */}
+            <div className="lg:col-span-6 space-y-6">
               <div>
-                <p className="text-[10px] text-[#888780] uppercase tracking-wider">Pricing</p>
-                <p className="text-xl font-bold text-[#1A1A18] mt-0.5">
-                  {product.priceDisplay || 'Price on Request'}
-                </p>
+                <p className="label-tech mb-2">Technical Overview</p>
+                <h2 className="heading-section text-[#131312] font-black uppercase">
+                  Engineering <span className="text-[#D85A30] italic font-medium">Specifications.</span>
+                </h2>
               </div>
-              <ProductQuoteModal
-                productName={product.name}
-                productId={product._id}
-                slug={product.slug}
-              />
-            </div>
 
-            {/* Specifications List */}
-            {product.specifications && Object.keys(product.specifications).length > 0 && (
-              <div className="space-y-4">
-                <h3 className="font-heading text-lg font-bold text-[#1A1A18] border-b border-border pb-2">
-                  Technical Specifications
-                </h3>
-                <div className="border border-black/5 rounded-lg overflow-hidden">
-                  <table className="w-full text-xs">
-                    <tbody>
-                      {Object.entries(product.specifications).map(([key, val], i) => (
-                        <tr key={key} className={i % 2 === 0 ? 'bg-white/30 backdrop-blur-sm' : 'bg-white/60'}>
-                          <td className="px-4 py-3 font-semibold text-[#1A1A18] w-1/3 border-r border-black/5">{key}</td>
-                          <td className="px-4 py-3 text-[#5f5e58]">{String(val)}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+              <div className="flex flex-wrap gap-3">
+                {product.capacity && (
+                  <span className="label-tech !bg-[#131312] !text-white px-3 py-1.5 border border-white/10">
+                    Capacity: {product.capacity}
+                  </span>
+                )}
+                {product.span && (
+                  <span className="label-tech !bg-[#D85A30] !text-white px-3 py-1.5">
+                    Span: {product.span}
+                  </span>
+                )}
               </div>
-            )}
+
+              {product.fullDescription && (
+                <p className="body-text text-[#131312]/80 leading-relaxed text-sm sm:text-base whitespace-pre-wrap border-l-2 border-[#D85A30] pl-4">
+                  {product.fullDescription}
+                </p>
+              )}
+
+              {/* Quote CTA box */}
+              <div className="border border-black/10 bg-white p-6 shadow-sm flex items-center justify-between flex-wrap gap-4">
+                <div>
+                  <p className="label-tech">Pricing Guidance</p>
+                  <p className="font-heading text-xl font-black text-[#131312] mt-0.5">
+                    {product.priceDisplay || 'Price On Request'}
+                  </p>
+                </div>
+                <ProductQuoteModal
+                  productName={product.name}
+                  productId={product._id}
+                  slug={product.slug}
+                />
+              </div>
+
+              {/* Specifications Table */}
+              {product.specifications && Object.keys(product.specifications).length > 0 && (
+                <div className="space-y-4 pt-2">
+                  <p className="label-tech border-b border-black/10 pb-2">Technical Data Sheet</p>
+                  <div className="border border-black/10 bg-white shadow-sm overflow-hidden">
+                    <table className="w-full text-xs font-sans">
+                      <tbody>
+                        {Object.entries(product.specifications).map(([key, val], i) => (
+                          <tr key={key} className={i % 2 === 0 ? 'bg-[#FAF9F6]' : 'bg-white'}>
+                            <td className="px-4 py-3 font-bold uppercase tracking-wider text-[#131312] w-1/3 border-r border-black/5">{key}</td>
+                            <td className="px-4 py-3 text-[#131312]/80 font-medium">{String(val)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+
     </div>
   );
 }
