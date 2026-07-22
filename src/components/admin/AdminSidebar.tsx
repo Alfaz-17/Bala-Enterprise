@@ -36,6 +36,8 @@ export default function AdminSidebar() {
   const { data: session } = useSession();
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  if (pathname === '/admin/login') return null;
+
   const isActive = (href: string) => {
     if (href === '/admin') return pathname === '/admin';
     return pathname.startsWith(href);
