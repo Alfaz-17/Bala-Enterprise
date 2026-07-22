@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ShieldCheck, CheckCircle2, Award, Phone, FileCheck, ShieldAlert, Factory, Wrench, Flame, CheckCircle, Truck, Anchor, Building2, HardHat, Warehouse } from 'lucide-react';
+import { ShieldCheck, CheckCircle2, Award, Phone, FileCheck, ShieldAlert, Factory, Wrench, Flame, Truck, Anchor, Building2, HardHat, Warehouse } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -75,21 +75,21 @@ export default function AboutPage() {
     {
       icon: Anchor,
       title: 'Shipbuilding & Alang Port',
-      desc: 'Heavy winch drums and gantry cranes for ship repair, plate lifting, and marine operations.',
+      desc: 'Heavy winches and gantry cranes for ship repair, plate lifting, and marine work.',
     },
     {
       icon: Building2,
       title: 'Steel Mills & Metal Works',
-      desc: 'High-capacity EOT cranes for moving heavy steel billets, coils, pipes, and scrap metal.',
+      desc: 'High-capacity EOT cranes for moving steel billets, coils, and scrap metal.',
     },
     {
       icon: HardHat,
-      title: 'Cement & Construction Plants',
+      title: 'Cement & Construction',
       desc: 'Heavy-duty electric winches and floor cranes built for continuous outdoor work.',
     },
     {
       icon: Warehouse,
-      title: 'Warehouses & Freight Hubs',
+      title: 'Warehouses & Logistics',
       desc: 'Hydraulic stackers, hand pallet trucks, and scissor lifts for fast goods loading.',
     },
   ];
@@ -112,8 +112,8 @@ export default function AboutPage() {
         }} 
       />
 
-      {/* Page Header */}
-      <div className="relative bg-[#1A1A18] text-white overflow-hidden py-12 sm:py-16 md:py-20 border-b border-[#2A2A28]">
+      {/* Page Header — Mobile Native Text Width */}
+      <div className="relative bg-[#1A1A18] text-white overflow-hidden py-10 sm:py-16 md:py-20 border-b border-[#2A2A28]">
         {/* Dot pattern overlay inside header */}
         <div 
           className="absolute inset-0 opacity-15 pointer-events-none z-10" 
@@ -124,7 +124,7 @@ export default function AboutPage() {
         />
         
         {/* Side-by-side image on the right */}
-        <div className="absolute top-0 right-0 h-full w-[42%] sm:w-[45%] lg:w-[50%] bg-[#1A1A18] origin-top-right transform skew-x-[-12deg] sm:skew-x-[-15deg] translate-x-[8%] sm:translate-x-[10%] z-0 overflow-hidden border-l border-white/10">
+        <div className="absolute top-0 right-0 h-full w-[38%] sm:w-[45%] lg:w-[50%] bg-[#1A1A18] origin-top-right transform skew-x-[-12deg] sm:skew-x-[-15deg] translate-x-[8%] sm:translate-x-[10%] z-0 overflow-hidden border-l border-white/10">
           <div className="absolute inset-0 transform skew-x-[12deg] sm:skew-x-[15deg] -translate-x-[8%] sm:-translate-x-[10%] w-[130%] h-full">
             <Image
               src="/Image_from_internet/pexels-cmrcn-29224563.jpg"
@@ -139,7 +139,7 @@ export default function AboutPage() {
         </div>
         
         <div className="section-container relative z-10 w-full">
-          <div className="max-w-[55%] sm:max-w-[50%] lg:max-w-[60%] space-y-3">
+          <div className="max-w-[65%] sm:max-w-[55%] lg:max-w-[60%] space-y-2 sm:space-y-3">
             <p className="label-tech text-[#D85A30] block">
               Bhavnagar GIDC, Gujarat
             </p>
@@ -154,7 +154,7 @@ export default function AboutPage() {
       </div>
 
       {/* Main Content */}
-      <section className="py-20 bg-[#F7EBDD] relative overflow-hidden border-b border-border/10">
+      <section className="py-16 sm:py-20 bg-[#F7EBDD] relative overflow-hidden border-b border-border/10">
         <div 
           className="absolute inset-0 opacity-40 pointer-events-none" 
           style={{ 
@@ -164,10 +164,10 @@ export default function AboutPage() {
         />
 
         <div className="section-container relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             {/* Story text */}
             <div className="lg:col-span-7 space-y-6">
-              <p className="label-tech mb-2">
+              <p className="label-tech mb-1">
                 Our Story
               </p>
               <h2 className="heading-section text-[#131312] font-black uppercase">
@@ -175,25 +175,25 @@ export default function AboutPage() {
                 <span className="text-[#D85A30] italic font-medium">What We Do.</span>
               </h2>
               
-              <div className="border-l-2 border-[#D85A30] pl-5 space-y-4 py-1">
-                <p className="body-text text-[#131312]/80 leading-relaxed text-sm sm:text-base">
+              <div className="border-l-2 border-[#D85A30] pl-4 sm:pl-5 space-y-4 py-1">
+                <p className="body-text text-[#131312]/80 leading-relaxed text-xs sm:text-base">
                   Bala Enterprise is located in Bhavnagar GIDC, Gujarat. We started as a small steel workshop and today we are one of the most trusted names for industrial cranes, electric winches, hoists, and material handling equipment. Managed by Mr. Mustufa, our team has built and delivered more than 500 overhead EOT cranes, wire rope hoists, and hydraulic stackers for factories across India.
                 </p>
-                <p className="body-text text-[#131312]/80 leading-relaxed text-sm sm:text-base">
+                <p className="body-text text-[#131312]/80 leading-relaxed text-xs sm:text-base">
                   We build heavy machines that last for years without breakdown. From raw steel cutting and welding to final motor fitting and safety load testing, everything is done right inside our Bhavnagar factory. Our customers include shipyards, steel factories, textile mills, cement plants, and warehouses across Gujarat and all over India.
                 </p>
               </div>
 
               {/* Value Props checklist */}
-              <div className="pt-4 space-y-3">
-                <h3 className="label-tech text-[#131312] mb-3">
+              <div className="pt-2 space-y-3">
+                <h3 className="label-tech text-[#131312] mb-2">
                   Why Factory Owners Choose Us:
                 </h3>
-                <ul className="space-y-3">
+                <ul className="space-y-2.5">
                   {valueProps.map((prop, idx) => (
-                    <li key={idx} className="flex items-start gap-3">
-                      <div className="w-5 h-5 rounded-full bg-green-600/10 border border-green-600/25 flex items-center justify-center shrink-0 mt-0.5">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-green-600" />
+                    <li key={idx} className="flex items-start gap-2.5">
+                      <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-green-600/10 border border-green-600/25 flex items-center justify-center shrink-0 mt-0.5">
+                        <CheckCircle2 className="w-3 h-3 text-green-600" />
                       </div>
                       <span className="body-text text-[#131312] font-medium text-xs sm:text-sm">{prop}</span>
                     </li>
@@ -204,36 +204,37 @@ export default function AboutPage() {
 
             {/* Right Column */}
             <div className="lg:col-span-5 space-y-6">
-              <div className="relative h-[280px] sm:h-[340px] w-full border border-black/10 p-2 bg-white shadow-sm">
+              <div className="relative h-[240px] sm:h-[320px] lg:h-[360px] w-full border border-black/10 p-2 bg-white shadow-sm">
                 <div className="relative w-full h-full overflow-hidden group">
                   <Image
                     src="/Images_Factory/inside_factory.png"
                     alt="Bala Enterprise Assembly Workshop"
                     fill
+                    sizes="(max-width: 768px) 100vw, 500px"
                     className="object-cover hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute bottom-4 left-4 bg-[#1A1A18]/85 border border-white/10 px-3 py-1.5 rounded text-[10px] font-bold uppercase tracking-wider text-white shadow-lg">
+                  <div className="absolute bottom-3 left-3 bg-[#1A1A18]/85 border border-white/10 px-2.5 py-1.5 rounded text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-white shadow-lg">
                     Bhavnagar Workshop Floor
                   </div>
                 </div>
               </div>
 
               {/* Quick Compliance Card */}
-              <div className="bg-[#FCF6ED] border border-border p-6 rounded-none space-y-4">
-                <div className="flex items-center gap-3">
+              <div className="bg-[#FCF6ED] border border-border p-5 sm:p-6 rounded-none space-y-3">
+                <div className="flex items-center gap-2.5">
                   <ShieldCheck className="h-5 w-5 text-[#D85A30] shrink-0" />
-                  <h3 className="font-heading text-sm font-bold text-[#131312] uppercase tracking-wider">
+                  <h3 className="font-heading text-xs sm:text-sm font-bold text-[#131312] uppercase tracking-wider">
                     GST & ISO Certified
                   </h3>
                 </div>
-                <div className="space-y-3 text-xs font-sans text-[#131312]/80 leading-relaxed">
+                <div className="space-y-2 text-xs font-sans text-[#131312]/80 leading-relaxed">
                   <div>
-                    <span className="label-tech !text-xs !text-[#131312]/60">GST Invoice Available</span>
-                    <p className="mt-0.5 font-mono text-sm font-semibold text-[#D85A30]">GSTIN: 24AIVPM3595R2Z1</p>
+                    <span className="label-tech !text-[10px] !text-[#131312]/60">GST Invoice Available</span>
+                    <p className="mt-0.5 font-mono text-xs sm:text-sm font-semibold text-[#D85A30]">GSTIN: 24AIVPM3595R2Z1</p>
                   </div>
                   <div>
-                    <span className="label-tech !text-xs !text-[#131312]/60">Quality Certification</span>
-                    <p className="mt-0.5">ISO 9001:2015 certified manufacturing and safety load testing.</p>
+                    <span className="label-tech !text-[10px] !text-[#131312]/60">Quality Certification</span>
+                    <p className="mt-0.5 text-[11px] sm:text-xs">ISO 9001:2015 certified manufacturing and safety load testing.</p>
                   </div>
                 </div>
               </div>
@@ -242,8 +243,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* NEW SECTION 1: OUR 4-STEP MANUFACTURING & TESTING PROCESS */}
-      <section className="py-20 bg-[#131312] text-white relative overflow-hidden border-b border-white/10">
+      {/* SECTION 1: OUR 4-STEP MANUFACTURING & TESTING PROCESS */}
+      <section className="py-16 sm:py-20 bg-[#131312] text-white relative overflow-hidden border-b border-white/10">
         <div 
           className="absolute inset-0 opacity-[0.05] pointer-events-none" 
           style={{ 
@@ -253,7 +254,7 @@ export default function AboutPage() {
         />
 
         <div className="section-container relative z-10">
-          <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14 space-y-2">
             <p className="label-tech text-[#D85A30]">Factory Process</p>
             <h2 className="heading-section text-white font-black uppercase">
               How We Build & Test <span className="text-[#D85A30] italic font-medium">Your Machines.</span>
@@ -263,28 +264,28 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {manufacturingSteps.map((item) => (
               <div 
                 key={item.step} 
-                className="p-6 bg-white/5 border border-white/10 hover:border-[#D85A30]/50 transition-all duration-300 relative group"
+                className="p-5 sm:p-6 bg-white/5 border border-white/10 hover:border-[#D85A30]/50 transition-all duration-300 relative group"
               >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-10 h-10 bg-[#D85A30]/20 text-[#D85A30] flex items-center justify-center border border-[#D85A30]/30 group-hover:bg-[#D85A30] group-hover:text-white transition-colors">
-                    <item.icon className="w-5 h-5" />
+                <div className="flex items-center justify-between mb-3 sm:mb-4">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 bg-[#D85A30]/20 text-[#D85A30] flex items-center justify-center border border-[#D85A30]/30 group-hover:bg-[#D85A30] group-hover:text-white transition-colors">
+                    <item.icon className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
-                  <span className="font-heading text-xl font-black text-white/30 group-hover:text-[#D85A30] transition-colors">{item.step}</span>
+                  <span className="font-heading text-lg sm:text-xl font-black text-white/30 group-hover:text-[#D85A30] transition-colors">{item.step}</span>
                 </div>
-                <h3 className="font-heading text-sm font-bold text-white uppercase tracking-wider mb-2">{item.title}</h3>
-                <p className="body-text text-white/70 text-xs leading-relaxed">{item.desc}</p>
+                <h3 className="font-heading text-xs sm:text-sm font-bold text-white uppercase tracking-wider mb-1.5">{item.title}</h3>
+                <p className="body-text text-white/70 text-[11px] sm:text-xs leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* NEW SECTION 2: INDUSTRIES WE SERVE ACROSS INDIA */}
-      <section className="py-20 bg-[#F7EBDD] relative overflow-hidden border-b border-black/10">
+      {/* SECTION 2: INDUSTRIES WE SERVE ACROSS INDIA (2-Columns on Mobile) */}
+      <section className="py-16 sm:py-20 bg-[#F7EBDD] relative overflow-hidden border-b border-black/10">
         <div 
           className="absolute inset-0 opacity-40 pointer-events-none" 
           style={{ 
@@ -294,7 +295,7 @@ export default function AboutPage() {
         />
 
         <div className="section-container relative z-10">
-          <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14 space-y-2">
             <p className="label-tech text-[#D85A30]">Our Clients</p>
             <h2 className="heading-section text-[#131312] font-black uppercase">
               Industries We Serve <span className="text-[#D85A30] italic font-medium">Across India.</span>
@@ -304,17 +305,17 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {industriesServed.map((ind) => (
               <div 
                 key={ind.title} 
-                className="p-6 bg-white border border-black/10 hover:border-[#D85A30]/50 transition-all duration-300 shadow-sm"
+                className="p-4 sm:p-6 bg-white border border-black/10 hover:border-[#D85A30]/50 transition-all duration-300 shadow-sm"
               >
-                <div className="w-10 h-10 bg-[#D85A30]/10 text-[#D85A30] flex items-center justify-center mb-4 border border-[#D85A30]/20">
-                  <ind.icon className="w-5 h-5" />
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#D85A30]/10 text-[#D85A30] flex items-center justify-center mb-3 border border-[#D85A30]/20">
+                  <ind.icon className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
-                <h3 className="font-heading text-sm font-bold text-[#131312] uppercase tracking-wider mb-2">{ind.title}</h3>
-                <p className="body-text text-[#131312]/70 text-xs leading-relaxed">{ind.desc}</p>
+                <h3 className="font-heading text-xs sm:text-sm font-bold text-[#131312] uppercase tracking-wider mb-1">{ind.title}</h3>
+                <p className="body-text text-[#131312]/70 text-[11px] sm:text-xs leading-relaxed">{ind.desc}</p>
               </div>
             ))}
           </div>
@@ -322,7 +323,7 @@ export default function AboutPage() {
       </section>
 
       {/* OUR CERTIFICATIONS & GUARANTEES SECTION */}
-      <section className="py-20 bg-[#131312] text-white relative overflow-hidden border-b border-white/10">
+      <section className="py-16 sm:py-20 bg-[#131312] text-white relative overflow-hidden border-b border-white/10">
         <div 
           className="absolute inset-0 opacity-[0.05] pointer-events-none" 
           style={{ 
@@ -332,7 +333,7 @@ export default function AboutPage() {
         />
 
         <div className="section-container relative z-10">
-          <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14 space-y-2">
             <p className="label-tech text-[#D85A30]">Our Certifications</p>
             <h2 className="heading-section text-white font-black uppercase">
               Certifications & <span className="text-[#D85A30] italic font-medium">Quality Guarantees.</span>
@@ -342,17 +343,17 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
             {certifications.map((cert) => (
               <div 
                 key={cert.title} 
-                className="p-8 bg-white/5 border border-white/10 hover:border-[#D85A30]/50 transition-all duration-300 relative group"
+                className="p-5 sm:p-8 bg-white/5 border border-white/10 hover:border-[#D85A30]/50 transition-all duration-300 relative group"
               >
-                <div className="w-12 h-12 bg-[#D85A30]/20 text-[#D85A30] flex items-center justify-center mb-5 border border-[#D85A30]/30 group-hover:bg-[#D85A30] group-hover:text-white transition-colors">
-                  <cert.icon className="w-6 h-6" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#D85A30]/20 text-[#D85A30] flex items-center justify-center mb-4 sm:mb-5 border border-[#D85A30]/30 group-hover:bg-[#D85A30] group-hover:text-white transition-colors">
+                  <cert.icon className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
                 <span className="label-tech !text-[#D85A30] block mb-1">{cert.subtitle}</span>
-                <h3 className="font-heading text-lg font-bold text-white uppercase tracking-wider mb-2">{cert.title}</h3>
+                <h3 className="font-heading text-sm sm:text-lg font-bold text-white uppercase tracking-wider mb-1.5">{cert.title}</h3>
                 <p className="body-text text-white/70 text-xs sm:text-sm leading-relaxed">{cert.desc}</p>
               </div>
             ))}
@@ -361,7 +362,7 @@ export default function AboutPage() {
       </section>
 
       {/* Trust Stats Bar */}
-      <section className="bg-[#1A1A18] text-white py-14 border-b border-white/10 relative overflow-hidden">
+      <section className="bg-[#1A1A18] text-white py-10 sm:py-14 border-b border-white/10 relative overflow-hidden">
         <div 
           className="absolute inset-0 opacity-[0.05] pointer-events-none" 
           style={{ 
@@ -369,10 +370,10 @@ export default function AboutPage() {
             backgroundSize: '1.5rem 1.5rem' 
           }} 
         />
-        <div className="section-container grid grid-cols-2 md:grid-cols-4 gap-8 text-center relative z-10">
+        <div className="section-container grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center relative z-10">
           {stats.map((stat, idx) => (
             <div key={idx} className="space-y-1 md:border-r md:border-white/10 md:last:border-r-0 py-2">
-              <div className="font-heading text-4xl lg:text-5xl font-black text-[#D85A30]">{stat.value}</div>
+              <div className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black text-[#D85A30]">{stat.value}</div>
               <div className="label-tech text-white/60 mt-1">
                 {stat.label}
               </div>
@@ -382,7 +383,7 @@ export default function AboutPage() {
       </section>
 
       {/* Bottom CTA Banner */}
-      <section className="bg-[#1A1A18] text-white py-16 border-t border-[#2A2A28] relative overflow-hidden">
+      <section className="bg-[#1A1A18] text-white py-14 sm:py-16 border-t border-[#2A2A28] relative overflow-hidden">
         <div 
           className="absolute inset-0 opacity-15 pointer-events-none" 
           style={{ 
@@ -390,24 +391,24 @@ export default function AboutPage() {
             backgroundSize: '20px 20px' 
           }} 
         />
-        <div className="section-container max-w-4xl text-center space-y-6 relative z-10">
+        <div className="section-container max-w-4xl text-center space-y-4 sm:space-y-6 relative z-10">
           <p className="label-tech text-[#D85A30]">Get Price Quote</p>
           <h2 className="heading-section text-white font-black uppercase">
             Need a Crane or Hoist for Your Factory?
           </h2>
-          <p className="body-text text-white/70 max-w-xl mx-auto leading-relaxed">
+          <p className="body-text text-white/70 max-w-xl mx-auto leading-relaxed text-xs sm:text-sm">
             Call or send us your requirements. Our team will help you choose the right capacity and send you a fast price quote.
           </p>
-          <div className="flex flex-wrap justify-center gap-4 pt-2">
+          <div className="flex flex-wrap justify-center gap-3 pt-2">
             <Link
               href="/contact"
-              className="px-6 py-3.5 bg-[#D85A30] text-white hover:bg-[#c24a24] text-xs font-bold uppercase tracking-wider transition-colors rounded-none shadow-md"
+              className="px-5 py-3 bg-[#D85A30] text-white hover:bg-[#c24a24] text-xs font-bold uppercase tracking-wider transition-colors rounded-none shadow-md"
             >
               Get Price Quote
             </Link>
             <a
               href="tel:+919825214214"
-              className="px-6 py-3.5 border border-white/20 hover:border-white text-white text-xs font-bold uppercase tracking-wider transition-colors flex items-center gap-2 rounded-none"
+              className="px-5 py-3 border border-white/20 hover:border-white text-white text-xs font-bold uppercase tracking-wider transition-colors flex items-center gap-2 rounded-none"
             >
               <Phone className="h-4 w-4 text-[#D85A30]" />
               Call +91 98252 14214

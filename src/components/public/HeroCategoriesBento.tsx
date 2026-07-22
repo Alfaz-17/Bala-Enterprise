@@ -67,7 +67,7 @@ export default function HeroCategoriesBento({ categories }: HeroCategoriesBentoP
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-white/10 pb-8">
           <div className="max-w-2xl">
             <p className="label-tech mb-3">
-              Product Categories
+              Categories Showcase
             </p>
             <h2 className="heading-section text-white font-black uppercase tracking-tight">
               Our Machinery <span className="text-[#D85A30] italic font-medium">Line.</span>
