@@ -102,10 +102,10 @@ export default function Header() {
       )}
 
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-24 md:h-32">
-            {/* Logo Only (2x Big) */}
+          <div className="flex justify-between items-center h-16 sm:h-20 md:h-24">
+            {/* Logo Only */}
             <Link href="/" className="flex items-center group">
-              <div className={`relative h-22 w-22 md:h-30 md:w-30 transition-transform group-hover:scale-105 duration-300 ${
+              <div className={`relative h-12 w-12 sm:h-16 sm:w-16 md:h-20 md:w-20 transition-transform group-hover:scale-105 duration-300 ${
                 isTransparent ? 'filter drop-shadow-[0_2px_8px_rgba(255,255,255,0.15)] brightness-110' : ''
               }`}>
                 <Image

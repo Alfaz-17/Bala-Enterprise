@@ -6,43 +6,43 @@ import { motion } from 'framer-motion';
 const galleryImages = [
   {
     src: '/Images_Factory/front_main.png',
-    alt: 'Bala Enterprise main factory entrance at GIDC Bhavnagar.',
-    label: 'Main Factory Gate',
+    alt: 'Bala Enterprise main factory entrance at Bhavnagar GIDC.',
+    label: 'Main Entrance & Factory Gate',
     span: 'md:col-span-2 md:row-span-2 col-span-2 row-span-2',
   },
   {
     src: '/Images_Factory/inside_factory.png',
     alt: 'Inside Bala Enterprise heavy crane manufacturing and assembly workshop floor.',
-    label: 'Factory Workshop Floor',
+    label: 'Assembly Workshop Floor',
     span: 'md:col-span-2 md:row-span-1 col-span-2 row-span-1',
   },
   {
     src: '/Images_Factory/IMG_1223.JPG.jpeg',
-    alt: 'Heavy duty chain pulley block testing area.',
-    label: 'Chain Pulley Testing',
+    alt: 'Heavy duty chain pulley block load testing area.',
+    label: 'Chain Block Testing Rig',
     span: 'col-span-1 row-span-1',
   },
   {
     src: '/Images_Factory/IMG_1230.JPG.jpeg',
     alt: 'Manual hoist chain block ready for load test.',
-    label: 'Manual Hoists',
+    label: 'Manual Hoist Stock',
     span: 'col-span-1 row-span-1',
   },
   {
     src: '/Images_Factory/IMG_1327.jpg',
     alt: 'Bala Enterprise warehouse facility with hoists and winches stock.',
-    label: 'Stockyard Area',
+    label: 'Warehouse & Stockyard',
     span: 'col-span-1 row-span-1',
   },
   {
     src: '/Images_Factory/IMG_1329.jpg',
-    alt: 'Industrial electric motor winches and wire ropes stock.',
+    alt: 'Industrial electric motor winches ready for dispatch.',
     label: 'Electric Winches Stock',
     span: 'col-span-1 row-span-1',
   },
   {
     src: '/Images_Factory/factory_hangar_refined.png',
-    alt: 'Heavy crane fabrication bay with overhead cranes.',
+    alt: 'Overhead crane fabrication area with overhead cranes.',
     label: 'Crane Fabrication Hangar',
     span: 'md:col-span-2 md:row-span-1 col-span-2 row-span-1',
   },
@@ -71,19 +71,16 @@ const itemVariants = {
 
 export default function FactoryGallery() {
   return (
-    <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 bg-[#131312] text-white border-t border-b border-white/10 relative overflow-hidden">
+    <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 bg-[#F7EBDD] text-[#131312] border-t border-b border-black/10 relative overflow-hidden">
       {/* Blueprint Dot Grid overlay */}
       <div 
-        className="absolute inset-0 opacity-[0.05] pointer-events-none" 
+        className="absolute inset-0 opacity-[0.06] pointer-events-none" 
         style={{ 
-          backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', 
+          backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(0,0,0,0.8) 1px, transparent 0)', 
           backgroundSize: '2rem 2rem' 
         }} 
       />
 
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#D85A30]/5 blur-[150px] pointer-events-none rounded-full" />
-      
       <div className="section-container relative z-10">
         {/* Section header */}
         <motion.div
@@ -96,11 +93,11 @@ export default function FactoryGallery() {
           <span className="label-tech mb-2 block text-[#D85A30]">
             Our Factory Photos
           </span>
-          <h2 className="heading-section text-white uppercase font-black">
-            Inside Our <span className="text-[#D85A30] italic font-medium">Bhavnagar Unit.</span>
+          <h2 className="heading-section text-[#131312] uppercase font-black">
+            Inside Our <span className="text-[#D85A30] italic font-medium">Bhavnagar Plant.</span>
           </h2>
-          <p className="body-text text-white/70 max-w-lg mx-auto pt-2 leading-relaxed text-xs sm:text-sm">
-            See photos of our GIDC Bhavnagar factory unit — equipped with heavy crane assembly bays, fabrication rigs, and testing fields.
+          <p className="body-text text-[#131312]/80 max-w-lg mx-auto pt-2 leading-relaxed text-xs sm:text-sm">
+            Take a look at photos from our Bhavnagar GIDC plant — heavy crane assembly bays, welding shop, and load testing area.
           </p>
         </motion.div>
 
@@ -116,7 +113,7 @@ export default function FactoryGallery() {
             <motion.div
               key={image.src}
               variants={itemVariants}
-              className={`${image.span} relative group overflow-hidden border border-white/10 bg-white/5 rounded-none`}
+              className={`${image.span} relative group overflow-hidden border border-black/10 bg-white rounded-none shadow-sm`}
             >
               <Image
                 src={image.src}

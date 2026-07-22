@@ -1,13 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ShieldCheck, CheckCircle2, Phone } from 'lucide-react';
+import { ShieldCheck, CheckCircle2, Award, Phone, FileCheck, ShieldAlert, Factory, Wrench, Flame, CheckCircle, Truck, Anchor, Building2, HardHat, Warehouse } from 'lucide-react';
 import type { Metadata } from 'next';
-import FactoryGallery from '@/components/public/FactoryGallery';
 
 export const metadata: Metadata = {
-  title: 'About Our Industrial Crane & Hoist Factory | Bala Enterprise',
+  title: 'About Our Factory & Manufacturing Process | Bala Enterprise',
   description:
-    'For over 15 years, Bala Enterprise has made heavy-duty overhead cranes, hoists, stackers, and pallet trucks in our Bhavnagar GIDC workshop, Gujarat.',
+    'ISO 9001:2015 certified manufacturer of overhead cranes, wire rope hoists, and electric winches in Bhavnagar GIDC, Gujarat. Learn how we build and test your heavy lifting machines.',
 };
 
 export default function AboutPage() {
@@ -16,6 +15,83 @@ export default function AboutPage() {
     { label: 'Cranes & Hoists Built', value: '500+' },
     { label: 'Max Load Capacity', value: '50 Ton' },
     { label: 'Safety Verified', value: '100%' },
+  ];
+
+  const certifications = [
+    {
+      icon: Award,
+      title: 'ISO 9001:2015 Certified',
+      subtitle: 'Quality Management & Manufacturing',
+      desc: 'Our factory follows strict quality control for steel fabrication, welding quality, and machine assembly.',
+    },
+    {
+      icon: FileCheck,
+      title: 'GST B2B Registered',
+      subtitle: 'GSTIN: 24AIVPM3595R2Z1',
+      desc: 'Get full B2B tax invoice with every order so your business can claim complete input tax credit (ITC).',
+    },
+    {
+      icon: ShieldCheck,
+      title: 'Full Load & Safety Tested',
+      subtitle: '100% Factory Overload Test',
+      desc: 'Every crane, wire rope hoist, and winch is physically load-tested on our testing rig before leaving the factory.',
+    },
+    {
+      icon: ShieldAlert,
+      title: 'Factory Guarantee & Parts Support',
+      subtitle: 'Direct Manufacturer Support',
+      desc: 'We provide full warranty support, spare parts, and fast service for all our lifting equipment.',
+    },
+  ];
+
+  const manufacturingSteps = [
+    {
+      step: '01',
+      icon: Factory,
+      title: 'Steel Plate & Girder Cutting',
+      desc: 'We select tested heavy steel plates and girders, precision-cut for your exact factory span and load weight.',
+    },
+    {
+      step: '02',
+      icon: Flame,
+      title: 'Heavy Welding & Motor Fitting',
+      desc: 'Our experienced welders fabricate main girders, end carriages, drum winches, and fit heavy copper-wound motors.',
+    },
+    {
+      step: '03',
+      icon: Wrench,
+      title: 'Factory Overload Safety Test',
+      desc: 'Every completed hoist and crane is tested on our factory overload test rig to guarantee 100% safe operation.',
+    },
+    {
+      step: '04',
+      icon: Truck,
+      title: 'GST Invoice & Safe Dispatch',
+      desc: 'We prepare your GST tax invoice, pack all components safely, and dispatch directly to your factory site anywhere in India.',
+    },
+  ];
+
+  const industriesServed = [
+    {
+      icon: Anchor,
+      title: 'Shipbuilding & Alang Port',
+      desc: 'Heavy winch drums and gantry cranes for ship repair, plate lifting, and marine operations.',
+    },
+    {
+      icon: Building2,
+      title: 'Steel Mills & Metal Works',
+      desc: 'High-capacity EOT cranes for moving heavy steel billets, coils, pipes, and scrap metal.',
+    },
+    {
+      icon: HardHat,
+      title: 'Cement & Construction Plants',
+      desc: 'Heavy-duty electric winches and floor cranes built for continuous outdoor work.',
+    },
+    {
+      icon: Warehouse,
+      title: 'Warehouses & Freight Hubs',
+      desc: 'Hydraulic stackers, hand pallet trucks, and scissor lifts for fast goods loading.',
+    },
   ];
 
   const valueProps = [
@@ -36,7 +112,7 @@ export default function AboutPage() {
         }} 
       />
 
-      {/* Page Header — Side-by-side text + image on ALL screens */}
+      {/* Page Header */}
       <div className="relative bg-[#1A1A18] text-white overflow-hidden py-12 sm:py-16 md:py-20 border-b border-[#2A2A28]">
         {/* Dot pattern overlay inside header */}
         <div 
@@ -52,7 +128,7 @@ export default function AboutPage() {
           <div className="absolute inset-0 transform skew-x-[12deg] sm:skew-x-[15deg] -translate-x-[8%] sm:-translate-x-[10%] w-[130%] h-full">
             <Image
               src="/Image_from_internet/pexels-cmrcn-29224563.jpg"
-              alt="About Bala Enterprise"
+              alt="About Bala Enterprise Factory"
               fill
               priority
               className="object-cover object-center opacity-60 sm:opacity-70 hover:scale-105 transition-transform duration-700"
@@ -142,12 +218,12 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              {/* Compliance Box */}
+              {/* Quick Compliance Card */}
               <div className="bg-[#FCF6ED] border border-border p-6 rounded-none space-y-4">
                 <div className="flex items-center gap-3">
                   <ShieldCheck className="h-5 w-5 text-[#D85A30] shrink-0" />
                   <h3 className="font-heading text-sm font-bold text-[#131312] uppercase tracking-wider">
-                    GST & ISO Registered
+                    GST & ISO Certified
                   </h3>
                 </div>
                 <div className="space-y-3 text-xs font-sans text-[#131312]/80 leading-relaxed">
@@ -157,7 +233,7 @@ export default function AboutPage() {
                   </div>
                   <div>
                     <span className="label-tech !text-xs !text-[#131312]/60">Quality Certification</span>
-                    <p className="mt-0.5">ISO 9001:2015 certified quality manufacturing and safety testing.</p>
+                    <p className="mt-0.5">ISO 9001:2015 certified manufacturing and safety load testing.</p>
                   </div>
                 </div>
               </div>
@@ -166,8 +242,126 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* NEW SECTION 1: OUR 4-STEP MANUFACTURING & TESTING PROCESS */}
+      <section className="py-20 bg-[#131312] text-white relative overflow-hidden border-b border-white/10">
+        <div 
+          className="absolute inset-0 opacity-[0.05] pointer-events-none" 
+          style={{ 
+            backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', 
+            backgroundSize: '1.5rem 1.5rem' 
+          }} 
+        />
+
+        <div className="section-container relative z-10">
+          <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
+            <p className="label-tech text-[#D85A30]">Factory Process</p>
+            <h2 className="heading-section text-white font-black uppercase">
+              How We Build & Test <span className="text-[#D85A30] italic font-medium">Your Machines.</span>
+            </h2>
+            <p className="body-text text-white/70 text-xs sm:text-sm leading-relaxed">
+              Every crane and hoist is manufactured step-by-step inside our Bhavnagar GIDC workshop before dispatch.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {manufacturingSteps.map((item) => (
+              <div 
+                key={item.step} 
+                className="p-6 bg-white/5 border border-white/10 hover:border-[#D85A30]/50 transition-all duration-300 relative group"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-10 h-10 bg-[#D85A30]/20 text-[#D85A30] flex items-center justify-center border border-[#D85A30]/30 group-hover:bg-[#D85A30] group-hover:text-white transition-colors">
+                    <item.icon className="w-5 h-5" />
+                  </div>
+                  <span className="font-heading text-xl font-black text-white/30 group-hover:text-[#D85A30] transition-colors">{item.step}</span>
+                </div>
+                <h3 className="font-heading text-sm font-bold text-white uppercase tracking-wider mb-2">{item.title}</h3>
+                <p className="body-text text-white/70 text-xs leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* NEW SECTION 2: INDUSTRIES WE SERVE ACROSS INDIA */}
+      <section className="py-20 bg-[#F7EBDD] relative overflow-hidden border-b border-black/10">
+        <div 
+          className="absolute inset-0 opacity-40 pointer-events-none" 
+          style={{ 
+            backgroundImage: 'radial-gradient(circle at 2px 2px, #E5E4DE 1px, transparent 0)', 
+            backgroundSize: '20px 20px' 
+          }} 
+        />
+
+        <div className="section-container relative z-10">
+          <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
+            <p className="label-tech text-[#D85A30]">Our Clients</p>
+            <h2 className="heading-section text-[#131312] font-black uppercase">
+              Industries We Serve <span className="text-[#D85A30] italic font-medium">Across India.</span>
+            </h2>
+            <p className="body-text text-[#131312]/80 text-xs sm:text-sm leading-relaxed">
+              We supply heavy lifting machinery for factories, shipyards, warehouses, and industrial plants across Gujarat and India.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {industriesServed.map((ind) => (
+              <div 
+                key={ind.title} 
+                className="p-6 bg-white border border-black/10 hover:border-[#D85A30]/50 transition-all duration-300 shadow-sm"
+              >
+                <div className="w-10 h-10 bg-[#D85A30]/10 text-[#D85A30] flex items-center justify-center mb-4 border border-[#D85A30]/20">
+                  <ind.icon className="w-5 h-5" />
+                </div>
+                <h3 className="font-heading text-sm font-bold text-[#131312] uppercase tracking-wider mb-2">{ind.title}</h3>
+                <p className="body-text text-[#131312]/70 text-xs leading-relaxed">{ind.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* OUR CERTIFICATIONS & GUARANTEES SECTION */}
+      <section className="py-20 bg-[#131312] text-white relative overflow-hidden border-b border-white/10">
+        <div 
+          className="absolute inset-0 opacity-[0.05] pointer-events-none" 
+          style={{ 
+            backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', 
+            backgroundSize: '1.5rem 1.5rem' 
+          }} 
+        />
+
+        <div className="section-container relative z-10">
+          <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
+            <p className="label-tech text-[#D85A30]">Our Certifications</p>
+            <h2 className="heading-section text-white font-black uppercase">
+              Certifications & <span className="text-[#D85A30] italic font-medium">Quality Guarantees.</span>
+            </h2>
+            <p className="body-text text-white/70 text-xs sm:text-sm leading-relaxed">
+              We maintain full government and ISO compliance so your factory gets genuine quality machinery and proper GST tax invoices.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {certifications.map((cert) => (
+              <div 
+                key={cert.title} 
+                className="p-8 bg-white/5 border border-white/10 hover:border-[#D85A30]/50 transition-all duration-300 relative group"
+              >
+                <div className="w-12 h-12 bg-[#D85A30]/20 text-[#D85A30] flex items-center justify-center mb-5 border border-[#D85A30]/30 group-hover:bg-[#D85A30] group-hover:text-white transition-colors">
+                  <cert.icon className="w-6 h-6" />
+                </div>
+                <span className="label-tech !text-[#D85A30] block mb-1">{cert.subtitle}</span>
+                <h3 className="font-heading text-lg font-bold text-white uppercase tracking-wider mb-2">{cert.title}</h3>
+                <p className="body-text text-white/70 text-xs sm:text-sm leading-relaxed">{cert.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Trust Stats Bar */}
-      <section className="bg-[#131312] text-white py-14 border-t border-b border-white/10 relative overflow-hidden">
+      <section className="bg-[#1A1A18] text-white py-14 border-b border-white/10 relative overflow-hidden">
         <div 
           className="absolute inset-0 opacity-[0.05] pointer-events-none" 
           style={{ 
@@ -186,9 +380,6 @@ export default function AboutPage() {
           ))}
         </div>
       </section>
-
-      {/* Production Facilities Bento Gallery */}
-      <FactoryGallery />
 
       {/* Bottom CTA Banner */}
       <section className="bg-[#1A1A18] text-white py-16 border-t border-[#2A2A28] relative overflow-hidden">

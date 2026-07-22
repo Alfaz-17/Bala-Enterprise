@@ -84,15 +84,15 @@ export default async function HomePage() {
             loop
             muted
             playsInline
-            className="w-full h-full object-cover opacity-60 filter brightness-90 contrast-105 pointer-events-none"
+            className="w-full h-full object-cover opacity-85 filter brightness-100 contrast-105 pointer-events-none"
           />
           <div className="absolute inset-0 bg-[#D85A30]/5 mix-blend-multiply pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#131312]/30 via-[#131312]/60 to-[#131312] pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#131312]/20 via-[#131312]/40 to-[#131312]/80 pointer-events-none" />
         </div>
 
         {/* Blueprint Dot Grid */}
         <div 
-          className="absolute inset-0 opacity-[0.08] pointer-events-none z-10" 
+          className="absolute inset-0 opacity-[0.06] pointer-events-none z-10" 
           style={{ 
             backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', 
             backgroundSize: '2.5rem 2.5rem' 
@@ -101,75 +101,70 @@ export default async function HomePage() {
 
         {/* Content Container */}
         <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 pt-28 sm:pt-32 lg:pt-40 pb-16 flex items-center">
-          <div className="max-w-2xl text-left space-y-4">
-            <span className="label-tech tracking-[0.3em] block drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)]">
-              Industrial Cranes, Hoists & Winches
+          <div className="max-w-md text-left space-y-2.5">
+            <span className="label-tech !text-[9px] sm:!text-[10px] tracking-[0.2em] block drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] text-[#D85A30]">
+              Industrial Cranes & Hoists
             </span>
             
-            <h1 className="heading-display uppercase text-white font-black tracking-tight leading-[1.05] drop-shadow-[0_4px_16px_rgba(0,0,0,0.6)]">
+            <h1 className="font-heading uppercase text-white font-black tracking-tight text-xl sm:text-2xl md:text-3xl leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
               Cranes, Hoists & Winches <br />
               <span className="text-[#D85A30] italic font-medium">Built Heavy for Factory Work.</span>
             </h1>
             
-            <p className="body-text text-white/80 font-medium leading-relaxed max-w-xl text-sm sm:text-base drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
-              Bala Enterprise makes strong, reliable overhead cranes, hoists, winches, stackers, and heavy lifting equipment for factories in Bhavnagar GIDC and across Gujarat & India.
+            <p className="font-sans text-xs sm:text-sm text-white/90 font-medium leading-relaxed max-w-sm drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
+              Strong overhead cranes, wire rope hoists & lifting machinery made in Bhavnagar, Gujarat. Built for heavy factory work.
             </p>
 
-            <div className="flex flex-wrap items-center gap-3 pt-4">
+            <div className="flex flex-wrap items-center gap-2.5 pt-2">
               <Link
-                href="/products"
-                className="px-6 py-3.5 bg-[#D85A30] text-white text-xs font-sans font-bold uppercase tracking-wider hover:bg-[#c24a24] transition-colors rounded-none shadow-lg"
+                href="/contact"
+                className="px-5 py-2.5 bg-[#D85A30] text-white text-[10px] sm:text-xs font-sans font-bold uppercase tracking-wider hover:bg-[#c24a24] transition-colors rounded-none shadow-md"
               >
                 Get Price Quote
               </Link>
-              <a
-                href="https://wa.me/919825214214?text=Hi%20Bala%20Enterprise%2C%20I%20need%20help%20with%20industrial%20lifting%20equipment."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-3.5 border border-white/30 text-white hover:border-white hover:bg-white/10 text-xs font-sans font-bold uppercase tracking-wider transition-colors rounded-none bg-transparent"
+              <Link
+                href="/products"
+                className="px-5 py-2.5 border border-white/40 text-white hover:border-white hover:bg-white/10 text-[10px] sm:text-xs font-sans font-bold uppercase tracking-wider transition-colors rounded-none bg-black/40 backdrop-blur-xs"
               >
-                WhatsApp Us
-              </a>
+                Browse Inventory
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 02. CATEGORIES CAROUSEL BENTO */}
-      <HeroCategoriesBento categories={categories} />
-
-      {/* 03. TECHNICAL TRUST STATS (Dark strip) */}
-      <section className="bg-[#131312] py-12 border-b border-white/10 relative overflow-hidden text-white">
+      {/* 02. TRUST STATS STRIP (Light section between Hero and Categories) */}
+      <section className="bg-[#F7EBDD] py-10 border-b border-black/10 relative overflow-hidden text-[#131312]">
         <div 
-          className="absolute inset-0 opacity-[0.05] pointer-events-none" 
+          className="absolute inset-0 opacity-[0.06] pointer-events-none" 
           style={{ 
-            backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', 
+            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(0,0,0,0.8) 1px, transparent 0)', 
             backgroundSize: '1.5rem 1.5rem' 
           }} 
         />
-        
-        {/* Glow Effects */}
-        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-48 h-48 bg-[#D85A30]/10 blur-[80px] pointer-events-none rounded-full" />
 
         <div className="section-container grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center relative z-10">
-          <div className="md:border-r md:border-white/10 py-3">
+          <div className="md:border-r md:border-black/10 py-2">
             <span className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#D85A30] block mb-1 font-black">15+</span>
-            <span className="label-tech text-white/60">Years Experience</span>
+            <span className="label-tech !text-[#131312]/70">Years Experience</span>
           </div>
-          <div className="md:border-r md:border-white/10 py-3">
-            <span className="font-heading text-3xl sm:text-4xl lg:text-5xl text-white block mb-1 font-black">GST</span>
-            <span className="label-tech text-[#D85A30]">GST Bill & Invoice</span>
+          <div className="md:border-r md:border-black/10 py-2">
+            <span className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#131312] block mb-1 font-black">500+</span>
+            <span className="label-tech !text-[#131312]/70">Cranes & Hoists Built</span>
           </div>
-          <div className="md:border-r md:border-white/10 py-3">
-            <span className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#D85A30] block mb-1 font-black">9+</span>
-            <span className="label-tech text-white/60">Product Types</span>
+          <div className="md:border-r md:border-black/10 py-2">
+            <span className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#D85A30] block mb-1 font-black">50 Ton</span>
+            <span className="label-tech !text-[#131312]/70">Max Load Capacity</span>
           </div>
-          <div className="py-3">
-            <span className="font-heading text-3xl sm:text-4xl lg:text-5xl text-white block mb-1 font-black">Fast</span>
-            <span className="label-tech text-white/60">Price Quote</span>
+          <div className="py-2">
+            <span className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#131312] block mb-1 font-black">100%</span>
+            <span className="label-tech !text-[#D85A30]">Safety Verified</span>
           </div>
         </div>
       </section>
+
+      {/* 03. CATEGORIES CAROUSEL BENTO */}
+      <HeroCategoriesBento categories={categories} />
 
       {/* 04. FEATURED PRODUCTS CATALOG */}
       <section className="py-20 lg:py-28 bg-[#F7EBDD] border-b border-black/10 relative overflow-hidden">
@@ -203,8 +198,8 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          {/* Grid Layout */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+          {/* Grid Layout (2 Columns on Mobile) */}
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8">
             {products.length === 0 ? (
               <div className="col-span-full text-center text-sm text-muted-foreground py-16">No products found.</div>
             ) : (
@@ -217,7 +212,7 @@ export default async function HomePage() {
       </section>
 
       {/* 05. WHY CHOOSE US */}
-      <section className="py-20 lg:py-28 bg-[#131312] text-white relative overflow-hidden border-b border-white/10">
+      <section className="py-16 lg:py-28 bg-[#131312] text-white relative overflow-hidden border-b border-white/10">
         <div 
           className="absolute inset-0 opacity-[0.06] pointer-events-none" 
           style={{ 
@@ -227,63 +222,63 @@ export default async function HomePage() {
         />
 
         <div className="section-container relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
             
             {/* Left Column */}
-            <div className="lg:col-span-7 space-y-8">
+            <div className="lg:col-span-7 space-y-6 sm:space-y-8">
               <div>
-                <p className="label-tech mb-3">
+                <p className="label-tech mb-2">
                   Why Buy From Us
                 </p>
                 <h2 className="heading-section text-white font-black uppercase">
                   Why Factory Owners Trust <span className="text-[#D85A30] italic font-medium">Bala Enterprise.</span>
                 </h2>
-                <p className="body-text text-white/70 mt-4 leading-relaxed max-w-xl">
+                <p className="body-text text-white/70 mt-3 leading-relaxed max-w-xl text-xs sm:text-sm">
                   We give simple technical advice, heavy-duty long lasting machinery, and fast reply for factory owners who need zero breakdown work.
                 </p>
               </div>
 
-              {/* Feature Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {/* Feature Cards (2 Columns on Mobile for Neat Alignment) */}
+              <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 sm:gap-6">
                 {[
                   {
                     icon: ShieldCheck,
                     title: 'Heavy Duty Steel',
-                    copy: 'Made with tested strong steel and powerful electric heavy motors for long life.',
+                    copy: 'Made with tested strong steel and powerful heavy motors.',
                   },
                   {
                     icon: Settings,
                     title: 'Fast Technical Help',
-                    copy: 'Quick guidance on crane size, load capacity, and drawing layout for your factory.',
+                    copy: 'Quick guidance on crane size and drawing layout.',
                   },
                   {
                     icon: Award,
                     title: 'GST Registered Factory',
-                    copy: 'Proper GST B2B invoice available for your full input tax credit.',
+                    copy: 'Proper GST B2B invoice for full input tax credit.',
                   },
                   {
                     icon: CheckCircle2,
                     title: 'Full Product Range',
-                    copy: 'Complete range of EOT Cranes, Wire Rope Hoists, Winches, and Stackers.',
+                    copy: 'Complete range of Cranes, Hoists, Winches & Stackers.',
                   },
                 ].map((item) => (
                   <div 
                     key={item.title} 
-                    className="p-6 bg-white/5 border border-white/10 hover:border-[#D85A30]/50 transition-all duration-300 relative group overflow-hidden"
+                    className="p-4 sm:p-6 bg-white/5 border border-white/10 hover:border-[#D85A30]/50 transition-all duration-300 relative group overflow-hidden"
                   >
-                    <div className="w-10 h-10 bg-[#D85A30]/20 text-[#D85A30] flex items-center justify-center mb-4 border border-[#D85A30]/30 group-hover:bg-[#D85A30] group-hover:text-white transition-colors">
-                      <item.icon className="w-5 h-5" />
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#D85A30]/20 text-[#D85A30] flex items-center justify-center mb-3 border border-[#D85A30]/30 group-hover:bg-[#D85A30] group-hover:text-white transition-colors">
+                      <item.icon className="w-4 h-4 sm:w-5 sm:h-5" />
                     </div>
-                    <h3 className="font-heading text-sm font-bold text-white uppercase tracking-wider mb-2">{item.title}</h3>
-                    <p className="text-xs text-white/60 leading-relaxed font-sans">{item.copy}</p>
+                    <h3 className="font-heading text-xs sm:text-sm font-bold text-white uppercase tracking-wider mb-1">{item.title}</h3>
+                    <p className="text-[11px] sm:text-xs text-white/60 leading-relaxed font-sans">{item.copy}</p>
                   </div>
                 ))}
               </div>
 
-              <div className="pt-2">
+              <div className="pt-1">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-3 px-6 py-3.5 bg-[#D85A30] text-white text-xs font-sans font-bold uppercase tracking-wider hover:bg-[#c24a24] transition-colors rounded-none shadow-md"
+                  className="inline-flex items-center gap-2.5 px-5 py-3 bg-[#D85A30] text-white text-xs font-sans font-bold uppercase tracking-wider hover:bg-[#c24a24] transition-colors rounded-none shadow-md"
                 >
                   <span>Visit Our Factory</span>
                   <ArrowRight className="h-4 w-4" />
@@ -292,19 +287,20 @@ export default async function HomePage() {
             </div>
 
             {/* Right Column: Workshop Image Showcase */}
-            <div className="lg:col-span-5 relative w-full aspect-[4/3] lg:aspect-square">
+            <div className="lg:col-span-5 relative w-full h-[240px] sm:h-[320px] lg:h-[440px]">
               <div className="relative w-full h-full border border-white/10 p-2 bg-white/5">
                 <div className="relative w-full h-full overflow-hidden group">
                   <Image
                     src="/Images_Factory/inside_factory.png"
                     alt="Bala Enterprise Factory Workshop"
                     fill
+                    sizes="(max-width: 768px) 100vw, 500px"
                     className="object-cover filter brightness-95 group-hover:scale-105 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                  <div className="absolute bottom-6 left-6 right-6">
-                    <span className="label-tech !text-white/80 block mb-1">Bhavnagar GIDC Factory</span>
-                    <h4 className="font-heading text-base font-bold text-white uppercase">Inside Factory Workshop</h4>
+                  <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6">
+                    <span className="label-tech !text-white/80 block mb-0.5 !text-[9px] sm:!text-[10px]">Bhavnagar GIDC Factory</span>
+                    <h4 className="font-heading text-xs sm:text-sm md:text-base font-bold text-white uppercase">Inside Factory Workshop</h4>
                   </div>
                 </div>
               </div>
@@ -317,35 +313,64 @@ export default async function HomePage() {
       {/* 06. FACTORY GALLERY SHOWCASE */}
       <FactoryGallery />
 
-      {/* 07. TESTIMONIALS */}
+      {/* 07. TESTIMONIALS (Dark Technical Glass Cards) */}
       {testimonials.length > 0 && (
-        <section className="py-20 bg-[#F7EBDD] border-t border-black/10 relative overflow-hidden">
+        <section className="py-16 lg:py-24 bg-[#131312] text-white border-t border-white/10 relative overflow-hidden">
+          {/* Blueprint Dot Grid Overlay */}
+          <div 
+            className="absolute inset-0 opacity-[0.05] pointer-events-none" 
+            style={{ 
+              backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', 
+              backgroundSize: '1.5rem 1.5rem' 
+            }} 
+          />
+
           <div className="section-container max-w-5xl relative z-10">
-            <div className="text-center mb-12">
-              <p className="label-tech mb-3">Client Reviews</p>
-              <h2 className="heading-section text-[#131312] font-black uppercase">
+            <div className="text-center mb-10 sm:mb-14 space-y-2">
+              <p className="label-tech text-[#D85A30]">Client Reviews</p>
+              <h2 className="heading-section text-white font-black uppercase">
                 What Our Customers <span className="text-[#D85A30] italic font-medium">Say.</span>
               </h2>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
               {testimonials.map((test) => (
-                <div key={test._id} className="bg-white border border-black/10 p-8 shadow-sm hover:border-[#D85A30]/40 transition-colors">
-                  <div className="flex text-[#D85A30] mb-4">
+                <div 
+                  key={test._id} 
+                  className="bg-white/5 border border-white/10 hover:border-[#D85A30]/50 p-5 sm:p-8 transition-all duration-300 relative group overflow-hidden shadow-lg"
+                >
+                  {/* Top Edge Accent Bar */}
+                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-[#D85A30] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  
+                  {/* Rating Stars */}
+                  <div className="flex items-center gap-1 text-[#D85A30] mb-3 sm:mb-5">
                     {Array(test.rating)
                       .fill(0)
                       .map((_, i) => (
-                        <Star key={i} className="h-4 w-4 fill-current" />
+                        <Star key={i} className="h-3.5 w-3.5 sm:h-4 sm:w-4 fill-current" />
                       ))}
                   </div>
-                  <p className="text-sm text-[#131312]/80 leading-relaxed font-sans mb-6 italic">
+
+                  {/* Review Quote Text */}
+                  <p className="text-xs sm:text-sm text-white/90 leading-relaxed font-sans italic mb-5 sm:mb-8 relative z-10">
                     &ldquo;{test.reviewText}&rdquo;
                   </p>
-                  <div className="border-t border-black/5 pt-4">
-                    <h4 className="text-xs font-bold font-heading text-[#131312] uppercase tracking-wider">{test.clientName}</h4>
-                    {test.companyName && (
-                      <span className="text-[10px] text-muted-foreground uppercase font-sans tracking-widest mt-0.5 block">{test.companyName}</span>
-                    )}
+
+                  {/* Client Info Footer */}
+                  <div className="border-t border-white/10 pt-4 sm:pt-5 flex items-center gap-3">
+                    <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#D85A30]/20 text-[#D85A30] border border-[#D85A30]/30 flex items-center justify-center font-heading font-black text-xs shrink-0">
+                      {test.clientName.charAt(0)}
+                    </div>
+                    <div>
+                      <h4 className="font-heading text-xs font-bold text-white uppercase tracking-wider">
+                        {test.clientName}
+                      </h4>
+                      {test.companyName && (
+                        <span className="label-tech !text-[9px] !text-white/60 block mt-0.5">
+                          {test.companyName}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}

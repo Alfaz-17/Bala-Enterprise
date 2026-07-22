@@ -112,42 +112,23 @@ export default function HeroCategoriesBento({ categories }: HeroCategoriesBentoP
               <Link
                 key={`${cat._id}-${index}`}
                 href={`/products?category=${cat.slug}`}
-                className="group relative flex flex-col justify-between p-6 w-56 sm:w-64 md:w-72 h-72 sm:h-80 bg-white/5 border border-white/10 hover:border-[#D85A30]/50 transition-all duration-500 rounded-none shrink-0 overflow-hidden"
+                className="group flex flex-col items-center justify-center p-2 w-36 sm:w-48 md:w-52 h-44 sm:h-56 shrink-0 text-center transition-all duration-300"
               >
-                {/* Micro Ambient Glow */}
-                <div className="absolute -top-16 -right-16 h-32 w-32 rounded-full bg-[#D85A30]/10 group-hover:bg-[#D85A30]/30 blur-[40px] transition-all duration-500 pointer-events-none" />
-                
-                {/* Category Header Badge */}
-                <div className="flex items-center justify-between z-10">
-                  <div className="w-8 h-8 rounded-none bg-[#D85A30]/20 text-[#D85A30] flex items-center justify-center border border-[#D85A30]/30">
-                    <Layers className="w-4 h-4" />
-                  </div>
-                  <span className="font-sans text-[8px] font-bold uppercase tracking-[0.2em] text-white/40 group-hover:text-white/80 transition-colors">
-                    GST Invoice Available
-                  </span>
-                </div>
-
-                {/* 3D Image Preview Container */}
-                <div className="relative w-full h-36 sm:h-44 my-2 flex items-center justify-center z-10 transition-transform duration-500 group-hover:scale-105 group-hover:-translate-y-1">
+                {/* Floating 3D Image Preview */}
+                <div className="relative w-full h-32 sm:h-44 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-1">
                   <Image
                     src={image}
                     alt={cat.name}
                     fill
-                    sizes="(max-width: 768px) 200px, 280px"
-                    className="object-contain filter drop-shadow-[0_10px_25px_rgba(0,0,0,0.5)]"
+                    sizes="(max-width: 768px) 140px, 220px"
+                    className="object-contain filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.6)]"
                   />
                 </div>
 
-                {/* Text Label Footer */}
-                <div className="z-10 pt-2 border-t border-white/10 group-hover:border-[#D85A30]/30 transition-colors">
-                  <span className="font-heading text-xs sm:text-sm font-black uppercase tracking-wider text-white group-hover:text-[#D85A30] transition-colors leading-tight block truncate">
-                    {cat.name}
-                  </span>
-                  <div className="flex items-center justify-between mt-1">
-                    <span className="font-sans text-[9px] uppercase tracking-widest text-white/50">Explore Products</span>
-                    <ArrowRight className="w-3 h-3 text-[#D85A30] transform group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
+                {/* Category Name Label */}
+                <span className="font-heading text-xs sm:text-sm font-black uppercase tracking-wider text-white/90 group-hover:text-[#D85A30] transition-colors leading-tight block truncate mt-2">
+                  {cat.name}
+                </span>
               </Link>
             );
           })}

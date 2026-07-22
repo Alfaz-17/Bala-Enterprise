@@ -23,7 +23,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="group relative flex flex-col h-[320px] sm:h-[420px] w-full cursor-pointer transition-all duration-300"
+      className="group relative flex flex-col h-[260px] sm:h-[380px] md:h-[420px] w-full cursor-pointer transition-all duration-300"
     >
       {/* Upper Badges */}
       <div className="absolute top-3 left-3 z-20 flex flex-col gap-1 pointer-events-none">
