@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 
 export const metadata: Metadata = {
-  title: 'Contact Our Engineering Office & Factory | Bala Enterprise',
+  title: 'Contact Our Sales Desk & Factory | Bala Enterprise',
   description:
     'Contact Bala Enterprise at Bhavnagar GIDC, Gujarat. Request custom gantry crane quotes, EOT drawing layouts, and pricing details from our engineering desk.',
 };
@@ -13,14 +13,14 @@ export default function ContactPage() {
   const contactDetails = [
     {
       icon: <Phone className="h-5 w-5 text-[#D85A30]" />,
-      title: 'Call / WhatsApp Support',
+      title: 'Call / WhatsApp Sales Desk',
       details: '+91 98252 14214',
       sub: 'Mon-Sat, 9:00 AM - 7:00 PM IST',
       href: 'tel:+919825214214',
     },
     {
       icon: <Mail className="h-5 w-5 text-[#D85A30]" />,
-      title: 'Email Correspondence',
+      title: 'Email Support',
       details: 'info@balaenterprise.com',
       sub: 'Sales: sales@balaenterprise.com',
       href: 'mailto:info@balaenterprise.com',
@@ -28,24 +28,40 @@ export default function ContactPage() {
     {
       icon: <MapPin className="h-5 w-5 text-[#D85A30]" />,
       title: 'Factory & Showroom Address',
-      details: 'Bala Enterprise, GIDC Industrial Area, Bhavnagar - 364001, Gujarat, India',
+      details: 'Bala Enterprise Plant, GIDC Industrial Area, Bhavnagar - 364001, Gujarat, India',
       sub: 'Prior visit appointment recommended for crane inspections.',
       href: 'https://maps.google.com/?q=Bhavnagar+GIDC+Gujarat+India',
     },
     {
       icon: <Clock className="h-5 w-5 text-[#D85A30]" />,
-      title: 'Working Operations Hours',
+      title: 'Working Hours',
       details: 'Monday - Saturday: 09:00 AM - 07:00 PM',
       sub: 'Closed on Sundays and National Holidays.',
     },
   ];
 
   return (
-    <div className="bg-[#FAF9F6] min-h-screen text-[#1A1A18] relative overflow-hidden">
+    <div className="bg-[#F7EBDD] min-h-screen text-[#131312] relative overflow-hidden">
       {/* Engineering blueprint dot grid */}
-      <div className="absolute inset-0 bg-[radial-gradient(#E5E4DE_1px,transparent_1px)] [background-size:20px_20px] opacity-40 pointer-events-none" />
-      {/* Page Header — Side-by-side text + image on ALL screens */}
-      <div className="relative bg-[#1A1A18] text-white overflow-hidden py-8 sm:py-12 md:py-16 lg:py-20 border-b border-[#2A2A28]">
+      <div 
+        className="absolute inset-0 opacity-40 pointer-events-none" 
+        style={{ 
+          backgroundImage: 'radial-gradient(circle at 2px 2px, #E5E4DE 1px, transparent 0)', 
+          backgroundSize: '20px 20px' 
+        }} 
+      />
+
+      {/* Page Header */}
+      <div className="relative bg-[#1A1A18] text-white overflow-hidden py-12 sm:py-16 md:py-20 border-b border-[#2A2A28]">
+        {/* Dot pattern overlay inside header */}
+        <div 
+          className="absolute inset-0 opacity-15 pointer-events-none z-10" 
+          style={{ 
+            backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', 
+            backgroundSize: '20px 20px' 
+          }} 
+        />
+
         <div className="absolute top-0 right-0 h-full w-[42%] sm:w-[45%] lg:w-[50%] bg-[#1A1A18] origin-top-right transform skew-x-[-12deg] sm:skew-x-[-15deg] translate-x-[8%] sm:translate-x-[10%] z-0 overflow-hidden border-l border-white/10">
           <div className="absolute inset-0 transform skew-x-[12deg] sm:skew-x-[15deg] -translate-x-[8%] sm:-translate-x-[10%] w-[130%] h-full">
             <Image
@@ -60,69 +76,58 @@ export default function ContactPage() {
           </div>
         </div>
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="max-w-[55%] sm:max-w-[50%] lg:max-w-[60%] space-y-2 sm:space-y-3">
-            <span className="text-[#D85A30] text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-[0.2em] font-bold block">
-              B2B Sales Desk
-            </span>
-            <h1 className="font-heading text-xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-[1.1] text-white">
-              Contact Our Team
+        <div className="section-container relative z-10 w-full">
+          <div className="max-w-[55%] sm:max-w-[50%] lg:max-w-[60%] space-y-3">
+            <p className="label-tech text-[#D85A30] block">
+              B2B Sales & Quote Desk
+            </p>
+            <h1 className="heading-display uppercase text-white font-black">
+              Contact <span className="text-[#D85A30] italic font-medium">Us.</span>
             </h1>
-            <p className="text-[11px] sm:text-sm text-white/80 max-w-xl leading-relaxed">
-              Get in touch with our Bhavnagar GIDC engineering office. Submit your lifting parameters for custom EOT layouts and drawing quotes.
+            <p className="body-text text-white/80 max-w-xl text-xs sm:text-sm leading-relaxed">
+              Get in touch with our Bhavnagar GIDC sales team. Submit your load parameters for fast price quotes and layout drawings.
             </p>
           </div>
         </div>
       </div>
 
       {/* Main Content Layout */}
-      <section className="py-20 bg-gradient-to-b from-[#FAF9F6] to-[#E3E2DA] relative overflow-hidden border-b border-border/10">
-        {/* Engineering blueprint dot grid */}
-        <div className="absolute inset-0 bg-[radial-gradient(#E5E4DE_1px,transparent_1px)] [background-size:20px_20px] opacity-40 pointer-events-none" />
+      <section className="py-20 bg-[#F7EBDD] relative overflow-hidden border-b border-border/10">
+        <div 
+          className="absolute inset-0 opacity-40 pointer-events-none" 
+          style={{ 
+            backgroundImage: 'radial-gradient(circle at 2px 2px, #E5E4DE 1px, transparent 0)', 
+            backgroundSize: '20px 20px' 
+          }} 
+        />
 
-        {/* Giant Rotating Mechanical Cog Silhouette */}
-        <div className="absolute -right-20 -bottom-20 w-96 h-96 text-black/[0.015] pointer-events-none select-none z-0">
-          <svg
-            className="w-full h-full"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="0.35"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <circle cx="12" cy="12" r="3" />
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
-          </svg>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="section-container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             
             {/* Left Column: Contact details card list */}
             <div className="lg:col-span-5 space-y-8">
-              <div className="space-y-4">
-                <span className="text-[#D85A30] text-xs uppercase tracking-[0.2em] font-semibold block">
-                  Communication Channels
-                </span>
-                <h2 className="font-heading text-3xl sm:text-4xl font-black text-[#1A1A18] leading-tight">
-                  Reach out directly to our sales managers.
+              <div className="space-y-3">
+                <p className="label-tech mb-2">
+                  Direct Support
+                </p>
+                <h2 className="heading-section text-[#131312] font-black uppercase">
+                  Reach Out Directly <br />
+                  <span className="text-[#D85A30] italic font-medium">To Our Team.</span>
                 </h2>
-                <p className="text-sm text-[#888780] leading-relaxed">
-                  Have questions about load specs, shipping container sizes, or custom track spans? Our managers are available during workshop hours.
+                <p className="body-text text-[#131312]/80 leading-relaxed text-sm">
+                  Have questions about crane capacity, beam span, or custom track design? Our team is available during plant working hours.
                 </p>
               </div>
 
               {/* Details List */}
-              <div className="grid grid-cols-1 gap-4 pt-4">
+              <div className="grid grid-cols-1 gap-4 pt-2">
                 {contactDetails.map((detail, idx) => (
-                  <div key={idx} className="flex gap-4 p-4 bg-white/40 backdrop-blur-sm border border-black/5 rounded-lg hover:border-[#D85A30]/25 hover:bg-white/60 transition-all duration-300 relative overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.01)]">
-                    {/* Corner Tag Accent */}
-                    <div className="absolute top-0 left-0 w-1.5 h-4 bg-[#D85A30]" />
-                    <div className="w-10 h-10 rounded-full bg-[#FAF9F6] flex items-center justify-center flex-shrink-0 shadow-sm border border-border">
+                  <div key={idx} className="flex gap-4 p-4 bg-white/60 backdrop-blur-sm border border-black/10 rounded-none hover:border-[#D85A30]/40 transition-all duration-300 relative overflow-hidden shadow-sm">
+                    <div className="w-10 h-10 rounded-none bg-[#F7EBDD] flex items-center justify-center shrink-0 border border-border">
                       {detail.icon}
                     </div>
-                    <div className="space-y-1">
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-[#1A1A18]">
+                    <div className="space-y-1 font-sans">
+                      <h4 className="label-tech !text-xs !text-[#131312]">
                         {detail.title}
                       </h4>
                       {detail.href ? (
@@ -130,14 +135,14 @@ export default function ContactPage() {
                           href={detail.href}
                           target={detail.href.startsWith('http') ? '_blank' : undefined}
                           rel={detail.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                          className="block text-sm font-semibold text-[#D85A30] hover:underline"
+                          className="block text-sm font-bold text-[#D85A30] hover:underline"
                         >
                           {detail.details}
                         </a>
                       ) : (
-                        <p className="text-sm font-semibold text-[#1A1A18]">{detail.details}</p>
+                        <p className="text-sm font-bold text-[#131312]">{detail.details}</p>
                       )}
-                      <p className="text-[11px] text-[#888780] leading-normal">{detail.sub}</p>
+                      <p className="text-xs text-muted-foreground">{detail.sub}</p>
                     </div>
                   </div>
                 ))}
@@ -146,19 +151,30 @@ export default function ContactPage() {
 
             {/* Right Column: Enquiry Form Container */}
             <div className="lg:col-span-7 space-y-6">
-              <div className="bg-[#F5F4F0] border border-border p-6 sm:p-8 rounded-md shadow-sm">
-                <div className="mb-6 space-y-2">
-                  <div className="flex items-center gap-2">
-                    <ShieldCheck className="h-5 w-5 text-green-600" />
-                    <h3 className="font-heading text-lg font-bold text-[#1A1A18]">
-                      Request Drawing Layout & Quote
+              <div className="bg-[#131312] text-white border border-white/10 p-8 sm:p-10 shadow-lg relative overflow-hidden">
+                <div 
+                  className="absolute inset-0 opacity-[0.05] pointer-events-none" 
+                  style={{ 
+                    backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', 
+                    backgroundSize: '1.5rem 1.5rem' 
+                  }} 
+                />
+                
+                <div className="mb-6 space-y-2 relative z-10 border-b border-white/10 pb-6">
+                  <div className="flex items-center gap-3">
+                    <ShieldCheck className="h-6 w-6 text-[#D85A30]" />
+                    <h3 className="font-heading text-lg sm:text-xl font-bold uppercase tracking-wider text-white">
+                      Request Layout & Price Quote
                     </h3>
                   </div>
-                  <p className="text-xs text-[#888780]">
-                    Complete the form below. Our drawing layout desk will reply within 24 hours.
+                  <p className="body-text text-white/70 text-xs sm:text-sm">
+                    Complete the form below. Our team will reply with technical specifications and pricing within 24 hours.
                   </p>
                 </div>
-                <EnquiryForm sourcePage="contactpage" />
+
+                <div className="relative z-10">
+                  <EnquiryForm sourcePage="contactpage" />
+                </div>
               </div>
             </div>
 
@@ -167,10 +183,10 @@ export default function ContactPage() {
       </section>
 
       {/* Map Embed Section */}
-      <section className="relative w-full h-96 border-t border-border bg-[#F5F4F0]">
+      <section className="relative w-full h-96 border-t border-black/10 bg-[#131312]">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d118943.46914569502!2d72.1009139828458!3d21.751996503923984!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395f507b53805eb3%3A0xc3cfc2d76587c6b5!2sBhavnagar%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
-          className="absolute inset-0 w-full h-full border-0 filter grayscale contrast-125 opacity-90"
+          className="absolute inset-0 w-full h-full border-0 filter grayscale contrast-125 opacity-85"
           allowFullScreen
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
