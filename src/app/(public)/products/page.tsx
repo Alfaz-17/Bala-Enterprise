@@ -104,7 +104,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         </div>
         
         <div className="section-container relative z-10 w-full">
-          <div className="max-w-[55%] sm:max-w-[50%] lg:max-w-[60%] space-y-3">
+          <div className="max-w-[65%] sm:max-w-[55%] lg:max-w-[60%] space-y-2 sm:space-y-3">
             <p className="label-tech text-[#D85A30] block">
               Equipment List
             </p>

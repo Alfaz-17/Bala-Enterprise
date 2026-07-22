@@ -122,7 +122,7 @@ export default function ProductListing({
             <p className="label-tech !text-muted-foreground">No equipment items found in this section.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-6 lg:gap-8">
             {filteredProducts.map((prod) => (
               <ProductCard key={prod._id} product={prod} />
             ))}
