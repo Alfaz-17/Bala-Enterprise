@@ -7,7 +7,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 
 export const metadata: Metadata = {
-  title: 'Industrial Equipment Catalog | Bala Enterprise',
+  title: 'Industrial Cranes & Hoists Catalog | Bala Enterprise',
   description:
     'Browse wire rope hoists, chain blocks, stackers, pallet trucks, winches, cranes, and industrial lifting equipment from Bala Enterprise.',
 };
@@ -67,11 +67,28 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   const { categories, products } = await getProductsCatalogData(category);
 
   return (
-    <div className="bg-[#FAF9F6] min-h-screen text-[#1A1A18] relative overflow-hidden">
+    <div className="bg-[#F7EBDD] min-h-screen text-[#131312] relative overflow-hidden">
       {/* Engineering blueprint dot grid */}
-      <div className="absolute inset-0 bg-[radial-gradient(#E5E4DE_1px,transparent_1px)] [background-size:20px_20px] opacity-40 pointer-events-none" />
-      {/* Page Header — Side-by-side text + image on ALL screens */}
-      <div className="relative bg-[#1A1A18] text-white overflow-hidden py-8 sm:py-12 md:py-16 lg:py-20 border-b border-[#2A2A28]">
+      <div 
+        className="absolute inset-0 opacity-40 pointer-events-none" 
+        style={{ 
+          backgroundImage: 'radial-gradient(circle at 2px 2px, #E5E4DE 1px, transparent 0)', 
+          backgroundSize: '20px 20px' 
+        }} 
+      />
+
+      {/* Page Header */}
+      <div className="relative bg-[#1A1A18] text-white overflow-hidden py-12 sm:py-16 md:py-20 border-b border-[#2A2A28]">
+        {/* Dot pattern overlay inside header */}
+        <div 
+          className="absolute inset-0 opacity-15 pointer-events-none z-10" 
+          style={{ 
+            backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', 
+            backgroundSize: '20px 20px' 
+          }} 
+        />
+        
+        {/* Side-by-side skewed image on the right */}
         <div className="absolute top-0 right-0 h-full w-[42%] sm:w-[45%] lg:w-[50%] bg-[#1A1A18] origin-top-right transform skew-x-[-12deg] sm:skew-x-[-15deg] translate-x-[8%] sm:translate-x-[10%] z-0 overflow-hidden border-l border-white/10">
           <div className="absolute inset-0 transform skew-x-[12deg] sm:skew-x-[15deg] -translate-x-[8%] sm:-translate-x-[10%] w-[130%] h-full">
             <Image
@@ -86,22 +103,23 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
           </div>
         </div>
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="max-w-[55%] sm:max-w-[50%] lg:max-w-[60%] space-y-2 sm:space-y-3">
-            <span className="text-[#D85A30] text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-[0.2em] font-bold block">
-              B2B Equipment Catalog
-            </span>
-            <h1 className="font-heading text-xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-[1.1] text-white">
-              Equipment Catalog
+        <div className="section-container relative z-10 w-full">
+          <div className="max-w-[55%] sm:max-w-[50%] lg:max-w-[60%] space-y-3">
+            <p className="label-tech text-[#D85A30] block">
+              Equipment List
+            </p>
+            <h1 className="heading-display uppercase text-white font-black">
+              Products <span className="text-[#D85A30] italic font-medium">Catalog.</span>
             </h1>
-            <p className="text-[11px] sm:text-sm text-white/80 max-w-xl leading-relaxed">
+            <p className="body-text text-white/80 max-w-xl text-xs sm:text-sm leading-relaxed">
               Explore industrial lifting equipment by category and enquire for the exact capacity your factory needs.
             </p>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 relative z-10">
+      {/* Product Listing Main Catalog Area */}
+      <div className="section-container py-12 sm:py-16 lg:py-20 relative z-10">
         <ProductListing categories={categories} initialProducts={products} />
       </div>
     </div>
