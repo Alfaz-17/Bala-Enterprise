@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Star, Settings, ShieldCheck, Award } from 'lucide-react';
+import { ArrowRight, Star, Settings, ShieldCheck, Award, CheckCircle2 } from 'lucide-react';
 import { connectToDatabase } from '@/lib/mongoose';
 import { Category } from '@/models/Category';
 import { Product } from '@/models/Product';
@@ -24,7 +24,7 @@ async function getHomePageData() {
 
   const [categories, featuredProducts, projects, testimonials] = await Promise.all([
     Category.find({ status: 'active' }).sort({ sortOrder: 1 }).limit(9).lean(),
-    Product.find({ status: 'active', featured: true }).limit(3).lean(),
+    Product.find({ status: 'active', featured: true }).limit(6).lean(),
     Project.find({ status: 'active' }).sort({ completedDate: -1, createdAt: -1 }).limit(3).lean(),
     Testimonial.find({ status: 'active' }).sort({ createdAt: -1 }).limit(4).lean(),
   ]);
@@ -72,9 +72,11 @@ export default async function HomePage() {
   const { categories, products, testimonials } = await getHomePageData();
 
   return (
-    <div className="flex flex-col min-h-screen overflow-x-hidden">
-      <section className="relative min-h-screen lg:h-screen lg:min-h-[580px] flex items-center bg-[#131312] text-white overflow-hidden border-b border-border">
-        {/* Full-bleed Loop Video Background */}
+    <div className="flex flex-col min-h-screen overflow-x-hidden bg-background">
+      
+      {/* 01. HERO SECTION */}
+      <section className="relative min-h-screen lg:h-screen lg:min-h-[620px] flex items-center bg-[#131312] text-white overflow-hidden border-b border-white/10">
+        {/* Loop Video Background */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <video
             src="/hero.webm"
@@ -82,42 +84,49 @@ export default async function HomePage() {
             loop
             muted
             playsInline
-            className="w-full h-full object-cover opacity-65 filter brightness-90 contrast-105 pointer-events-none"
+            className="w-full h-full object-cover opacity-60 filter brightness-90 contrast-105 pointer-events-none"
           />
-          {/* Gradient overlays to match style and make text readable */}
-          <div className="absolute inset-0 bg-[#D85A30]/3 mix-blend-multiply pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#131312]/15 via-transparent to-[#131312]/50 pointer-events-none" />
+          <div className="absolute inset-0 bg-[#D85A30]/5 mix-blend-multiply pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#131312]/30 via-[#131312]/60 to-[#131312] pointer-events-none" />
         </div>
+
+        {/* Blueprint Dot Grid */}
+        <div 
+          className="absolute inset-0 opacity-[0.08] pointer-events-none z-10" 
+          style={{ 
+            backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', 
+            backgroundSize: '2.5rem 2.5rem' 
+          }} 
+        />
 
         {/* Content Container */}
         <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 pt-28 sm:pt-32 lg:pt-40 pb-16 flex items-center">
-          <div className="max-w-2xl text-left space-y-2.5 sm:space-y-3.5">
-            <span className="text-[9px] md:text-[10px] tracking-[0.25em] sm:tracking-[0.3em] uppercase text-[#D85A30] font-black block drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)]">
-              Industrial Lifting Equipment
+          <div className="max-w-2xl text-left space-y-4">
+            <span className="label-tech tracking-[0.3em] block drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)]">
+              Industrial Cranes, Hoists & Winches
             </span>
-            <h1 className="font-heading text-2xl sm:text-4xl lg:text-5xl font-black leading-tight tracking-tight text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.6)]">
-              Cranes, Hoists & Winches
-              <span className="text-[#D85A30] block mt-0.5">
-                Built for Heavy-Duty
-              </span>
+            
+            <h1 className="heading-display uppercase text-white font-black tracking-tight leading-[1.05] drop-shadow-[0_4px_16px_rgba(0,0,0,0.6)]">
+              Cranes, Hoists & Winches <br />
+              <span className="text-[#D85A30] italic font-medium">Built Heavy for Factory Work.</span>
             </h1>
             
-            <p className="text-xs sm:text-sm text-white font-medium leading-relaxed max-w-xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
-              Bala Enterprise manufactures highly reliable overhead cranes, hoists, winches, stackers, and industrial lifting machinery for factories and GIDC sites across Gujarat.
+            <p className="body-text text-white/80 font-medium leading-relaxed max-w-xl text-sm sm:text-base drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
+              Bala Enterprise makes strong, reliable overhead cranes, hoists, winches, stackers, and heavy lifting equipment for factories in Bhavnagar GIDC and across Gujarat & India.
             </p>
 
-            <div className="flex flex-wrap items-center gap-2.5 pt-2">
+            <div className="flex flex-wrap items-center gap-3 pt-4">
               <Link
                 href="/products"
-                className="px-5 py-2.5 bg-[#D85A30] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#c24a24] transition-colors rounded-sm shadow-md"
+                className="px-6 py-3.5 bg-[#D85A30] text-white text-xs font-sans font-bold uppercase tracking-wider hover:bg-[#c24a24] transition-colors rounded-none shadow-lg"
               >
-                Get a Quote
+                Get Price Quote
               </Link>
               <a
                 href="https://wa.me/919825214214?text=Hi%20Bala%20Enterprise%2C%20I%20need%20help%20with%20industrial%20lifting%20equipment."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-5 py-2.5 border border-white/35 text-white hover:border-white hover:bg-white/5 text-xs font-bold uppercase tracking-wider transition-colors rounded-sm bg-transparent"
+                className="px-6 py-3.5 border border-white/30 text-white hover:border-white hover:bg-white/10 text-xs font-sans font-bold uppercase tracking-wider transition-colors rounded-none bg-transparent"
               >
                 WhatsApp Us
               </a>
@@ -126,175 +135,78 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Categories Bento Grid Section */}
+      {/* 02. CATEGORIES CAROUSEL BENTO */}
       <HeroCategoriesBento categories={categories} />
 
-      {/* Trust Stats */}
-      <section className="bg-[#1A1A18] py-10 sm:py-12 border-b border-white/5 relative overflow-hidden">
-        {/* Subtle orange glow in background */}
-        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-48 h-48 bg-[#D85A30]/5 blur-[80px] pointer-events-none rounded-full" />
-        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-48 h-48 bg-[#FFB800]/5 blur-[80px] pointer-events-none rounded-full" />
+      {/* 03. TECHNICAL TRUST STATS (Dark strip) */}
+      <section className="bg-[#131312] py-12 border-b border-white/10 relative overflow-hidden text-white">
+        <div 
+          className="absolute inset-0 opacity-[0.05] pointer-events-none" 
+          style={{ 
+            backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', 
+            backgroundSize: '1.5rem 1.5rem' 
+          }} 
+        />
+        
+        {/* Glow Effects */}
+        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-48 h-48 bg-[#D85A30]/10 blur-[80px] pointer-events-none rounded-full" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center relative z-10">
-          <div className="md:border-r md:border-white/10 md:last:border-r-0 py-2">
-            <span className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#D85A30] block mb-1 sm:mb-2 font-black tracking-tight">11+</span>
-            <span className="text-[9px] sm:text-[10px] tracking-[0.14em] sm:tracking-[0.2em] uppercase text-white/60 font-bold">Years in Business</span>
+        <div className="section-container grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center relative z-10">
+          <div className="md:border-r md:border-white/10 py-3">
+            <span className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#D85A30] block mb-1 font-black">15+</span>
+            <span className="label-tech text-white/60">Years Experience</span>
           </div>
-          <div className="md:border-r md:border-white/10 md:last:border-r-0 py-2">
-            <span className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#D85A30] block mb-1 sm:mb-2 font-black tracking-tight">GST</span>
-            <span className="text-[9px] sm:text-[10px] tracking-[0.14em] sm:tracking-[0.2em] uppercase text-white/60 font-bold">Certified</span>
+          <div className="md:border-r md:border-white/10 py-3">
+            <span className="font-heading text-3xl sm:text-4xl lg:text-5xl text-white block mb-1 font-black">GST</span>
+            <span className="label-tech text-[#D85A30]">GST Bill & Invoice</span>
           </div>
-          <div className="md:border-r md:border-white/10 md:last:border-r-0 py-2">
-            <span className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#D85A30] block mb-1 sm:mb-2 font-black tracking-tight">9</span>
-            <span className="text-[9px] sm:text-[10px] tracking-[0.14em] sm:tracking-[0.2em] uppercase text-white/60 font-bold">Product Categories</span>
+          <div className="md:border-r md:border-white/10 py-3">
+            <span className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#D85A30] block mb-1 font-black">9+</span>
+            <span className="label-tech text-white/60">Product Types</span>
           </div>
-          <div className="py-2">
-            <span className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#D85A30] block mb-1 sm:mb-2 font-black tracking-tight">1 Hr</span>
-            <span className="text-[9px] sm:text-[10px] tracking-[0.14em] sm:tracking-[0.2em] uppercase text-white/60 font-bold">Avg Reply Time</span>
+          <div className="py-3">
+            <span className="font-heading text-3xl sm:text-4xl lg:text-5xl text-white block mb-1 font-black">Fast</span>
+            <span className="label-tech text-white/60">Price Quote</span>
           </div>
         </div>
       </section>
 
+      {/* 04. FEATURED PRODUCTS CATALOG */}
+      <section className="py-20 lg:py-28 bg-[#F7EBDD] border-b border-black/10 relative overflow-hidden">
+        {/* Radial dot grid overlay */}
+        <div 
+          className="absolute inset-0 opacity-[0.06] pointer-events-none" 
+          style={{ 
+            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(0,0,0,0.8) 1px, transparent 0)', 
+            backgroundSize: '2rem 2rem' 
+          }} 
+        />
 
-      {/* Why Choose Us */}
-      <section className="py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-[#FAF9F6] to-[#E3E2DA] text-[#1A1A18] relative overflow-hidden border-b border-border/10">
-        {/* Engineering Dot Grid Pattern */}
-        <div className="absolute inset-0 bg-[radial-gradient(#E5E4DE_1px,transparent_1px)] [background-size:20px_20px] opacity-60 pointer-events-none" />
-
-        {/* Giant Rotating Mechanical Cog Silhouette */}
-        <div className="absolute -right-20 -bottom-20 w-96 h-96 text-black/[0.015] pointer-events-none select-none z-0">
-          <svg
-            className="w-full h-full"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="0.35"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <circle cx="12" cy="12" r="3" />
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
-          </svg>
-        </div>
-
-        {/* Decorative background glow */}
-        <div className="absolute top-1/3 right-1/10 w-96 h-96 bg-[#D85A30]/5 blur-[120px] pointer-events-none rounded-full" />
-        <div className="absolute bottom-1/4 left-1/10 w-96 h-96 bg-[#FFB800]/4 blur-[120px] pointer-events-none rounded-full" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div className="section-container relative z-10">
+          {/* Section Header */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-black/10 pb-8 mb-12">
+            <div className="max-w-xl">
+              <p className="label-tech mb-3">
+                Our Main Products
+              </p>
+              <h2 className="heading-section text-[#131312] font-black uppercase">
+                Cranes, Hoists & <span className="text-[#D85A30] italic font-medium">Lifting Equipment.</span>
+              </h2>
+            </div>
             
-            {/* Left Column: Typographic Details and Checklist */}
-            <div className="lg:col-span-7 space-y-6">
-              <div className="space-y-3">
-                <span className="text-[#D85A30] text-xs uppercase tracking-[0.2em] font-bold block">
-                  Why Choose Us
-                </span>
-                <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight text-[#1A1A18]">
-                  Why Factories Trust <br/>Bala Enterprise
-                </h2>
-                <p className="text-sm text-[#888780] leading-relaxed max-w-xl">
-                  Practical engineering guidance, highly durable hoisting gear, and fast turnaround response for factories that cannot afford operational downtime. We build for performance and long service life.
-                </p>
-              </div>
-
-              {/* Grid of benefits */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
-                {[
-                  {
-                    icon: ShieldCheck,
-                    title: 'Built to Last',
-                    copy: 'Manufactured with high-tensile steel and premium electrical elements tested for heavy industrial duties.',
-                  },
-                  {
-                    icon: Settings,
-                    title: 'Fast Response',
-                    copy: 'Quick guidance on spans, load capacity, and customized drawings because downtime costs money.',
-                  },
-                  {
-                    icon: Award,
-                    title: 'GST Certified',
-                    copy: 'Fully registered compliant B2B manufacturer based in GIDC Bhavnagar so you can claim input tax credit.',
-                  },
-                  {
-                    icon: ArrowRight,
-                    title: 'Wide Catalog Range',
-                    copy: 'Complete range of overhead EOT cranes, manual hoists, electric winches, stackers, and hand pallet trucks.',
-                  },
-                ].map((item) => (
-                  <div key={item.title} className="flex gap-4 group bg-white/30 backdrop-blur-sm border border-black/5 p-4 rounded-lg hover:border-[#D85A30]/25 hover:bg-white/60 transition-all duration-300 relative overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.01)]">
-                    {/* Corner Tag Accent */}
-                    <div className="absolute top-0 left-0 w-1.5 h-4 bg-[#D85A30]" />
-                    <div className="flex-shrink-0 w-10 h-10 rounded bg-[#D85A30]/10 border border-[#D85A30]/20 flex items-center justify-center transition-colors group-hover:bg-[#D85A30] group-hover:text-white duration-300">
-                      <item.icon className="h-5 w-5 text-[#D85A30] group-hover:text-white transition-colors duration-300" />
-                    </div>
-                    <div className="space-y-1">
-                      <h3 className="font-heading text-sm font-bold text-[#1A1A18] tracking-wide">{item.title}</h3>
-                      <p className="text-xs text-[#888780] leading-relaxed">{item.copy}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* CTA Link */}
-              <div className="pt-4">
-                <Link
-                  href="#enquire"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#D85A30] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#c24a24] transition-colors rounded-sm shadow-md"
-                >
-                  <span>Get a Quote</span>
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Right Column: Factory Photo Showcase */}
-            <div className="lg:col-span-5 relative w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-square max-w-md mx-auto lg:max-w-none">
-              {/* Decorative borders */}
-              <div className="absolute inset-0 border-2 border-black/5 rounded-md transform translate-x-3 translate-y-3 -z-10" />
-              <div className="absolute inset-0 border border-[#D85A30]/30 rounded-md transform -translate-x-3 -translate-y-3 -z-10" />
-
-              {/* Main image container */}
-              <div className="relative w-full h-full rounded-md overflow-hidden shadow-2xl group border border-black/10 bg-black">
-                <Image
-                  src="/Images_Factory/chain_hoists_refined.png"
-                  alt="Bala Enterprise Factory Workshop"
-                  fill
-                  className="object-cover filter brightness-95 group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute bottom-4 left-4 bg-[#1A1A18]/85 border border-white/10 px-3 py-1.5 rounded text-[10px] font-bold uppercase tracking-wider text-white shadow-lg">
-                  Bala Factory Floor
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Products */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-[#E6E5DF] to-[#D1CFC6] border-t border-b border-border/40 relative overflow-hidden">
-        {/* Soft reflection light gradient */}
-        <div className="absolute inset-0 bg-white/20 pointer-events-none bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.15)_50%,transparent_75%)] bg-[length:250px_250px]" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4 mb-8 sm:mb-12">
-            <div className="space-y-3">
-              <span className="text-[#D85A30] text-xs uppercase tracking-[0.2em] font-semibold">Reliable Material Handling</span>
-              <h2 className="font-heading text-2xl sm:text-4xl font-black text-[#1A1A18]">Featured Equipment</h2>
-              <div className="h-0.5 w-12 bg-[#D85A30]" />
-            </div>
             <Link
               href="/products"
-              className="text-xs font-semibold hover:text-[#D85A30] transition-colors flex items-center gap-1 group"
+              className="group flex items-center gap-3 text-xs font-sans font-bold uppercase tracking-widest text-[#131312] hover:text-[#D85A30] transition-colors"
             >
-              View Full Catalog
-              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              See All Products
+              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform text-[#D85A30]" />
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-5 lg:gap-8">
+          {/* Grid Layout */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
             {products.length === 0 ? (
-              <div className="col-span-3 text-center text-sm text-[#888780] py-12">No featured products listed.</div>
+              <div className="col-span-full text-center text-sm text-muted-foreground py-16">No products found.</div>
             ) : (
               products.map((prod) => (
                 <ProductCard key={prod._id} product={prod} />
@@ -304,38 +216,135 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Our Manufacturing Facility Showcase */}
+      {/* 05. WHY CHOOSE US */}
+      <section className="py-20 lg:py-28 bg-[#131312] text-white relative overflow-hidden border-b border-white/10">
+        <div 
+          className="absolute inset-0 opacity-[0.06] pointer-events-none" 
+          style={{ 
+            backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', 
+            backgroundSize: '2rem 2rem' 
+          }} 
+        />
+
+        <div className="section-container relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            
+            {/* Left Column */}
+            <div className="lg:col-span-7 space-y-8">
+              <div>
+                <p className="label-tech mb-3">
+                  Why Buy From Us
+                </p>
+                <h2 className="heading-section text-white font-black uppercase">
+                  Why Factory Owners Trust <span className="text-[#D85A30] italic font-medium">Bala Enterprise.</span>
+                </h2>
+                <p className="body-text text-white/70 mt-4 leading-relaxed max-w-xl">
+                  We give simple technical advice, heavy-duty long lasting machinery, and fast reply for factory owners who need zero breakdown work.
+                </p>
+              </div>
+
+              {/* Feature Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {[
+                  {
+                    icon: ShieldCheck,
+                    title: 'Heavy Duty Steel',
+                    copy: 'Made with tested strong steel and powerful electric heavy motors for long life.',
+                  },
+                  {
+                    icon: Settings,
+                    title: 'Fast Technical Help',
+                    copy: 'Quick guidance on crane size, load capacity, and drawing layout for your factory.',
+                  },
+                  {
+                    icon: Award,
+                    title: 'GST Registered Factory',
+                    copy: 'Proper GST B2B invoice available for your full input tax credit.',
+                  },
+                  {
+                    icon: CheckCircle2,
+                    title: 'Full Product Range',
+                    copy: 'Complete range of EOT Cranes, Wire Rope Hoists, Winches, and Stackers.',
+                  },
+                ].map((item) => (
+                  <div 
+                    key={item.title} 
+                    className="p-6 bg-white/5 border border-white/10 hover:border-[#D85A30]/50 transition-all duration-300 relative group overflow-hidden"
+                  >
+                    <div className="w-10 h-10 bg-[#D85A30]/20 text-[#D85A30] flex items-center justify-center mb-4 border border-[#D85A30]/30 group-hover:bg-[#D85A30] group-hover:text-white transition-colors">
+                      <item.icon className="w-5 h-5" />
+                    </div>
+                    <h3 className="font-heading text-sm font-bold text-white uppercase tracking-wider mb-2">{item.title}</h3>
+                    <p className="text-xs text-white/60 leading-relaxed font-sans">{item.copy}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-2">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-3 px-6 py-3.5 bg-[#D85A30] text-white text-xs font-sans font-bold uppercase tracking-wider hover:bg-[#c24a24] transition-colors rounded-none shadow-md"
+                >
+                  <span>Visit Our Factory</span>
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Right Column: Workshop Image Showcase */}
+            <div className="lg:col-span-5 relative w-full aspect-[4/3] lg:aspect-square">
+              <div className="relative w-full h-full border border-white/10 p-2 bg-white/5">
+                <div className="relative w-full h-full overflow-hidden group">
+                  <Image
+                    src="/Images_Factory/inside_factory.png"
+                    alt="Bala Enterprise Factory Workshop"
+                    fill
+                    className="object-cover filter brightness-95 group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                  <div className="absolute bottom-6 left-6 right-6">
+                    <span className="label-tech !text-white/80 block mb-1">Bhavnagar GIDC Factory</span>
+                    <h4 className="font-heading text-base font-bold text-white uppercase">Inside Factory Workshop</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* 06. FACTORY GALLERY SHOWCASE */}
       <FactoryGallery />
 
-
-
-      {/* Testimonials */}
+      {/* 07. TESTIMONIALS */}
       {testimonials.length > 0 && (
-        <section className="py-16 sm:py-20 bg-[#1A1A18] border-t border-b border-white/5 relative overflow-hidden">
-          {/* Subtle background glow */}
-          <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-[#D85A30]/5 blur-[100px] pointer-events-none rounded-full" />
-          
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-4 relative z-10">
-            <span className="text-[#D85A30] text-xs uppercase tracking-[0.2em] font-bold">Feedback</span>
-            <h2 className="font-heading text-2xl sm:text-4xl font-black text-white mb-6 sm:mb-8">What Our Customers Say</h2>
+        <section className="py-20 bg-[#F7EBDD] border-t border-black/10 relative overflow-hidden">
+          <div className="section-container max-w-5xl relative z-10">
+            <div className="text-center mb-12">
+              <p className="label-tech mb-3">Client Reviews</p>
+              <h2 className="heading-section text-[#131312] font-black uppercase">
+                What Our Customers <span className="text-[#D85A30] italic font-medium">Say.</span>
+              </h2>
+            </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 text-left">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {testimonials.map((test) => (
-                <div key={test._id} className="bg-white/[0.03] border border-white/10 p-6 space-y-4 rounded-md backdrop-blur-sm transition-all duration-300 hover:border-[#D85A30]/40 hover:bg-white/[0.05]">
-                  <div className="flex text-[#D85A30]">
+                <div key={test._id} className="bg-white border border-black/10 p-8 shadow-sm hover:border-[#D85A30]/40 transition-colors">
+                  <div className="flex text-[#D85A30] mb-4">
                     {Array(test.rating)
                       .fill(0)
                       .map((_, i) => (
-                        <Star key={i} className="h-3.5 w-3.5 fill-current" />
+                        <Star key={i} className="h-4 w-4 fill-current" />
                       ))}
                   </div>
-                  <p className="text-sm text-white/85 leading-relaxed italic">
+                  <p className="text-sm text-[#131312]/80 leading-relaxed font-sans mb-6 italic">
                     &ldquo;{test.reviewText}&rdquo;
                   </p>
-                  <div>
-                    <h4 className="text-xs font-bold text-white">{test.clientName}</h4>
+                  <div className="border-t border-black/5 pt-4">
+                    <h4 className="text-xs font-bold font-heading text-[#131312] uppercase tracking-wider">{test.clientName}</h4>
                     {test.companyName && (
-                      <span className="text-[10px] text-white/50 mt-0.5 block">{test.companyName}</span>
+                      <span className="text-[10px] text-muted-foreground uppercase font-sans tracking-widest mt-0.5 block">{test.companyName}</span>
                     )}
                   </div>
                 </div>
@@ -345,7 +354,6 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* End of content sections */}
     </div>
   );
 }
