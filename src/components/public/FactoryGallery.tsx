@@ -5,43 +5,43 @@ import { motion } from 'framer-motion';
 
 const galleryImages = [
   {
-    src: '/Images_Factory/front_main.png',
+    src: '/Images_Factory/front_main.webp',
     alt: 'Bala Enterprise main factory entrance at Bhavnagar GIDC.',
     label: 'Main Entrance & Factory Gate',
     span: 'md:col-span-2 md:row-span-2 col-span-2 row-span-2',
   },
   {
-    src: '/Images_Factory/inside_factory.png',
+    src: '/Images_Factory/inside_factory.webp',
     alt: 'Inside Bala Enterprise heavy crane manufacturing and assembly workshop floor.',
     label: 'Assembly Workshop Floor',
     span: 'md:col-span-2 md:row-span-1 col-span-2 row-span-1',
   },
   {
-    src: '/Images_Factory/IMG_1223.JPG.jpeg',
+    src: '/Images_Factory/IMG_1223.JPG.webp',
     alt: 'Heavy duty chain pulley block load testing area.',
     label: 'Chain Block Testing Rig',
     span: 'col-span-1 row-span-1',
   },
   {
-    src: '/Images_Factory/IMG_1230.JPG.jpeg',
+    src: '/Images_Factory/IMG_1230.JPG.webp',
     alt: 'Manual hoist chain block ready for load test.',
     label: 'Manual Hoist Stock',
     span: 'col-span-1 row-span-1',
   },
   {
-    src: '/Images_Factory/IMG_1327.jpg',
+    src: '/Images_Factory/IMG_1327.webp',
     alt: 'Bala Enterprise warehouse facility with hoists and winches stock.',
     label: 'Warehouse & Stockyard',
     span: 'col-span-1 row-span-1',
   },
   {
-    src: '/Images_Factory/IMG_1329.jpg',
+    src: '/Images_Factory/IMG_1329.webp',
     alt: 'Industrial electric motor winches ready for dispatch.',
     label: 'Electric Winches Stock',
     span: 'col-span-1 row-span-1',
   },
   {
-    src: '/Images_Factory/factory_hangar_refined.png',
+    src: '/Images_Factory/factory_hangar_refined.webp',
     alt: 'Overhead crane fabrication area with overhead cranes.',
     label: 'Crane Fabrication Hangar',
     span: 'md:col-span-2 md:row-span-1 col-span-2 row-span-1',

@@ -27,7 +27,7 @@ export default function Footer() {
             <Link href="/" className="flex items-center gap-3.5 group">
               <div className="relative h-14 w-14 transition-transform group-hover:scale-105 duration-300">
                 <Image
-                  src="/logo.png"
+                  src="/logo.webp"
                   alt="Bala Enterprise Logo"
                   fill
                   className="object-contain"
@@ -66,7 +66,7 @@ export default function Footer() {
                 title="Bala Enterprise on IndiaMART"
               >
                 <Image
-                  src="/indiamart.png"
+                  src="/indiamart.webp"
                   alt="IndiaMART Logo"
                   width={110}
                   height={32}
@@ -82,7 +82,7 @@ export default function Footer() {
                 title="Bala Enterprise on TradeIndia"
               >
                 <Image
-                  src="/tradeindia.png"
+                  src="/tradeindia.webp"
                   alt="TradeIndia Logo"
                   width={110}
                   height={32}

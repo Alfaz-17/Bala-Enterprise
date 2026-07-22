@@ -109,7 +109,7 @@ export default function Header() {
                 isTransparent ? 'filter drop-shadow-[0_2px_8px_rgba(255,255,255,0.15)] brightness-110' : ''
               }`}>
                 <Image
-                  src="/logo.png"
+                  src="/logo.webp"
                   alt="Bala Enterprise Logo"
                   fill
                   priority
@@ -194,7 +194,7 @@ export default function Header() {
                 title="Bala Enterprise on IndiaMART"
               >
                 <Image
-                  src="/indiamart.png"
+                  src="/indiamart.webp"
                   alt="IndiaMART Logo"
                   width={140}
                   height={40}
@@ -211,7 +211,7 @@ export default function Header() {
                 title="Bala Enterprise on TradeIndia"
               >
                 <Image
-                  src="/tradeindia.png"
+                  src="/tradeindia.webp"
                   alt="TradeIndia Logo"
                   width={140}
                   height={40}
@@ -345,7 +345,7 @@ export default function Header() {
                   className="min-h-14 flex items-center justify-center px-3 py-2 bg-white border border-slate-200 shadow-sm rounded-md overflow-hidden"
                 >
                   <Image
-                    src="/indiamart.png"
+                    src="/indiamart.webp"
                     alt="IndiaMART Logo"
                     width={130}
                     height={36}
@@ -362,7 +362,7 @@ export default function Header() {
                   className="min-h-14 flex items-center justify-center px-3 py-2 bg-white border border-slate-200 shadow-sm rounded-md overflow-hidden"
                 >
                   <Image
-                    src="/tradeindia.png"
+                    src="/tradeindia.webp"
                     alt="TradeIndia Logo"
                     width={130}
                     height={36}

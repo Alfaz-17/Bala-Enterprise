@@ -6,14 +6,14 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Layers } from 'lucide-react';
 
 const category3DImages: Record<string, string> = {
-  'wire-rope-hoist': '/Categories_3d/0a4d7a0d-e724-4c3d-b5e3-d3020ba287bf.png',
-  'chain-block': '/Categories_3d/Chain_Block.png',
-  'manual-stacker': '/Categories_3d/Stacker.png',
-  'hand-pallet-truck': '/Categories_3d/35e73dd5-60db-4891-8715-b6c2ed715917.png',
-  'manual-geared-trolley': '/Categories_3d/Geared_Trolley.png',
-  'hydraulic-floor-crane': '/Categories_3d/Floor crane.png',
-  'electric-winch': '/Categories_3d/837efcf2-bdd8-4892-8868-267e6b22ca49.png',
-  'hand-winch': '/Categories_3d/Hand_winch.png',
+  'wire-rope-hoist': '/Categories_3d/0a4d7a0d-e724-4c3d-b5e3-d3020ba287bf.webp',
+  'chain-block': '/Categories_3d/Chain_Block.webp',
+  'manual-stacker': '/Categories_3d/Stacker.webp',
+  'hand-pallet-truck': '/Categories_3d/35e73dd5-60db-4891-8715-b6c2ed715917.webp',
+  'manual-geared-trolley': '/Categories_3d/Geared_Trolley.webp',
+  'hydraulic-floor-crane': '/Categories_3d/Floor crane.webp',
+  'electric-winch': '/Categories_3d/837efcf2-bdd8-4892-8868-267e6b22ca49.webp',
+  'hand-winch': '/Categories_3d/Hand_winch.webp',
 };
 
 interface CategoryItem {
