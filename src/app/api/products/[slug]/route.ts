@@ -128,25 +128,24 @@ export async function DELETE(_request: NextRequest, { params }: RouteParams) {
     const isId = mongoose.Types.ObjectId.isValid(slug);
     const query: Record<string, any> = isId ? { _id: slug } : { slug };
 
-    const product = await Product.findOneAndUpdate(
-      query,
-      { status: 'inactive' },
-      { new: true }
-    ).lean();
+    const product = await Product.findOneAndDelete(query).lean();
 
     if (!product) {
       return notFoundError('Product not found');
     }
+
+    // Delete associated images
+    await ProductImage.deleteMany({ product: product._id });
 
     // Trigger on-demand revalidation of catalog and detail page
     try {
       revalidatePath('/products');
       revalidatePath(`/products/${product.slug}`);
     } catch (revalError) {
-      console.error('Revalidation error after product deactivation:', revalError);
+      console.error('Revalidation error after product deletion:', revalError);
     }
 
-    return successResponse({ message: 'Product deactivated' });
+    return successResponse({ message: 'Product deleted' });
   } catch (error) {
     console.error('DELETE /api/products/[slug] error:', error);
     return errorResponse('Failed to delete product');

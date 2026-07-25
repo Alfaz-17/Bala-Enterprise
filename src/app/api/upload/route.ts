@@ -2,6 +2,8 @@ import { NextRequest } from 'next/server';
 import { uploadToCloudinary } from '@/lib/cloudinary';
 import { successResponse, errorResponse, validationError } from '@/lib/api-response';
 
+export const maxDuration = 60; // 60 seconds (max default on Vercel Hobby)
+
 /**
  * POST /api/upload
  * Accepts an image file (multipart/form-data) and uploads it to Cloudinary.

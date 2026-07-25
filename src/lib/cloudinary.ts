@@ -6,6 +6,7 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
   secure: true,
+  timeout: 180000, // 3 minutes timeout for large files / slow connections
 });
 
 /**
@@ -19,6 +20,7 @@ export async function uploadToCloudinary(fileUri: string, folder = 'bala-enterpr
     const result = await cloudinary.uploader.upload(fileUri, {
       folder,
       resource_type: 'auto',
+      timeout: 180000,
     });
     return {
       url: result.secure_url,

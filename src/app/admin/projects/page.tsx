@@ -28,7 +28,11 @@ export default function AdminProjectsPage() {
   async function handleDelete(id: string) {
     const proj = projects.find((p) => p._id === id);
     if (!proj) return;
-    await fetch(`/api/projects/${proj.slug}`, { method: 'DELETE' });
+    const res = await fetch(`/api/projects/${proj.slug}`, { method: 'DELETE' });
+    const json = await res.json();
+    if (!res.ok || !json.success) {
+      throw new Error(json.error?.message || 'Failed to delete project');
+    }
     setProjects((prev) => prev.filter((p) => p._id !== id));
   }
 

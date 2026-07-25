@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server';
 import mongoose from 'mongoose';
 import { connectToDatabase } from '@/lib/mongoose';
 import { Category } from '@/models/Category';
+import { Product } from '@/models/Product';
 import { updateCategorySchema } from '@/lib/validations';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
@@ -93,17 +94,26 @@ export async function DELETE(_request: NextRequest, { params }: RouteParams) {
     const isId = mongoose.Types.ObjectId.isValid(slug);
     const query: Record<string, any> = isId ? { _id: slug } : { slug };
 
-    const category = await Category.findOneAndUpdate(
-      query,
-      { status: 'inactive' },
-      { new: true }
-    ).lean();
+    const category = await Category.findOne(query).lean();
 
     if (!category) {
       return notFoundError('Category not found');
     }
 
-    return successResponse({ message: 'Category deactivated' });
+    // Check if there are products referencing this category
+    const productsCount = await Product.countDocuments({
+      category: category._id,
+    });
+
+    if (productsCount > 0) {
+      return validationError(
+        `Cannot delete category "${category.name}" because it has associated products. Please delete or reassign them first.`
+      );
+    }
+
+    await Category.deleteOne({ _id: category._id });
+
+    return successResponse({ message: 'Category deleted' });
   } catch (error) {
     console.error('DELETE /api/categories/[slug] error:', error);
     return errorResponse('Failed to delete category');

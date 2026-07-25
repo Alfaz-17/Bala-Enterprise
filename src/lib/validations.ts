@@ -7,7 +7,7 @@ export const createCategorySchema = z.object({
   name: z.string().min(1, 'Name is required').max(100),
   slug: z.string().min(1, 'Slug is required').max(120),
   description: z.string().optional(),
-  imageUrl: z.string().url().optional(),
+  imageUrl: z.string().optional(),
   sortOrder: z.number().int().optional(),
   status: z.enum(['active', 'inactive']).optional(),
 });
@@ -74,7 +74,7 @@ export const createBlogPostSchema = z.object({
   title: z.string().min(1, 'Title is required').max(200),
   slug: z.string().min(1, 'Slug is required').max(220),
   content: z.string().min(1, 'Content is required'),
-  featuredImage: z.string().url().optional(),
+  featuredImage: z.string().optional(),
   metaDescription: z.string().max(300).optional(),
   status: z.enum(['draft', 'published']).optional(),
   publishedAt: z.string().optional(),

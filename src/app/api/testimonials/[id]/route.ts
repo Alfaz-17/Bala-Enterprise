@@ -92,17 +92,13 @@ export async function DELETE(_request: NextRequest, { params }: RouteParams) {
       return notFoundError('Invalid ID format');
     }
 
-    const testimonial = await Testimonial.findByIdAndUpdate(
-      id,
-      { status: 'inactive' },
-      { new: true }
-    ).lean();
+    const testimonial = await Testimonial.findByIdAndDelete(id).lean();
 
     if (!testimonial) {
       return notFoundError('Testimonial not found');
     }
 
-    return successResponse({ message: 'Testimonial deactivated' });
+    return successResponse({ message: 'Testimonial deleted' });
   } catch (error) {
     console.error('DELETE /api/testimonials/[id] error:', error);
     return errorResponse('Failed to delete testimonial');

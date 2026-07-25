@@ -27,7 +27,11 @@ export default function AdminBlogPage() {
   async function handleDelete(id: string) {
     const post = posts.find((p) => p._id === id);
     if (!post) return;
-    await fetch(`/api/blog/${post.slug}`, { method: 'DELETE' });
+    const res = await fetch(`/api/blog/${post.slug}`, { method: 'DELETE' });
+    const json = await res.json();
+    if (!res.ok || !json.success) {
+      throw new Error(json.error?.message || 'Failed to delete blog post');
+    }
     setPosts((prev) => prev.filter((p) => p._id !== id));
   }
 

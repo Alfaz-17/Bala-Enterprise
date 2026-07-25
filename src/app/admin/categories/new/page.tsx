@@ -3,10 +3,12 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import ImageUpload from '@/components/admin/ImageUpload';
 
 export default function NewCategoryPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [imageUrl, setImageUrl] = useState('');
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -17,7 +19,7 @@ export default function NewCategoryPage() {
       name: formData.get('name') as string,
       slug: formData.get('slug') as string,
       description: formData.get('description') as string,
-      imageUrl: formData.get('imageUrl') as string || undefined,
+      imageUrl: imageUrl || undefined,
       sortOrder: parseInt(formData.get('sortOrder') as string) || 0,
     };
 
@@ -84,17 +86,11 @@ export default function NewCategoryPage() {
           />
         </div>
 
-        <div>
-          <label htmlFor="imageUrl" className="block text-sm font-medium text-foreground mb-1">
-            Image URL
-          </label>
-          <input
-            id="imageUrl"
-            name="imageUrl"
-            type="url"
-            className="w-full px-3 py-2 border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-          />
-        </div>
+        <ImageUpload
+          label="Category Image"
+          value={imageUrl}
+          onChange={setImageUrl}
+        />
 
         <div>
           <label htmlFor="sortOrder" className="block text-sm font-medium text-foreground mb-1">

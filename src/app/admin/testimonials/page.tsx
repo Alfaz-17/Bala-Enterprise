@@ -26,7 +26,11 @@ export default function AdminTestimonialsPage() {
   }, []);
 
   async function handleDelete(id: string) {
-    await fetch(`/api/testimonials/${id}`, { method: 'DELETE' });
+    const res = await fetch(`/api/testimonials/${id}`, { method: 'DELETE' });
+    const json = await res.json();
+    if (!res.ok || !json.success) {
+      throw new Error(json.error?.message || 'Failed to delete testimonial');
+    }
     setTestimonials((prev) => prev.filter((t) => t._id !== id));
   }
 

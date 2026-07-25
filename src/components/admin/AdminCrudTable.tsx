@@ -18,6 +18,7 @@ interface AdminCrudTableProps<T extends { _id: string }> {
   createHref?: string;
   onDelete?: (id: string) => Promise<void> | void;
   editHref?: (row: T) => string;
+  filterSection?: React.ReactNode;
 }
 
 export default function AdminCrudTable<T extends { _id: string }>({
@@ -27,6 +28,7 @@ export default function AdminCrudTable<T extends { _id: string }>({
   createHref,
   onDelete,
   editHref,
+  filterSection,
 }: AdminCrudTableProps<T>) {
   const router = useRouter();
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -45,8 +47,8 @@ export default function AdminCrudTable<T extends { _id: string }>({
               try {
                 await onDelete(id);
                 toast.success('Item deleted successfully');
-              } catch {
-                toast.error('Failed to delete item');
+              } catch (err: any) {
+                toast.error(err.message || 'Failed to delete item');
               } finally {
                 setDeletingId(null);
               }
@@ -84,6 +86,9 @@ export default function AdminCrudTable<T extends { _id: string }>({
           </a>
         )}
       </div>
+
+      {/* Filter Section */}
+      {filterSection && <div className="mb-6">{filterSection}</div>}
 
       {/* Table */}
       <div className="bg-card border border-border overflow-x-auto">

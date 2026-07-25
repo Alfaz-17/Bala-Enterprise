@@ -118,17 +118,16 @@ export async function DELETE(_request: NextRequest, { params }: RouteParams) {
     const isId = mongoose.Types.ObjectId.isValid(slug);
     const query: Record<string, any> = isId ? { _id: slug } : { slug };
 
-    const project = await Project.findOneAndUpdate(
-      query,
-      { status: 'inactive' },
-      { new: true }
-    ).lean();
+    const project = await Project.findOneAndDelete(query).lean();
 
     if (!project) {
       return notFoundError('Project not found');
     }
 
-    return successResponse({ message: 'Project deactivated' });
+    // Delete associated images
+    await ProjectImage.deleteMany({ project: project._id });
+
+    return successResponse({ message: 'Project deleted' });
   } catch (error) {
     console.error('DELETE /api/projects/[slug] error:', error);
     return errorResponse('Failed to delete project');

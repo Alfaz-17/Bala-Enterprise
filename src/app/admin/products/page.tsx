@@ -12,27 +12,84 @@ interface ProductRow {
   featured: boolean;
 }
 
+interface CategoryItem {
+  _id: string;
+  name: string;
+  slug: string;
+}
+
 export default function AdminProductsPage() {
   const [products, setProducts] = useState<ProductRow[]>([]);
+  const [categories, setCategories] = useState<CategoryItem[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [loading, setLoading] = useState(true);
 
+  // Fetch categories once on mount
   useEffect(() => {
-    fetch('/api/products?all=true&limit=50')
+    fetch('/api/categories?all=true')
+      .then((r) => r.json())
+      .then((json) => {
+        setCategories(json.data || []);
+      })
+      .catch((err) => console.error('Error fetching categories:', err));
+  }, []);
+
+  // Fetch products when selected category changes
+  useEffect(() => {
+    setLoading(true);
+    const query = selectedCategory
+      ? `/api/products?all=true&limit=100&category=${selectedCategory}`
+      : '/api/products?all=true&limit=100';
+
+    fetch(query)
       .then((r) => r.json())
       .then((json) => {
         setProducts(json.data?.data || []);
         setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Error fetching products:', err);
+        setLoading(false);
       });
-  }, []);
+  }, [selectedCategory]);
 
   async function handleDelete(id: string) {
     const prod = products.find((p) => p._id === id);
     if (!prod) return;
-    await fetch(`/api/products/${prod.slug}`, { method: 'DELETE' });
+    
+    const res = await fetch(`/api/products/${prod.slug}`, { method: 'DELETE' });
+    const json = await res.json();
+    if (!res.ok || !json.success) {
+      throw new Error(json.error?.message || 'Failed to delete product');
+    }
+    
     setProducts((prev) => prev.filter((p) => p._id !== id));
   }
 
-  if (loading) {
+  const filterSection = (
+    <div className="flex items-center gap-4 bg-card border border-border p-4">
+      <div className="flex flex-col gap-1.5 w-64">
+        <label htmlFor="categoryFilter" className="text-sm font-medium text-foreground">
+          Filter by Category
+        </label>
+        <select
+          id="categoryFilter"
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          className="w-full px-3 py-2 border border-input bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+        >
+          <option value="">All Categories</option>
+          {categories.map((cat) => (
+            <option key={cat._id} value={cat.slug}>
+              {cat.name}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
+  );
+
+  if (loading && products.length === 0) {
     return (
       <div className="flex items-center justify-center h-64 text-muted-foreground">
         Loading...
@@ -46,6 +103,7 @@ export default function AdminProductsPage() {
       createHref="/admin/products/new"
       editHref={(row) => `/admin/products/${row._id}/edit`}
       onDelete={handleDelete}
+      filterSection={filterSection}
       columns={[
         { header: 'Name', accessor: 'name' },
         { header: 'Slug', accessor: 'slug', className: 'text-muted-foreground' },

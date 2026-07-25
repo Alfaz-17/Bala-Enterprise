@@ -29,10 +29,15 @@ export default function AdminCategoriesPage() {
   }
 
   async function handleDelete(id: string) {
-    // find slug from categories state
     const cat = categories.find((c) => c._id === id);
     if (!cat) return;
-    await fetch(`/api/categories/${cat.slug}`, { method: 'DELETE' });
+    
+    const res = await fetch(`/api/categories/${cat.slug}`, { method: 'DELETE' });
+    const json = await res.json();
+    if (!res.ok || !json.success) {
+      throw new Error(json.error?.message || 'Failed to delete category');
+    }
+    
     setCategories((prev) => prev.filter((c) => c._id !== id));
   }
 
