@@ -14,7 +14,9 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
+    "@google/genai": "^2.13.0",
     "@hookform/resolvers": "^5.4.0",
+    "@huggingface/transformers": "^4.2.0",
     "@sentry/nextjs": "^10.65.0",
     "bcryptjs": "^3.0.3",
     "class-variance-authority": "^0.7.1",
