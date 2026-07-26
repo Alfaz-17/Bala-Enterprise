@@ -27,14 +27,14 @@ describe('Public Layout Components', () => {
     expect(screen.getByAltText('Bala Enterprise Logo')).toBeInTheDocument();
     expect(screen.getByText('Home')).toBeInTheDocument();
     expect(screen.getByText('Products')).toBeInTheDocument();
-    expect(screen.getByText('Factory Tour')).toBeInTheDocument();
+    expect(screen.getByText('Factory Photos')).toBeInTheDocument();
     expect(screen.getByText('Blog')).toBeInTheDocument();
   });
 
   it('should render Footer correctly', () => {
     render(<Footer />);
     expect(screen.getByAltText('Bala Enterprise Logo')).toBeInTheDocument();
-    expect(screen.getByText('GST certified manufacturer of cranes, hoists, winches, stackers, pallet trucks, and custom material handling equipment for factories across Gujarat.')).toBeInTheDocument();
+    expect(screen.getByText('GST certified manufacturer of heavy-duty overhead cranes, wire rope hoists, winches, stackers, and hand pallet trucks serving factories & GIDC industrial plants across Gujarat and India.')).toBeInTheDocument();
     expect(screen.getByText('Quick Links')).toBeInTheDocument();
     expect(screen.getAllByText('Contact Us').length).toBeGreaterThan(0);
   });

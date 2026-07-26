@@ -24,6 +24,7 @@ describe('Cloudinary Utilities', () => {
     expect(cloudinary.uploader.upload).toHaveBeenCalledWith(fileUri, {
       folder: 'test-folder',
       resource_type: 'auto',
+      timeout: 180000,
     });
     expect(result).toEqual({
       url: 'https://res.cloudinary.com/test/image/upload/v1/img.jpg',

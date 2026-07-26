@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
+import { signOut } from 'next-auth/react';
 
 interface SettingsState {
   [key: string]: string;
@@ -23,6 +24,12 @@ export default function AdminSettingsPage() {
   const [settings, setSettings] = useState<SettingsState>({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState<string | null>(null);
+
+  // Password change state
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [changingPassword, setChangingPassword] = useState(false);
 
   useEffect(() => {
     fetch('/api/settings')
@@ -48,6 +55,49 @@ export default function AdminSettingsPage() {
       toast.error(err.message || 'Failed to save setting');
     } finally {
       setSaving(null);
+    }
+  }
+
+  async function handlePasswordChange(e: React.FormEvent) {
+    e.preventDefault();
+    if (newPassword.length < 8) {
+      toast.error('New password must be at least 8 characters long.');
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      toast.error('New password and confirmation password do not match.');
+      return;
+    }
+
+    setChangingPassword(true);
+    try {
+      const res = await fetch('/api/admin/change-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          currentPassword,
+          newPassword,
+          confirmPassword,
+        }),
+      });
+      const json = await res.json();
+      if (!json.success) {
+        throw new Error(json.error?.message || 'Failed to change password.');
+      }
+
+      toast.success('Password changed successfully! Signing out...');
+      
+      setCurrentPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
+
+      setTimeout(() => {
+        signOut({ callbackUrl: '/admin/login' });
+      }, 1500);
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to change password.');
+    } finally {
+      setChangingPassword(false);
     }
   }
 
@@ -95,6 +145,62 @@ export default function AdminSettingsPage() {
           </div>
         ))}
       </div>
+
+      <h2 className="font-heading text-2xl font-bold text-foreground mt-12 mb-6">
+        Change Password
+      </h2>
+
+      <form onSubmit={handlePasswordChange} className="bg-card border border-border p-6 space-y-4">
+        <div>
+          <label className="block text-sm font-medium text-foreground mb-2">
+            Current Password
+          </label>
+          <input
+            type="password"
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
+            required
+            placeholder="••••••••"
+            className="w-full px-3 py-2 border border-input bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-foreground mb-2">
+            New Password
+          </label>
+          <input
+            type="password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            required
+            placeholder="••••••••"
+            className="w-full px-3 py-2 border border-input bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-foreground mb-2">
+            Confirm New Password
+          </label>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+            placeholder="••••••••"
+            className="w-full px-3 py-2 border border-input bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+        </div>
+
+        <button
+          type="submit"
+          disabled={changingPassword}
+          className="px-4 py-2 bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
+        >
+          {changingPassword ? 'Changing...' : 'Change Password'}
+        </button>
+      </form>
     </div>
   );
 }
