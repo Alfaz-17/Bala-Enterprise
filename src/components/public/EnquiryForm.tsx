@@ -67,7 +67,7 @@ export default function EnquiryForm({
             name="name"
             required
             suppressHydrationWarning
-            placeholder="e.g. Rakesh Patel"
+            placeholder="Enter your name"
             className="w-full min-h-12 px-4 py-2.5 bg-white/5 border border-white/20 text-white placeholder:text-white/40 text-xs font-sans focus:outline-none focus:border-[#D85A30] transition-colors"
           />
         </div>
@@ -80,7 +80,7 @@ export default function EnquiryForm({
             id="form-company"
             name="companyName"
             suppressHydrationWarning
-            placeholder="e.g. ABC Steel Industries"
+            placeholder="Enter company name (optional)"
             className="w-full min-h-12 px-4 py-2.5 bg-white/5 border border-white/20 text-white placeholder:text-white/40 text-xs font-sans focus:outline-none focus:border-[#D85A30] transition-colors"
           />
         </div>
@@ -95,7 +95,7 @@ export default function EnquiryForm({
             required
             suppressHydrationWarning
             type="tel"
-            placeholder="e.g. 98765 43210"
+            placeholder="Enter mobile number"
             className="w-full min-h-12 px-4 py-2.5 bg-white/5 border border-white/20 text-white placeholder:text-white/40 text-xs font-sans focus:outline-none focus:border-[#D85A30] transition-colors"
           />
         </div>
@@ -109,7 +109,7 @@ export default function EnquiryForm({
             name="email"
             type="email"
             suppressHydrationWarning
-            placeholder="e.g. info@abcsteel.com"
+            placeholder="Enter email address (optional)"
             className="w-full min-h-12 px-4 py-2.5 bg-white/5 border border-white/20 text-white placeholder:text-white/40 text-xs font-sans focus:outline-none focus:border-[#D85A30] transition-colors"
           />
         </div>
@@ -126,7 +126,7 @@ export default function EnquiryForm({
           suppressHydrationWarning
           rows={4}
           defaultValue={defaultMessage}
-          placeholder="e.g. We need a 10-ton EOT crane with 18 meters span for our workshop in Gujarat."
+          placeholder="Describe your lifting requirement..."
           className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder:text-white/40 text-xs font-sans focus:outline-none focus:border-[#D85A30] transition-colors resize-y"
         />
       </div>
