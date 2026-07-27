@@ -76,7 +76,7 @@ async function getProductCache() {
 
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.NEXTAUTH_URL || 'https://balaenterprise.com',
+  siteUrl: process.env.SITE_URL || 'https://www.balaenterprise.in',
   generateRobotsTxt: true,
   exclude: ['/admin*', '/api*'],
   robotsTxtOptions: {

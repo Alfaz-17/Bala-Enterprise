@@ -34,7 +34,7 @@ export async function GET() {
       <g:id>${p._id}</g:id>
       <g:title>${escapeXml(title)}</g:title>
       <g:description>${escapeXml(description)}</g:description>
-      <g:link>https://balaenterprise.com/products/${p.slug}</g:link>
+      <g:link>https://www.balaenterprise.in/products/${p.slug}</g:link>
       <g:image_link>${escapeXml(imageUrl)}</g:image_link>
       <g:availability>in_stock</g:availability>
       <g:price>${price} INR</g:price>
@@ -47,7 +47,7 @@ export async function GET() {
 <rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
   <channel>
     <title>Bala Enterprise Products</title>
-    <link>https://balaenterprise.com</link>
+    <link>https://www.balaenterprise.in</link>
     <description>Heavy lifting industrial cranes and equipment product feed</description>
     ${xmlItems}
   </channel>

@@ -66,7 +66,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title,
     description,
     alternates: {
-      canonical: `https://balaenterprise.com/products/${product.slug}`,
+      canonical: `https://www.balaenterprise.in/products/${product.slug}`,
     },
     openGraph: {
       title: product.name,
@@ -78,7 +78,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         alt: `${product.name}${capacityInfo} - Bala Enterprise`,
       })),
       type: 'website',
-      url: `https://balaenterprise.com/products/${product.slug}`,
+      url: `https://www.balaenterprise.in/products/${product.slug}`,
       siteName: 'Bala Enterprise',
     },
   };
@@ -92,7 +92,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  const currentUrl = `https://balaenterprise.com/products/${product.slug}`;
+  const currentUrl = `https://www.balaenterprise.in/products/${product.slug}`;
 
   // Product schema
   const productSchema = {
@@ -124,13 +124,13 @@ export default async function ProductDetailPage({ params }: PageProps) {
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://balaenterprise.com',
+        item: 'https://www.balaenterprise.in',
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Products',
-        item: 'https://balaenterprise.com/products',
+        item: 'https://www.balaenterprise.in/products',
       },
       ...(product.category
         ? [
@@ -138,7 +138,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
               '@type': 'ListItem',
               position: 3,
               name: product.category.name,
-              item: `https://balaenterprise.com/products?category=${product.category.slug}`,
+              item: `https://www.balaenterprise.in/products?category=${product.category.slug}`,
             },
           ]
         : []),
