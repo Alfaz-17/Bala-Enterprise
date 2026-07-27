@@ -66,7 +66,6 @@ export default function EditCategoryPage() {
         status,
       };
 
-    try {
       const res = await fetch(`/api/categories/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
