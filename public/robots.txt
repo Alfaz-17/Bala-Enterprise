@@ -3,6 +3,7 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /api
+Disallow: /temp-gallery
 
 # Host
 Host: https://www.balaenterprise.in

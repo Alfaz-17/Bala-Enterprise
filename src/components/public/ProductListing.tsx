@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { SlidersHorizontal, ChevronRight } from 'lucide-react';
 
@@ -37,6 +38,18 @@ export default function ProductListing({
   const filteredProducts = activeCategory
     ? initialProducts.filter(() => true)
     : initialProducts;
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 9;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeCategory]);
+
+  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
 
   function handleCategorySelect(slug: string) {
     const params = new URLSearchParams(searchParams.toString());
@@ -122,10 +135,47 @@ export default function ProductListing({
             <p className="label-tech !text-muted-foreground">No equipment items found in this section.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-6 lg:gap-8">
-            {filteredProducts.map((prod) => (
-              <ProductCard key={prod._id} product={prod} />
-            ))}
+          <div className="space-y-8">
+            <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-6 lg:gap-8">
+              {paginatedProducts.map((prod) => (
+                <ProductCard key={prod._id} product={prod} />
+              ))}
+            </div>
+
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-2 pt-6 border-t border-black/10">
+                <button
+                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                  className="px-4 py-2.5 bg-white border border-black/10 text-xs font-sans font-bold uppercase tracking-wider text-[#131312] disabled:opacity-40 hover:bg-[#FAF9F6] hover:text-[#D85A30] transition-colors cursor-pointer disabled:cursor-not-allowed flex items-center gap-1.5"
+                >
+                  Previous
+                </button>
+                
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                  <button
+                    key={pageNum}
+                    onClick={() => setCurrentPage(pageNum)}
+                    className={`w-10 h-10 flex items-center justify-center text-xs font-sans font-bold transition-all ${
+                      currentPage === pageNum
+                        ? 'bg-[#131312] text-white border-b-2 border-[#D85A30]'
+                        : 'bg-white border border-black/10 text-[#131312] hover:bg-[#FAF9F6] hover:text-[#D85A30]'
+                    }`}
+                  >
+                    {pageNum}
+                  </button>
+                ))}
+                
+                <button
+                  onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                  className="px-4 py-2.5 bg-white border border-black/10 text-xs font-sans font-bold uppercase tracking-wider text-[#131312] disabled:opacity-40 hover:bg-[#FAF9F6] hover:text-[#D85A30] transition-colors cursor-pointer disabled:cursor-not-allowed flex items-center gap-1.5"
+                >
+                  Next
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>
