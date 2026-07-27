@@ -19,11 +19,13 @@ export const metadata: Metadata = {
     'GST certified manufacturer of cranes, hoists, winches, stackers, pallet trucks, and industrial lifting equipment for factories across Gujarat.',
 };
 
+export const dynamic = 'force-dynamic';
+
 async function getHomePageData() {
   await connectToDatabase();
 
   const [categories, featuredProducts, projects, testimonials] = await Promise.all([
-    Category.find({ status: 'active' }).sort({ sortOrder: 1 }).limit(9).lean(),
+    Category.find({ status: 'active' }).sort({ sortOrder: 1 }).limit(50).lean(),
     Product.find({ status: 'active', featured: true }).limit(6).lean(),
     Project.find({ status: 'active' }).sort({ completedDate: -1, createdAt: -1 }).limit(3).lean(),
     Testimonial.find({ status: 'active' }).sort({ createdAt: -1 }).limit(4).lean(),

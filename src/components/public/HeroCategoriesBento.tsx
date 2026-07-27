@@ -39,9 +39,32 @@ export default function HeroCategoriesBento({ categories }: HeroCategoriesBentoP
     'hand-winch'
   ];
 
+  const getNormalizedIndex = (slug: string) => {
+    const s = slug.toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (s.includes('wireropehoist') || s.includes('ropehoist')) return 0;
+    if (s.includes('chainblock')) return 1;
+    if (s.includes('stacker')) return 2;
+    if (s.includes('pallet') || s.includes('pullet')) return 3;
+    if (s.includes('trolley')) return 4;
+    if (s.includes('floorcrane') || s.includes('crane')) {
+      if (s.includes('hoist')) return 0;
+      return 5;
+    }
+    if (s.includes('electricwinch')) return 6;
+    if (s.includes('handwinch') || s.includes('clutchwinch') || s.includes('winch')) {
+      if (s.includes('electric')) return 6;
+      return 7;
+    }
+    
+    return orderOfSlugs.findIndex(os => os.replace(/[^a-z0-9]/g, '') === s);
+  };
+
   const sortedCategories = [...categories].sort((a, b) => {
-    const idxA = orderOfSlugs.indexOf(a.slug);
-    const idxB = orderOfSlugs.indexOf(b.slug);
+    const idxA = getNormalizedIndex(a.slug);
+    const idxB = getNormalizedIndex(b.slug);
+    if (idxA === -1 && idxB === -1) {
+      return (a.sortOrder ?? 0) - (b.sortOrder ?? 0);
+    }
     if (idxA === -1) return 1;
     if (idxB === -1) return -1;
     return idxA - idxB;
@@ -104,7 +127,27 @@ export default function HeroCategoriesBento({ categories }: HeroCategoriesBentoP
           }}
         >
           {marqueeItems.map((cat, index) => {
-            const image = category3DImages[cat.slug] || cat.imageUrl || '/logo.png';
+            // Resolve 3D image based on normalized slug mapping
+            const get3DImage = (slug: string) => {
+              const s = slug.toLowerCase().replace(/[^a-z0-9]/g, '');
+              if (s.includes('wireropehoist') || s.includes('ropehoist')) return category3DImages['wire-rope-hoist'];
+              if (s.includes('chainblock')) return category3DImages['chain-block'];
+              if (s.includes('stacker')) return category3DImages['manual-stacker'];
+              if (s.includes('pallet') || s.includes('pullet')) return category3DImages['hand-pallet-truck'];
+              if (s.includes('trolley')) return category3DImages['manual-geared-trolley'];
+              if (s.includes('floorcrane') || s.includes('crane')) {
+                if (s.includes('hoist')) return category3DImages['wire-rope-hoist'];
+                return category3DImages['hydraulic-floor-crane'];
+              }
+              if (s.includes('electricwinch')) return category3DImages['electric-winch'];
+              if (s.includes('handwinch') || s.includes('clutchwinch') || s.includes('winch')) {
+                if (s.includes('electric')) return category3DImages['electric-winch'];
+                return category3DImages['hand-winch'];
+              }
+              return null;
+            };
+
+            const image = get3DImage(cat.slug) || cat.imageUrl || '/logo.png';
 
             return (
               <Link
