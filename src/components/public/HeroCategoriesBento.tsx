@@ -21,6 +21,7 @@ interface CategoryItem {
   name: string;
   slug: string;
   imageUrl?: string;
+  sortOrder?: number;
 }
 
 interface HeroCategoriesBentoProps {
