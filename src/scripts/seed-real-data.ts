@@ -37,7 +37,6 @@ async function seedRealData() {
   // Clear existing collections
   console.log('🗑️ Clearing collections...');
   await Promise.all([
-    Category.deleteMany({}),
     Product.deleteMany({}),
     ProductImage.deleteMany({}),
     Project.deleteMany({}),
@@ -46,93 +45,116 @@ async function seedRealData() {
     BlogPost.deleteMany({}),
     SiteSettings.deleteMany({}),
   ]);
-  console.log('✅ Collections cleared');
+  console.log('✅ Collections cleared (retained Categories)');
 
-  // 1. Insert 9 Categories
-  console.log('🌱 Seeding 9 Categories...');
+  // 1. Insert/Map 9 Categories
+  console.log('🌱 Seeding/Mapping 9 Categories...');
 
-  const catWireRopeHoist = await Category.create({
+  const slugMapping: Record<string, string> = {
+    'wire-rope-hoist': 'Electric-wire-Rope-Hoist',
+    'chain-block': 'Chain-block',
+    'hand-pallet-truck': 'hand-pullet-truck',
+    'hydraulic-floor-crane': 'Floor-Crane',
+    'electric-winch': 'electric-winch'
+  };
+
+  async function getOrCreateCategory(data: {
+    name: string;
+    slug: string;
+    description: string;
+    imageUrl: string;
+    sortOrder: number;
+  }) {
+    const targetSlug = slugMapping[data.slug] || data.slug;
+    const existing = await Category.findOne({
+      $or: [
+        { slug: targetSlug },
+        { slug: data.slug },
+        { name: data.name },
+        { slug: { $regex: new RegExp(`^${targetSlug.replace(/-/g, '.*')}$`, 'i') } }
+      ]
+    });
+    if (existing) {
+      console.log(`Found existing category: ${existing.name} (${existing.slug})`);
+      return existing;
+    }
+    console.log(`Skipping category: ${data.name} (${data.slug}) because it is not present in the database.`);
+    return null;
+  }
+
+  const catWireRopeHoist = await getOrCreateCategory({
     name: 'Wire Rope Hoist',
     slug: 'wire-rope-hoist',
     description: 'Electric wire rope hoists and utility hoists built for heavy overhead lifting.',
-    imageUrl: '/Categories_3d/0a4d7a0d-e724-4c3d-b5e3-d3020ba287bf.png',
+    imageUrl: '/Categories_3d/0a4d7a0d-e724-4c3d-b5e3-d3020ba287bf.webp',
     sortOrder: 1,
-    status: 'active',
   });
 
-  const catChainBlock = await Category.create({
+  const catChainBlock = await getOrCreateCategory({
     name: 'Chain Block',
     slug: 'chain-block',
     description: 'Manual and electric chain blocks and chain hoists for reliable vertical lifting.',
-    imageUrl: '/Categories_3d/Chain_Block.png',
+    imageUrl: '/Categories_3d/Chain_Block.webp',
     sortOrder: 2,
-    status: 'active',
   });
 
-  const catManualStacker = await Category.create({
+  const catManualStacker = await getOrCreateCategory({
     name: 'Manual Stacker',
     slug: 'manual-stacker',
     description: 'Hydraulic manual stackers for efficient warehouse pallet stacking and loading.',
-    imageUrl: '/Categories_3d/Stacker.png',
+    imageUrl: '/Categories_3d/Stacker.webp',
     sortOrder: 3,
-    status: 'active',
   });
 
-  const catHandPalletTruck = await Category.create({
+  const catHandPalletTruck = await getOrCreateCategory({
     name: 'Hand Pallet Truck',
     slug: 'hand-pallet-truck',
     description: 'Heavy-duty hydraulic hand pallet trucks for horizontal material handling.',
-    imageUrl: '/Categories_3d/35e73dd5-60db-4891-8715-b6c2ed715917.png',
+    imageUrl: '/Categories_3d/35e73dd5-60db-4891-8715-b6c2ed715917.webp',
     sortOrder: 4,
-    status: 'active',
   });
 
-  const catGearedTrolley = await Category.create({
+  const catGearedTrolley = await getOrCreateCategory({
     name: 'Geared Trolley',
     slug: 'manual-geared-trolley',
     description: 'Geared traveling monorail trolleys for secure beam movement.',
-    imageUrl: '/Categories_3d/Geared_Trolley.png',
+    imageUrl: '/Categories_3d/Geared_Trolley.webp',
     sortOrder: 5,
-    status: 'active',
   });
 
-  const catScissorLift = await Category.create({
+  const catScissorLift = await getOrCreateCategory({
     name: 'Scissor Lift Table',
     slug: 'hydraulic-scissor-lift-table',
     description: 'Hydraulic scissor lift tables for ergonomic height adjustment.',
-    imageUrl: '/Categories_3d/Scissor Lift Table.png',
+    imageUrl: '/Categories_3d/Scissor Lift Table.webp',
     sortOrder: 6,
-    status: 'active',
   });
 
-  const catFloorCrane = await Category.create({
+  const catFloorCrane = await getOrCreateCategory({
     name: 'Floor Crane',
     slug: 'hydraulic-floor-crane',
     description: 'Mobile hydraulic floor cranes for versatile shop floor hoisting.',
-    imageUrl: '/Categories_3d/Floor crane.png',
+    imageUrl: '/Categories_3d/Floor crane.webp',
     sortOrder: 7,
-    status: 'active',
   });
 
-  const catElectricWinch = await Category.create({
+  const catElectricWinch = await getOrCreateCategory({
     name: 'Electric Winch',
     slug: 'electric-winch',
     description: 'Electric winches, drum winches, and builder winches for heavy pulling.',
-    imageUrl: '/Categories_3d/837efcf2-bdd8-4892-8868-267e6b22ca49.png',
+    imageUrl: '/Categories_3d/837efcf2-bdd8-4892-8868-267e6b22ca49.webp',
     sortOrder: 8,
-    status: 'active',
   });
 
-  const catHandWinch = await Category.create({
+  const catHandWinch = await getOrCreateCategory({
     name: 'Hand Winch',
     slug: 'hand-winch',
     description: 'Self-locking and worm-gear manual hand winches for pulling and rigging.',
-    imageUrl: '/Categories_3d/Hand_winch.png',
+    imageUrl: '/Categories_3d/Hand_winch.webp',
     sortOrder: 9,
-    status: 'active',
   });
 
-  console.log('✅ 9 Categories seeded successfully');
+  console.log('✅ 9 Categories seeded/mapped successfully');
 
   // Helper function to seed product and its primary image
   async function addProduct(data: {
@@ -147,6 +169,10 @@ async function seedRealData() {
     category: any;
     specifications: Record<string, string>;
   }) {
+    if (!data.category) {
+      console.log(`Skipping product "${data.name}" because its category is not present in the database.`);
+      return null;
+    }
     const prod = await Product.create({
       name: data.name,
       slug: data.slug,
@@ -874,42 +900,45 @@ async function seedRealData() {
 
   // 4. Case Studies / Completed Projects
   console.log('🌱 Seeding Projects...');
-  const proj1 = await Project.create({
-    title: 'Hydraulic Scissor Lift Installation at Cargo Yard',
-    slug: 'hydraulic-scissor-lift-table-installation-cargo-yard',
-    clientName: 'Mundra Terminal Logistics',
-    industryType: 'Logistics & Distribution',
-    location: 'Mundra Port, Gujarat',
-    completedDate: new Date('2026-04-12'),
-    product: p15._id, // References Scissor Lift Table
-    description: 'We customized and commissioned a stationary 2-ton hydraulic scissor lift table for height adjustment during container unloading docks.',
-    status: 'active',
-  });
+  if (p15) {
+    const proj1 = await Project.create({
+      title: 'Hydraulic Scissor Lift Installation at Cargo Yard',
+      slug: 'hydraulic-scissor-lift-table-installation-cargo-yard',
+      clientName: 'Mundra Terminal Logistics',
+      industryType: 'Logistics & Distribution',
+      location: 'Mundra Port, Gujarat',
+      completedDate: new Date('2026-04-12'),
+      product: p15._id, // References Scissor Lift Table
+      description: 'We customized and commissioned a stationary 2-ton hydraulic scissor lift table for height adjustment during container unloading docks.',
+      status: 'active',
+    });
 
-  const proj2 = await Project.create({
-    title: 'Geared Trolley & Wire Rope Hoist Assembly Commissioning',
-    slug: 'geared-trolley-wire-rope-hoist-assembly-commissioning',
-    clientName: 'Bhavnagar Structural Steel Works',
-    industryType: 'Metal Fabrication',
-    location: 'Chitra GIDC, Bhavnagar',
-    completedDate: new Date('2026-06-08'),
-    product: p1._id, // References CD1 Electric Wire Rope Hoist
-    description: 'Supplied and assembled five CD1 model 5-Ton wire rope hoists paired with geared traveling monorail trolleys for overhead beam transport systems.',
-    status: 'active',
-  });
-
-  await ProjectImage.create([
-    {
+    await ProjectImage.create({
       project: proj1._id,
       url: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=600',
       sortOrder: 1,
-    },
-    {
+    });
+  }
+
+  if (p1) {
+    const proj2 = await Project.create({
+      title: 'Geared Trolley & Wire Rope Hoist Assembly Commissioning',
+      slug: 'geared-trolley-wire-rope-hoist-assembly-commissioning',
+      clientName: 'Bhavnagar Structural Steel Works',
+      industryType: 'Metal Fabrication',
+      location: 'Chitra GIDC, Bhavnagar',
+      completedDate: new Date('2026-06-08'),
+      product: p1._id, // References CD1 Electric Wire Rope Hoist
+      description: 'Supplied and assembled five CD1 model 5-Ton wire rope hoists paired with geared traveling monorail trolleys for overhead beam transport systems.',
+      status: 'active',
+    });
+
+    await ProjectImage.create({
       project: proj2._id,
       url: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=600',
       sortOrder: 1,
-    },
-  ]);
+    });
+  }
   console.log('✅ Projects seeded successfully');
 
   // 5. Testimonials

@@ -78,13 +78,13 @@ async function getProductCache() {
 module.exports = {
   siteUrl: process.env.SITE_URL || 'https://www.balaenterprise.in',
   generateRobotsTxt: true,
-  exclude: ['/admin*', '/api*'],
+  exclude: ['/admin*', '/api*', '/temp-gallery'],
   robotsTxtOptions: {
     policies: [
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/admin', '/api'],
+        disallow: ['/admin', '/api', '/temp-gallery'],
       },
     ],
   },
