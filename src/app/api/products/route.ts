@@ -25,12 +25,21 @@ export async function GET(request: NextRequest) {
 
     const categorySlug = searchParams.get('category');
     const featured = searchParams.get('featured');
+    const search = searchParams.get('search');
     const all = searchParams.get('all') === 'true';
     const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
     const limit = Math.min(50, Math.max(1, parseInt(searchParams.get('limit') || '10', 10)));
 
     // Build filter
-    const filter: Record<string, unknown> = {};
+    const filter: Record<string, any> = {};
+
+    if (search) {
+      filter.$or = [
+        { name: { $regex: search, $options: 'i' } },
+        { modelNumber: { $regex: search, $options: 'i' } },
+        { shortDescription: { $regex: search, $options: 'i' } },
+      ];
+    }
 
     let includeInactive = false;
     if (all) {

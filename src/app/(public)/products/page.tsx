@@ -13,23 +13,31 @@ export const metadata: Metadata = {
 };
 
 interface ProductsPageProps {
-  searchParams: Promise<{ category?: string }>;
+  searchParams: Promise<{ category?: string; search?: string }>;
 }
 
-async function getProductsCatalogData(categorySlug?: string) {
+async function getProductsCatalogData(categorySlug?: string, search?: string) {
   await connectToDatabase();
 
   const categories = await Category.find({ status: 'active' })
     .sort({ sortOrder: 1 })
     .lean();
 
-  const filter: Record<string, unknown> = { status: 'active' };
+  const filter: Record<string, any> = { status: 'active' };
 
   if (categorySlug) {
     const categoryDoc = await Category.findOne({ slug: categorySlug }).lean();
     if (categoryDoc) {
       filter.category = categoryDoc._id;
     }
+  }
+
+  if (search) {
+    filter.$or = [
+      { name: { $regex: search, $options: 'i' } },
+      { modelNumber: { $regex: search, $options: 'i' } },
+      { shortDescription: { $regex: search, $options: 'i' } }
+    ];
   }
 
   const products = await Product.find(filter).sort({ createdAt: -1 }).lean();
@@ -63,8 +71,8 @@ async function getProductsCatalogData(categorySlug?: string) {
 }
 
 export default async function ProductsPage({ searchParams }: ProductsPageProps) {
-  const { category } = await searchParams;
-  const { categories, products } = await getProductsCatalogData(category);
+  const { category, search } = await searchParams;
+  const { categories, products } = await getProductsCatalogData(category, search);
 
   return (
     <div className="bg-[#F7EBDD] min-h-screen text-[#131312] relative overflow-hidden">
