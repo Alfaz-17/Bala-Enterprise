@@ -1,15 +1,15 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { Upload, X, Loader2, ImageIcon } from 'lucide-react';
+import { Upload, X, Loader2 } from 'lucide-react';
 
 interface ImageUploadProps {
   value: string;
   onChange: (value: string) => void;
   label?: string;
-  /** Provide the raw File object back to the parent (for AI analysis) */
-  onFileReady?: (file: File) => void;
+  onFileReady?: (file: File | null) => void;
+  uploading?: boolean;
 }
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
@@ -19,12 +19,21 @@ export default function ImageUpload({
   onChange,
   label = 'Image URL',
   onFileReady,
+  uploading = false,
 }: ImageUploadProps) {
-  const [uploading, setUploading] = useState(false);
   const [isDragOver, setIsDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  async function uploadFile(file: File) {
+  // Clean up object URLs to avoid memory leaks
+  useEffect(() => {
+    return () => {
+      if (value && value.startsWith('blob:')) {
+        URL.revokeObjectURL(value);
+      }
+    };
+  }, [value]);
+
+  const processFile = useCallback((file: File) => {
     // Validate size
     if (file.size > MAX_FILE_SIZE) {
       toast.error(`File too large. Max size is ${MAX_FILE_SIZE / 1024 / 1024}MB.`);
@@ -37,40 +46,14 @@ export default function ImageUpload({
       return;
     }
 
+    const localUrl = URL.createObjectURL(file);
+    onChange(localUrl);
     if (onFileReady) onFileReady(file);
-
-    setUploading(true);
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
-      const data = await res.json();
-
-      if (data.success && data.data?.url) {
-        onChange(data.data.url);
-        toast.success('Image uploaded successfully');
-      } else {
-        const errorMsg =
-          data.error?.message || data.error || 'Upload failed. Check Cloudinary config.';
-        toast.error(errorMsg);
-        console.error('Upload error response:', data);
-      }
-    } catch (err: any) {
-      console.error('Upload network error:', err);
-      toast.error('Upload failed — network error. Please try again.');
-    } finally {
-      setUploading(false);
-    }
-  }
+  }, [onChange, onFileReady]);
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
-    if (file) uploadFile(file);
-    // Reset input so the same file can be selected again
+    if (file) processFile(file);
     if (fileInputRef.current) fileInputRef.current.value = '';
   }
 
@@ -93,10 +76,9 @@ export default function ImageUpload({
       e.stopPropagation();
       setIsDragOver(false);
       const file = e.dataTransfer.files?.[0];
-      if (file) uploadFile(file);
+      if (file) processFile(file);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [processFile]
   );
 
   return (
@@ -127,7 +109,7 @@ export default function ImageUpload({
             <>
               <Upload className="h-8 w-8 text-muted-foreground" />
               <p className="text-sm text-muted-foreground text-center">
-                <span className="font-medium text-foreground">Click to upload</span>{' '}
+                <span className="font-medium text-foreground">Click to select</span>{' '}
                 or drag & drop
               </p>
               <p className="text-xs text-muted-foreground">
@@ -147,27 +129,35 @@ export default function ImageUpload({
       ) : (
         /* Image preview + controls */
         <div className="space-y-2">
-          {/* URL input */}
+          {/* URL/Path input */}
           <div className="flex gap-2">
             <input
               type="text"
-              value={value}
-              onChange={(e) => onChange(e.target.value)}
+              value={value.startsWith('blob:') ? '' : value}
+              onChange={(e) => {
+                onChange(e.target.value);
+                if (onFileReady) onFileReady(null);
+              }}
               className="flex-1 px-3 py-2 border border-input bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-              placeholder="https://example.com/image.jpg"
+              placeholder="Local preview (uploading on save...)"
+              disabled={uploading}
             />
-            <label className="px-3 py-2 bg-muted text-foreground border border-input cursor-pointer hover:bg-accent transition-colors text-sm font-medium flex items-center gap-1.5 select-none whitespace-nowrap">
-              <ImageIcon className="h-3.5 w-3.5" />
-              {uploading ? 'Uploading...' : 'Replace'}
-              <input
-                ref={fileInputRef}
-                type="file"
-                onChange={handleFileChange}
-                accept="image/*"
-                className="hidden"
-                disabled={uploading}
-              />
-            </label>
+            <button
+              type="button"
+              onClick={() => !uploading && fileInputRef.current?.click()}
+              className="px-3 py-2 bg-muted text-foreground border border-input cursor-pointer hover:bg-accent transition-colors text-sm font-medium flex items-center gap-1.5 select-none whitespace-nowrap disabled:opacity-50"
+              disabled={uploading}
+            >
+              Replace
+            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              onChange={handleFileChange}
+              accept="image/*"
+              className="hidden"
+              disabled={uploading}
+            />
           </div>
 
           {/* Preview + actions */}
@@ -178,17 +168,26 @@ export default function ImageUpload({
               className="h-28 w-auto object-contain max-w-[240px]"
             />
 
-            {/* Remove image button */}
-            <button
-              type="button"
-              onClick={() => {
-                onChange('');
-              }}
-              className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold hover:bg-red-700 shadow-sm"
-              title="Remove image"
-            >
-              <X className="h-3 w-3" />
-            </button>
+            {uploading && (
+              <div className="absolute inset-0 bg-background/70 flex flex-col items-center justify-center gap-1">
+                <Loader2 className="h-5 w-5 text-primary animate-spin" />
+                <span className="text-[10px] text-muted-foreground font-medium">Uploading...</span>
+              </div>
+            )}
+
+            {!uploading && (
+              <button
+                type="button"
+                onClick={() => {
+                  onChange('');
+                  if (onFileReady) onFileReady(null);
+                }}
+                className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold hover:bg-red-700 shadow-sm"
+                title="Remove image"
+              >
+                <X className="h-3 w-3" />
+              </button>
+            )}
           </div>
         </div>
       )}

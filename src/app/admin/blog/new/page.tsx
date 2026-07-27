@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import ImageUpload from '@/components/admin/ImageUpload';
+import { uploadImage } from '@/lib/upload-client';
 
 export default function NewBlogPostPage() {
   const router = useRouter();
@@ -11,6 +12,7 @@ export default function NewBlogPostPage() {
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
   const [featuredImage, setFeaturedImage] = useState('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [content, setContent] = useState('');
   const [metaDescription, setMetaDescription] = useState('');
   const [status, setStatus] = useState<'draft' | 'published'>('draft');
@@ -21,19 +23,25 @@ export default function NewBlogPostPage() {
     e.preventDefault();
     setSaving(true);
 
-    const body = {
-      title,
-      slug,
-      content,
-      featuredImage: featuredImage || undefined,
-      metaDescription: metaDescription || undefined,
-      status,
-      publishedAt: status === 'published' 
-        ? (publishedAt ? new Date(publishedAt).toISOString() : new Date().toISOString())
-        : undefined,
-    };
-
     try {
+      let finalImageUrl = featuredImage;
+
+      if (imageFile) {
+        finalImageUrl = await uploadImage(imageFile);
+      }
+
+      const body = {
+        title,
+        slug,
+        content,
+        featuredImage: finalImageUrl || undefined,
+        metaDescription: metaDescription || undefined,
+        status,
+        publishedAt: status === 'published' 
+          ? (publishedAt ? new Date(publishedAt).toISOString() : new Date().toISOString())
+          : undefined,
+      };
+
       const res = await fetch('/api/blog', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -48,9 +56,9 @@ export default function NewBlogPostPage() {
 
       toast.success('Blog post created successfully');
       router.push('/admin/blog');
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      toast.error('Failed to create blog post');
+      toast.error(err.message || 'Failed to create blog post');
     } finally {
       setSaving(false);
     }
@@ -98,6 +106,8 @@ export default function NewBlogPostPage() {
           label="Featured Image"
           value={featuredImage}
           onChange={setFeaturedImage}
+          onFileReady={setImageFile}
+          uploading={saving}
         />
 
         <div>

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import toast from 'react-hot-toast';
 import ImageUpload from '@/components/admin/ImageUpload';
+import { uploadImage } from '@/lib/upload-client';
 
 export default function EditBlogPostPage() {
   const router = useRouter();
@@ -13,6 +14,7 @@ export default function EditBlogPostPage() {
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
   const [featuredImage, setFeaturedImage] = useState('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [content, setContent] = useState('');
   const [metaDescription, setMetaDescription] = useState('');
   const [status, setStatus] = useState<'draft' | 'published'>('draft');
@@ -59,19 +61,25 @@ export default function EditBlogPostPage() {
     e.preventDefault();
     setSaving(true);
 
-    const body = {
-      title,
-      slug,
-      content,
-      featuredImage: featuredImage || undefined,
-      metaDescription: metaDescription || undefined,
-      status,
-      publishedAt: status === 'published' 
-        ? (publishedAt ? new Date(publishedAt).toISOString() : new Date().toISOString())
-        : undefined,
-    };
-
     try {
+      let finalImageUrl = featuredImage;
+
+      if (imageFile) {
+        finalImageUrl = await uploadImage(imageFile);
+      }
+
+      const body = {
+        title,
+        slug,
+        content,
+        featuredImage: finalImageUrl || undefined,
+        metaDescription: metaDescription || undefined,
+        status,
+        publishedAt: status === 'published' 
+          ? (publishedAt ? new Date(publishedAt).toISOString() : new Date().toISOString())
+          : undefined,
+      };
+
       const res = await fetch(`/api/blog/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -86,9 +94,9 @@ export default function EditBlogPostPage() {
 
       toast.success('Blog post updated successfully');
       router.push('/admin/blog');
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      toast.error('Failed to update blog post');
+      toast.error(err.message || 'Failed to update blog post');
     } finally {
       setSaving(false);
     }
@@ -137,6 +145,8 @@ export default function EditBlogPostPage() {
           label="Featured Image"
           value={featuredImage}
           onChange={setFeaturedImage}
+          onFileReady={setImageFile}
+          uploading={saving}
         />
 
         <div>

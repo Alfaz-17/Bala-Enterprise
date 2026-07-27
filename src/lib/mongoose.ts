@@ -33,7 +33,8 @@ export async function connectToDatabase() {
 
   if (!global.mongooseConnection.promise) {
     global.mongooseConnection.promise = mongoose.connect(MONGODB_URI as string, {
-      // Options can be extended as needed.
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 15000,
     }).then((mongooseConn) => {
       global.mongooseConnection!.conn = mongooseConn;
       return mongooseConn;

@@ -4,41 +4,52 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import ImageUpload from '@/components/admin/ImageUpload';
+import { uploadImage } from '@/lib/upload-client';
 
 export default function NewCategoryPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
 
-    const formData = new FormData(e.currentTarget);
-    const body = {
-      name: formData.get('name') as string,
-      slug: formData.get('slug') as string,
-      description: formData.get('description') as string,
-      imageUrl: imageUrl || undefined,
-      sortOrder: parseInt(formData.get('sortOrder') as string) || 0,
-    };
+    try {
+      let finalImageUrl = imageUrl;
 
-    const res = await fetch('/api/categories', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
+      if (imageFile) {
+        finalImageUrl = await uploadImage(imageFile);
+      }
 
-    const json = await res.json();
-    setLoading(false);
+      const formData = new FormData(e.currentTarget);
+      const body = {
+        name: formData.get('name') as string,
+        slug: formData.get('slug') as string,
+        description: formData.get('description') as string,
+        imageUrl: finalImageUrl || undefined,
+        sortOrder: parseInt(formData.get('sortOrder') as string) || 0,
+      };
 
-    if (!json.success) {
-      toast.error(json.error?.message || 'Failed to create category');
-      return;
+      const res = await fetch('/api/categories', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+
+      const json = await res.json();
+      if (!json.success) {
+        throw new Error(json.error?.message || 'Failed to create category');
+      }
+
+      toast.success('Category created successfully');
+      router.push('/admin/categories');
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to create category');
+    } finally {
+      setLoading(false);
     }
-
-    toast.success('Category created successfully');
-    router.push('/admin/categories');
   }
 
   return (
@@ -90,6 +101,8 @@ export default function NewCategoryPage() {
           label="Category Image"
           value={imageUrl}
           onChange={setImageUrl}
+          onFileReady={setImageFile}
+          uploading={loading}
         />
 
         <div>

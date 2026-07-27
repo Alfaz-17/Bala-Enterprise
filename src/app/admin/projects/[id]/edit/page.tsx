@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import toast from 'react-hot-toast';
 import ImageUpload from '@/components/admin/ImageUpload';
+import { uploadImage } from '@/lib/upload-client';
 
 interface ProductItem {
   _id: string;
@@ -25,6 +26,7 @@ export default function EditProjectPage() {
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState<'active' | 'inactive'>('active');
   const [images, setImages] = useState<string[]>([]);
+  const [imageFiles, setImageFiles] = useState<(File | null)[]>([]);
 
   const [products, setProducts] = useState<ProductItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -68,7 +70,9 @@ export default function EditProjectPage() {
           }
 
           if (Array.isArray(project.images)) {
-            setImages(project.images.map((img: any) => img.url));
+            const urls = project.images.map((img: any) => img.url);
+            setImages(urls);
+            setImageFiles(new Array(urls.length).fill(null));
           }
         } else {
           toast.error('Failed to load project details');
@@ -85,20 +89,28 @@ export default function EditProjectPage() {
     e.preventDefault();
     setSaving(true);
 
-    const body = {
-      title,
-      slug,
-      clientName: clientName || undefined,
-      industryType: industryType || undefined,
-      location: location || undefined,
-      completedDate: completedDate || undefined,
-      productId: productId || undefined,
-      description: description || undefined,
-      status,
-      images: images.filter(Boolean),
-    };
-
     try {
+      const uploadedUrls = [...images];
+      for (let i = 0; i < imageFiles.length; i++) {
+        const file = imageFiles[i];
+        if (file) {
+          uploadedUrls[i] = await uploadImage(file);
+        }
+      }
+
+      const body = {
+        title,
+        slug,
+        clientName: clientName || undefined,
+        industryType: industryType || undefined,
+        location: location || undefined,
+        completedDate: completedDate || undefined,
+        productId: productId || undefined,
+        description: description || undefined,
+        status,
+        images: uploadedUrls.filter(Boolean),
+      };
+
       const res = await fetch(`/api/projects/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -113,9 +125,9 @@ export default function EditProjectPage() {
 
       toast.success('Project updated successfully');
       router.push('/admin/projects');
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      toast.error('Failed to update project');
+      toast.error(err.message || 'Failed to update project');
     } finally {
       setSaving(false);
     }
@@ -123,16 +135,26 @@ export default function EditProjectPage() {
 
   function addImageField() {
     setImages((prev) => [...prev, '']);
+    setImageFiles((prev) => [...prev, null]);
   }
 
   function removeImageField(index: number) {
     setImages((prev) => prev.filter((_, i) => i !== index));
+    setImageFiles((prev) => prev.filter((_, i) => i !== index));
   }
 
   function handleImageChange(index: number, val: string) {
     setImages((prev) => {
       const next = [...prev];
       next[index] = val;
+      return next;
+    });
+  }
+
+  function handleFileReady(index: number, file: File | null) {
+    setImageFiles((prev) => {
+      const next = [...prev];
+      next[index] = file;
       return next;
     });
   }
@@ -288,6 +310,8 @@ export default function EditProjectPage() {
                       label={`Image #${index + 1}`}
                       value={imgUrl}
                       onChange={(val) => handleImageChange(index, val)}
+                      onFileReady={(file) => handleFileReady(index, file)}
+                      uploading={saving}
                     />
                   </div>
                   <button

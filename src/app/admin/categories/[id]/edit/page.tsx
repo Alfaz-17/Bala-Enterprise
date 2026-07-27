@@ -4,6 +4,7 @@ import { useState, useEffect, use } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import toast from 'react-hot-toast';
 import ImageUpload from '@/components/admin/ImageUpload';
+import { uploadImage } from '@/lib/upload-client';
 
 export default function EditCategoryPage() {
   const router = useRouter();
@@ -14,6 +15,7 @@ export default function EditCategoryPage() {
   const [slug, setSlug] = useState('');
   const [description, setDescription] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [sortOrder, setSortOrder] = useState(0);
   const [status, setStatus] = useState<'active' | 'inactive'>('active');
   
@@ -48,14 +50,21 @@ export default function EditCategoryPage() {
     e.preventDefault();
     setSaving(true);
 
-    const body = {
-      name,
-      slug,
-      description,
-      imageUrl: imageUrl || undefined,
-      sortOrder,
-      status,
-    };
+    try {
+      let finalImageUrl = imageUrl;
+
+      if (imageFile) {
+        finalImageUrl = await uploadImage(imageFile);
+      }
+
+      const body = {
+        name,
+        slug,
+        description,
+        imageUrl: finalImageUrl || undefined,
+        sortOrder,
+        status,
+      };
 
     try {
       const res = await fetch(`/api/categories/${id}`, {
@@ -136,6 +145,8 @@ export default function EditCategoryPage() {
           label="Category Image"
           value={imageUrl}
           onChange={setImageUrl}
+          onFileReady={setImageFile}
+          uploading={saving}
         />
 
         <div>

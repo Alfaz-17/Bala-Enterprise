@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import ImageUpload from '@/components/admin/ImageUpload';
 import ProductPreview from '@/components/admin/ProductPreview';
 import { Sparkles, Loader2 } from 'lucide-react';
+import { uploadImage } from '@/lib/upload-client';
 
 interface CategoryItem {
   _id: string;
@@ -27,6 +28,7 @@ export default function NewProductPage() {
   const [featured, setFeatured] = useState(false);
   const [status, setStatus] = useState<'active' | 'inactive'>('active');
   const [images, setImages] = useState<string[]>([]);
+  const [imageFiles, setImageFiles] = useState<(File | null)[]>([]);
 
   const [categories, setCategories] = useState<CategoryItem[]>([]);
   const [categoriesLoading, setCategoriesLoading] = useState(true);
@@ -60,22 +62,30 @@ export default function NewProductPage() {
 
     setSaving(true);
 
-    const body = {
-      name,
-      slug,
-      categoryId,
-      modelNumber: modelNumber || undefined,
-      capacity: capacity || undefined,
-      span: span || undefined,
-      priceDisplay: priceDisplay || undefined,
-      shortDescription: shortDescription || undefined,
-      fullDescription: fullDescription || undefined,
-      featured,
-      status,
-      images: images.filter(Boolean),
-    };
-
     try {
+      const uploadedUrls = [...images];
+      for (let i = 0; i < imageFiles.length; i++) {
+        const file = imageFiles[i];
+        if (file) {
+          uploadedUrls[i] = await uploadImage(file);
+        }
+      }
+
+      const body = {
+        name,
+        slug,
+        categoryId,
+        modelNumber: modelNumber || undefined,
+        capacity: capacity || undefined,
+        span: span || undefined,
+        priceDisplay: priceDisplay || undefined,
+        shortDescription: shortDescription || undefined,
+        fullDescription: fullDescription || undefined,
+        featured,
+        status,
+        images: uploadedUrls.filter(Boolean),
+      };
+
       const res = await fetch('/api/products', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -90,9 +100,9 @@ export default function NewProductPage() {
 
       toast.success('Product created successfully');
       router.push('/admin/products');
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      toast.error('Failed to create product');
+      toast.error(err.message || 'Failed to create product');
     } finally {
       setSaving(false);
     }
@@ -100,10 +110,13 @@ export default function NewProductPage() {
 
   function addImageField() {
     setImages((prev) => [...prev, '']);
+    setImageFiles((prev) => [...prev, null]);
   }
 
   function removeImageField(index: number) {
     setImages((prev) => prev.filter((_, i) => i !== index));
+    setImageFiles((prev) => prev.filter((_, i) => i !== index));
+    if (index === 0) setFirstFile(null);
   }
 
   function handleImageChange(index: number, val: string) {
@@ -112,6 +125,17 @@ export default function NewProductPage() {
       next[index] = val;
       return next;
     });
+  }
+
+  function handleFileReady(index: number, file: File | null) {
+    setImageFiles((prev) => {
+      const next = [...prev];
+      next[index] = file;
+      return next;
+    });
+    if (index === 0) {
+      setFirstFile(file);
+    }
   }
 
   // --- AI Auto-Fill ---
@@ -273,9 +297,8 @@ export default function NewProductPage() {
                         label={`Image #${index + 1} ${index === 0 ? '(Primary / Cover)' : ''}`}
                         value={imgUrl}
                         onChange={(val) => handleImageChange(index, val)}
-                        onFileReady={(file) => {
-                          if (index === 0) setFirstFile(file);
-                        }}
+                        onFileReady={(file) => handleFileReady(index, file)}
+                        uploading={saving}
                       />
                     </div>
                     <button
