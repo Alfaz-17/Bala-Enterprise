@@ -19,16 +19,19 @@ function getMongoUri() {
   return null;
 }
 
-let productCache = null;
+let sitemapCache = null;
 
-async function getProductCache() {
-  if (productCache) return productCache;
-  productCache = new Map();
+async function getSitemapDataCache() {
+  if (sitemapCache) return sitemapCache;
+  sitemapCache = {
+    products: new Map(),
+    categories: []
+  };
 
   const uri = getMongoUri();
   if (!uri) {
     console.warn('MONGODB_URI not found. Skipping sitemap product data injection.');
-    return productCache;
+    return sitemapCache;
   }
 
   try {
@@ -47,6 +50,13 @@ async function getProductCache() {
       .find()
       .toArray();
 
+    // Fetch active categories
+    const categories = await mongoose.connection.db.collection('categories')
+      .find({ status: 'active' })
+      .toArray();
+
+    sitemapCache.categories = categories;
+
     // Map images by product ID
     for (const p of products) {
       const productImages = images
@@ -54,7 +64,7 @@ async function getProductCache() {
         .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
 
       const capacityInfo = p.capacity ? ` - ${p.capacity}` : '';
-      productCache.set(`/products/${p.slug}`, {
+      sitemapCache.products.set(`/products/${p.slug}`, {
         name: p.name,
         shortDescription: p.shortDescription || p.name,
         images: productImages.map(img => ({
@@ -71,7 +81,7 @@ async function getProductCache() {
     await mongoose.disconnect();
   }
 
-  return productCache;
+  return sitemapCache;
 }
 
 /** @type {import('next-sitemap').IConfig} */
@@ -89,23 +99,35 @@ module.exports = {
     ],
   },
   additionalPaths: async (config) => {
-    const cache = await getProductCache();
+    const cache = await getSitemapDataCache();
     const result = [];
-    for (const [relPath, product] of cache.entries()) {
+    
+    // 1. Add product URLs
+    for (const [relPath, product] of cache.products.entries()) {
       result.push({
-        loc: relPath, // next-sitemap will resolve it using siteUrl
+        loc: relPath,
         changefreq: 'weekly',
         priority: 0.8,
         images: product.images,
       });
     }
+
+    // 2. Add Category URLs
+    for (const cat of cache.categories) {
+      result.push({
+        loc: `/products?category=${cat.slug}`,
+        changefreq: 'weekly',
+        priority: 0.7,
+      });
+    }
+
     return result;
   },
   transform: async (config, path) => {
     // Check if path is a product detail page (e.g. from static crawl)
     if (path.startsWith('/products/')) {
-      const cache = await getProductCache();
-      const product = cache.get(path);
+      const cache = await getSitemapDataCache();
+      const product = cache.products.get(path);
 
       if (product) {
         return {
