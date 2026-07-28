@@ -11,9 +11,11 @@ const category3DImages: Record<string, string> = {
   'manual-stacker': '/Categories_3d/Stacker.webp',
   'hand-pallet-truck': '/Categories_3d/35e73dd5-60db-4891-8715-b6c2ed715917.webp',
   'manual-geared-trolley': '/Categories_3d/Geared_Trolley.webp',
+  'hydraulic-scissor-lift-table': '/Categories_3d/Scissor Lift Table.webp',
   'hydraulic-floor-crane': '/Categories_3d/Floor crane.webp',
   'electric-winch': '/Categories_3d/837efcf2-bdd8-4892-8868-267e6b22ca49.webp',
   'hand-winch': '/Categories_3d/Hand_winch.webp',
+  'motors-and-accessories': 'https://tiimg.tistatic.com/fp/10/010/213/crane-motor-989.jpg',
 };
 
 interface CategoryItem {

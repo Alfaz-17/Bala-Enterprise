@@ -26,8 +26,8 @@ export default function ProductQuoteModal({
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs">
-          <div className="bg-[#131312] border border-white/15 w-full max-w-lg p-6 sm:p-8 space-y-6 relative shadow-2xl overflow-hidden">
+        <div className="fixed inset-0 z-[200] overflow-y-auto p-4 sm:p-6 flex items-center justify-center bg-black/80 backdrop-blur-xs animate-fade-in">
+          <div className="bg-[#131312] border border-white/15 w-full max-w-lg p-6 sm:p-8 space-y-6 relative shadow-2xl my-auto max-h-[90vh] overflow-y-auto">
             {/* Dot Grid background overlay */}
             <div 
               className="absolute inset-0 opacity-[0.05] pointer-events-none" 

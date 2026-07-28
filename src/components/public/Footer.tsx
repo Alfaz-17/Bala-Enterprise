@@ -1,9 +1,39 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { MapPin, Phone, Mail, ArrowUpRight } from 'lucide-react';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const [siteInfo, setSiteInfo] = useState({
+    phone: '+919825214214',
+    phoneDisplay: '+91 98252 14214',
+    email: 'info@balaenterprise.com',
+    address: 'Bala Enterprise Factory, Bhavnagar GIDC Industrial Area, Gujarat - 364001, India',
+    tradeindiaUrl: 'https://www.tradeindia.com/bala-enterprise-24235777/',
+    indiamartUrl: 'https://www.indiamart.com/balaenterprises-gujarat/profile.html?srsltid=AfmBOoo-CME_id8olb_pyMrBd8IurDJTfC_G5k_UzNsao729y8RASlvF',
+  });
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.data) {
+          const d = json.data;
+          setSiteInfo((prev) => ({
+            phone: d.phone_number ? d.phone_number.replace(/\s+/g, '') : prev.phone,
+            phoneDisplay: d.phone_number || prev.phoneDisplay,
+            email: d.email || prev.email,
+            address: d.address || prev.address,
+            tradeindiaUrl: d.tradeindia_url || prev.tradeindiaUrl,
+            indiamartUrl: d.indiamart_url || prev.indiamartUrl,
+          }));
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   return (
     <footer className="bg-[#131312] text-white mt-auto relative overflow-hidden border-t border-white/10">
@@ -51,7 +81,7 @@ export default function Footer() {
               <span className="bg-[#D85A30]/15 border border-[#D85A30]/40 text-[#D85A30] px-3 py-1 text-[9px] uppercase font-bold tracking-widest">
                 ISO 9001 Certified
               </span>
-              <span className="font-mono text-[10px] text-white/60 bg-white/5 border border-white/10 px-3 py-1">
+              <span className="px-3 py-1 bg-white/5 border border-white/10 text-white/80 font-mono text-[10px] uppercase font-bold tracking-wider">
                 GSTIN: 24AIVPM3595R2Z1
               </span>
             </div>
@@ -59,7 +89,7 @@ export default function Footer() {
             {/* Verified B2B Partner Badges */}
             <div className="flex items-center gap-2.5 pt-2">
               <a
-                href="https://www.indiamart.com/"
+                href={siteInfo.indiamartUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="h-10 px-3 bg-white hover:bg-slate-50 transition-all duration-300 rounded-md shadow-sm border border-slate-300 hover:scale-105 flex items-center justify-center overflow-hidden"
@@ -75,7 +105,7 @@ export default function Footer() {
               </a>
 
               <a
-                href="https://www.tradeindia.com/"
+                href={siteInfo.tradeindiaUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="h-10 px-3 bg-white hover:bg-slate-50 transition-all duration-300 rounded-md shadow-sm border border-slate-300 hover:scale-105 flex items-center justify-center overflow-hidden"
@@ -145,18 +175,18 @@ export default function Footer() {
             <ul className="space-y-4 text-xs sm:text-sm font-sans text-white/70">
               <li className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 text-[#D85A30] shrink-0 mt-1" />
-                <span className="leading-relaxed">Bala Enterprise Factory, Bhavnagar GIDC Industrial Area, Gujarat - 364001, India</span>
+                <span className="leading-relaxed">{siteInfo.address}</span>
               </li>
               <li>
-                <a href="tel:+919825214214" className="flex items-center gap-3 hover:text-[#D85A30] transition-colors">
+                <a href={`tel:${siteInfo.phone}`} className="flex items-center gap-3 hover:text-[#D85A30] transition-colors">
                   <Phone className="h-4 w-4 text-[#D85A30] shrink-0" />
-                  <span className="font-bold text-white">+91 98252 14214</span>
+                  <span className="font-bold text-white">{siteInfo.phoneDisplay}</span>
                 </a>
               </li>
               <li>
-                <a href="mailto:info@balaenterprise.com" className="flex items-center gap-3 hover:text-[#D85A30] transition-colors">
+                <a href={`mailto:${siteInfo.email}`} className="flex items-center gap-3 hover:text-[#D85A30] transition-colors">
                   <Mail className="h-4 w-4 text-[#D85A30] shrink-0" />
-                  <span>info@balaenterprise.com</span>
+                  <span>{siteInfo.email}</span>
                 </a>
               </li>
             </ul>

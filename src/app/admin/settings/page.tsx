@@ -14,10 +14,12 @@ const settingFields = [
   { key: 'email', label: 'Email', placeholder: 'info@balaenterprise.com' },
   { key: 'address', label: 'Address', placeholder: 'Full address...' },
   { key: 'google_maps_url', label: 'Google Maps URL', placeholder: 'https://maps.google.com/...' },
-  { key: 'facebook_url', label: 'Facebook URL', placeholder: 'https://facebook.com/...' },
-  { key: 'instagram_url', label: 'Instagram URL', placeholder: 'https://instagram.com/...' },
   { key: 'youtube_url', label: 'YouTube URL', placeholder: 'https://youtube.com/...' },
+  { key: 'instagram_url', label: 'Instagram URL', placeholder: 'https://instagram.com/...' },
   { key: 'linkedin_url', label: 'LinkedIn URL', placeholder: 'https://linkedin.com/...' },
+  { key: 'facebook_url', label: 'Facebook URL', placeholder: 'https://facebook.com/...' },
+  { key: 'tradeindia_url', label: 'TradeIndia Profile URL', placeholder: 'https://www.tradeindia.com/bala-enterprise-24235777/' },
+  { key: 'indiamart_url', label: 'IndiaMART Profile URL', placeholder: 'https://www.indiamart.com/balaenterprises-gujarat/profile.html' },
 ];
 
 export default function AdminSettingsPage() {

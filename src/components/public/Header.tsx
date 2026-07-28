@@ -27,7 +27,38 @@ export default function Header() {
   const [searchResults, setSearchResults] = useState<{ _id: string; name: string; slug: string; capacity?: string; thumbnail?: string }[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showResults, setShowResults] = useState(false);
+  const [siteInfo, setSiteInfo] = useState({
+    phone: '+919825214214',
+    phoneDisplay: '+91 98252 14214',
+    email: 'info@balaenterprise.com',
+    instagramUrl: 'https://www.instagram.com/',
+    youtubeUrl: 'https://www.youtube.com/',
+    linkedinUrl: 'https://www.linkedin.com/',
+    tradeindiaUrl: 'https://www.tradeindia.com/bala-enterprise-24235777/',
+    indiamartUrl: 'https://www.indiamart.com/balaenterprises-gujarat/profile.html?srsltid=AfmBOoo-CME_id8olb_pyMrBd8IurDJTfC_G5k_UzNsao729y8RASlvF',
+  });
   const searchContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.data) {
+          const d = json.data;
+          setSiteInfo((prev) => ({
+            phone: d.phone_number ? d.phone_number.replace(/\s+/g, '') : prev.phone,
+            phoneDisplay: d.phone_number || prev.phoneDisplay,
+            email: d.email || prev.email,
+            instagramUrl: d.instagram_url || prev.instagramUrl,
+            youtubeUrl: d.youtube_url || prev.youtubeUrl,
+            linkedinUrl: d.linkedin_url || prev.linkedinUrl,
+            tradeindiaUrl: d.tradeindia_url || prev.tradeindiaUrl,
+            indiamartUrl: d.indiamart_url || prev.indiamartUrl,
+          }));
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -168,7 +199,7 @@ export default function Header() {
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden md:flex space-x-6 lg:space-x-8 h-full items-center">
+            <nav className="hidden md:flex items-center space-x-3 lg:space-x-5 xl:space-x-7 h-full shrink-0">
               {links.map((link) => {
                 if (link.label === 'Products') {
                   return (
@@ -232,15 +263,15 @@ export default function Header() {
             </nav>
 
             {/* Official Brand Logos & Social Icons */}
-            <div className="hidden md:flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-2 lg:gap-3 shrink-0">
               {/* Search Bar with Typeahead */}
-              <div ref={searchContainerRef} className="relative hidden lg:block mr-2">
-                <div className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full border transition-all duration-300 ${
+              <div ref={searchContainerRef} className="relative hidden lg:block">
+                <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border transition-all duration-300 ${
                   isTransparent 
                     ? 'bg-white/10 border-white/20 text-white focus-within:bg-white/20 focus-within:border-white/40' 
                     : 'bg-black/5 border-black/10 text-[#1A1A18] focus-within:bg-white focus-within:border-[#D85A30] focus-within:shadow-md'
                 }`}>
-                  <Search className="h-3.5 w-3.5 opacity-60" />
+                  <Search className="h-3.5 w-3.5 opacity-60 shrink-0" />
                   <input
                     type="text"
                     placeholder="Search machinery..."
@@ -251,8 +282,22 @@ export default function Header() {
                     }}
                     onFocus={() => { if (searchQuery.trim()) setShowResults(true); }}
                     onKeyDown={handleSearchSubmit}
-                    className="bg-transparent border-none outline-none text-xs font-sans placeholder-current opacity-80 focus:opacity-100 transition-all duration-300 w-28 focus:w-44 text-current"
+                    className="bg-transparent border-none outline-none text-xs font-sans placeholder-current opacity-80 focus:opacity-100 transition-all duration-300 w-32 xl:w-40 text-current"
                   />
+                  {searchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSearchQuery('');
+                        setShowResults(false);
+                        setSearchResults([]);
+                      }}
+                      className="p-0.5 hover:opacity-100 opacity-60 transition-opacity shrink-0"
+                      title="Clear search"
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  )}
                 </div>
 
                 {/* Typeahead Results Dropdown */}
@@ -319,43 +364,56 @@ export default function Header() {
                   </div>
                 )}
               </div>
-              {/* IndiaMART Official Brand Logo Badge */}
+              {/* IndiaMART Official Square Badge */}
               <a
-                href="https://www.indiamart.com/"
+                href={siteInfo.indiamartUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="h-11 px-3.5 bg-white hover:bg-slate-50 transition-all duration-300 rounded-md shadow-sm border border-slate-300 hover:border-[#2E3192] hover:scale-105 flex items-center justify-center overflow-hidden"
+                className="w-9 h-9 bg-white hover:bg-slate-100 transition-all duration-300 rounded-sm shadow-sm border border-slate-300 hover:border-[#2E3192] hover:scale-105 flex items-center justify-center overflow-hidden shrink-0 p-1"
                 title="Bala Enterprise on IndiaMART"
               >
                 <Image
                   src="/indiamart.webp"
                   alt="IndiaMART Logo"
-                  width={140}
-                  height={40}
-                  className="h-9 w-auto object-contain scale-125 transition-transform duration-300"
+                  width={36}
+                  height={36}
+                  className="w-full h-full object-contain scale-125"
                 />
               </a>
 
-              {/* TradeIndia Official Brand Logo Badge */}
+              {/* TradeIndia Official Square Badge */}
               <a
-                href="https://www.tradeindia.com/"
+                href={siteInfo.tradeindiaUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="h-11 px-3.5 bg-white hover:bg-slate-50 transition-all duration-300 rounded-md shadow-sm border border-slate-300 hover:border-[#E52823] hover:scale-105 flex items-center justify-center overflow-hidden"
+                className="w-9 h-9 bg-white hover:bg-slate-100 transition-all duration-300 rounded-sm shadow-sm border border-slate-300 hover:border-[#E52823] hover:scale-105 flex items-center justify-center overflow-hidden shrink-0 p-1"
                 title="Bala Enterprise on TradeIndia"
               >
                 <Image
                   src="/tradeindia.webp"
                   alt="TradeIndia Logo"
-                  width={140}
-                  height={40}
-                  className="h-9 w-auto object-contain scale-110 transition-transform duration-300"
+                  width={36}
+                  height={36}
+                  className="w-full h-full object-contain scale-110"
                 />
+              </a>
+
+              {/* YouTube Icon */}
+              <a
+                href={siteInfo.youtubeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 flex items-center justify-center bg-[#FF0000] hover:bg-[#cc0000] text-white transition-all duration-300 rounded-sm shadow-sm hover:scale-105 shrink-0"
+                title="YouTube Channel"
+              >
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
               </a>
 
               {/* Instagram Icon */}
               <a
-                href="https://www.instagram.com/"
+                href={siteInfo.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 flex items-center justify-center bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white transition-all duration-300 rounded-sm shadow-sm hover:scale-105 shrink-0"
@@ -368,7 +426,7 @@ export default function Header() {
 
               {/* LinkedIn Icon */}
               <a
-                href="https://www.linkedin.com/"
+                href={siteInfo.linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 flex items-center justify-center bg-[#0A66C2] hover:bg-[#084e96] text-white transition-all duration-300 rounded-sm shadow-sm hover:scale-105 shrink-0"
@@ -517,7 +575,7 @@ export default function Header() {
             <div className="grid grid-cols-2 gap-3">
               {/* IndiaMART Badge */}
               <a
-                href="https://www.indiamart.com/"
+                href="https://www.indiamart.com/balaenterprises-gujarat/profile.html?srsltid=AfmBOoo-CME_id8olb_pyMrBd8IurDJTfC_G5k_UzNsao729y8RASlvF"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsOpen(false)}
@@ -533,7 +591,7 @@ export default function Header() {
               </a>
               {/* TradeIndia Badge */}
               <a
-                href="https://www.tradeindia.com/"
+                href="https://www.tradeindia.com/bala-enterprise-24235777/"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsOpen(false)}
@@ -549,14 +607,27 @@ export default function Header() {
               </a>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 text-center">
+            <div className="grid grid-cols-3 gap-2 text-center">
+              {/* YouTube */}
+              <a
+                href={siteInfo.youtubeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsOpen(false)}
+                className="py-2.5 bg-[#FF0000] text-white text-[10px] font-sans font-black uppercase tracking-wider rounded-sm flex items-center justify-center gap-1"
+              >
+                <svg className="w-3.5 h-3.5 fill-current shrink-0" viewBox="0 0 24 24">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+                <span>YouTube</span>
+              </a>
               {/* Instagram */}
               <a
                 href="https://www.instagram.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsOpen(false)}
-                className="py-2.5 bg-gradient-to-r from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white text-[10px] font-sans font-black uppercase tracking-wider rounded-sm flex items-center justify-center gap-1.5"
+                className="py-2.5 bg-gradient-to-r from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white text-[10px] font-sans font-black uppercase tracking-wider rounded-sm flex items-center justify-center gap-1"
               >
                 <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
                   <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
