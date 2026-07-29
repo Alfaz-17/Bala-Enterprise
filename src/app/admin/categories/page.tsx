@@ -10,6 +10,7 @@ interface CategoryRow {
   slug: string;
   status: string;
   sortOrder: number;
+  imageUrl?: string;
 }
 
 export default function AdminCategoriesPage() {
@@ -56,6 +57,25 @@ export default function AdminCategoriesPage() {
       editHref={(row) => `/admin/categories/${row._id}/edit`}
       onDelete={handleDelete}
       columns={[
+        {
+          header: 'Image',
+          accessor: (row) => (
+            row.imageUrl ? (
+              <div className="relative w-10 h-10 bg-muted overflow-hidden border border-border">
+                <img
+                  src={row.imageUrl}
+                  alt={row.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ) : (
+              <div className="w-10 h-10 bg-muted border border-border flex items-center justify-center text-[10px] text-muted-foreground">
+                No Image
+              </div>
+            )
+          ),
+          className: 'w-16',
+        },
         { header: 'Name', accessor: 'name' },
         { header: 'Slug', accessor: 'slug', className: 'text-muted-foreground' },
         {

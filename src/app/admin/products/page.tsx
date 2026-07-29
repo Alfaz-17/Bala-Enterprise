@@ -10,6 +10,7 @@ interface ProductRow {
   capacity?: string;
   status: string;
   featured: boolean;
+  thumbnail?: string | null;
 }
 
 interface CategoryItem {
@@ -105,6 +106,25 @@ export default function AdminProductsPage() {
       onDelete={handleDelete}
       filterSection={filterSection}
       columns={[
+        {
+          header: 'Image',
+          accessor: (row) => (
+            row.thumbnail ? (
+              <div className="relative w-10 h-10 bg-muted overflow-hidden border border-border">
+                <img
+                  src={row.thumbnail}
+                  alt={row.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ) : (
+              <div className="w-10 h-10 bg-muted border border-border flex items-center justify-center text-[10px] text-muted-foreground">
+                No Image
+              </div>
+            )
+          ),
+          className: 'w-16',
+        },
         { header: 'Name', accessor: 'name' },
         { header: 'Slug', accessor: 'slug', className: 'text-muted-foreground' },
         { header: 'Capacity', accessor: 'capacity' },
