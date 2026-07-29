@@ -1,6 +1,8 @@
 import { NextRequest } from 'next/server';
 import { connectToDatabase } from '@/lib/mongoose';
 import { SiteSettings } from '@/models/SiteSettings';
+
+export const dynamic = 'force-dynamic';
 import { updateSiteSettingsSchema } from '@/lib/validations';
 import {
   successResponse,

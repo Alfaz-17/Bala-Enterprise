@@ -2,6 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ShieldCheck, CheckCircle2, Award, Phone, FileCheck, ShieldAlert, Factory, Wrench, Flame, Truck, Anchor, Building2, HardHat, Warehouse } from 'lucide-react';
 import type { Metadata } from 'next';
+import { connectToDatabase } from '@/lib/mongoose';
+import { SiteSettings } from '@/models/SiteSettings';
 
 export const metadata: Metadata = {
   title: 'About Our Factory & Manufacturing Process | Bala Enterprise',
@@ -9,7 +11,18 @@ export const metadata: Metadata = {
     'ISO 9001:2015 certified manufacturer of overhead cranes, wire rope hoists, and electric winches in Bhavnagar GIDC, Gujarat. Learn how we build and test your heavy lifting machines.',
 };
 
-export default function AboutPage() {
+export const dynamic = 'force-dynamic';
+
+export default async function AboutPage() {
+  await connectToDatabase();
+  const settings = await SiteSettings.find().lean();
+  const settingsMap: Record<string, string> = {};
+  for (const s of settings) {
+    settingsMap[s.settingKey] = s.settingValue;
+  }
+
+  const phoneDisplay = settingsMap.phone_number || '+91 98252 14214';
+  const phoneLink = phoneDisplay.replace(/\s+/g, '');
   const stats = [
     { label: 'Years Experience', value: '15+' },
     { label: 'Cranes & Hoists Built', value: '500+' },
@@ -407,11 +420,11 @@ export default function AboutPage() {
               Get Price Quote
             </Link>
             <a
-              href="tel:+919825214214"
+              href={`tel:${phoneLink}`}
               className="px-5 py-3 border border-white/20 hover:border-white text-white text-xs font-bold uppercase tracking-wider transition-colors flex items-center gap-2 rounded-none"
             >
               <Phone className="h-4 w-4 text-[#D85A30]" />
-              Call +91 98252 14214
+              Call {phoneDisplay}
             </a>
           </div>
         </div>

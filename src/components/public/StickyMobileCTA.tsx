@@ -1,15 +1,35 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { Phone, MessageSquare } from 'lucide-react';
 
 export default function StickyMobileCTA() {
-  const phoneNumber = '+919825214214';
-  const whatsappUrl = `https://wa.me/919825214214?text=Hi%20Bala%20Enterprise%2C%20I%20am%20interested%20in%20your%20material%20handling%20equipment.`;
+  const [siteInfo, setSiteInfo] = useState({
+    phone: '+919825214214',
+    whatsapp: '919825214214',
+  });
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.data) {
+          const d = json.data;
+          setSiteInfo({
+            phone: d.phone_number ? d.phone_number.replace(/\s+/g, '') : '+919825214214',
+            whatsapp: d.whatsapp_number ? d.whatsapp_number.replace(/[^0-9]/g, '') : '919825214214',
+          });
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const whatsappUrl = `https://wa.me/${siteInfo.whatsapp}?text=Hi%20Bala%20Enterprise%2C%20I%20am%20interested%20in%20your%20material%20handling%20equipment.`;
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-border p-3 grid grid-cols-2 gap-3 md:hidden shadow-[0_-4px_12px_rgba(0,0,0,0.05)] [padding-bottom:max(0.75rem,env(safe-area-inset-bottom))]">
       <a
-        href={`tel:${phoneNumber}`}
+        href={`tel:${siteInfo.phone}`}
         className="min-h-12 flex items-center justify-center gap-2 py-3 bg-[#1A1A18] text-white text-xs font-bold uppercase tracking-wider rounded-sm shadow-sm active:scale-95 transition-transform"
       >
         <Phone className="h-4 w-4" />

@@ -162,18 +162,18 @@ export default function Header() {
             </div>
             <div className="flex items-center gap-3 shrink-0">
               <a
-                href="tel:+919825214214"
+                href={`tel:${siteInfo.phone}`}
                 className="flex items-center gap-1.5 hover:text-primary transition-colors text-white/80 font-medium"
               >
                 <Phone className="h-3 w-3 text-primary" />
                 <span className="hidden min-[380px]:inline">Call</span>
               </a>
               <a 
-                href="mailto:info@balaenterprise.com" 
+                href={`mailto:${siteInfo.email}`} 
                 className="flex items-center gap-1.5 hover:text-primary transition-colors text-white/80 font-medium"
               >
                 <Mail className="h-3 w-3 text-primary" />
-                <span className="hidden min-[520px]:inline">info@balaenterprise.com</span>
+                <span className="hidden min-[520px]:inline">{siteInfo.email}</span>
               </a>
             </div>
           </div>

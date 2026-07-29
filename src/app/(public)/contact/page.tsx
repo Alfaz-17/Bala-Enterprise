@@ -2,6 +2,8 @@ import { Phone, Mail, MapPin, Clock, ShieldCheck } from 'lucide-react';
 import EnquiryForm from '@/components/public/EnquiryForm';
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import { connectToDatabase } from '@/lib/mongoose';
+import { SiteSettings } from '@/models/SiteSettings';
 
 export const metadata: Metadata = {
   title: 'Contact Our Sales Desk & Factory | Bala Enterprise',
@@ -9,28 +11,43 @@ export const metadata: Metadata = {
     'Contact Bala Enterprise at Bhavnagar GIDC, Gujarat. Request custom gantry crane quotes, EOT drawing layouts, and pricing details from our engineering desk.',
 };
 
-export default function ContactPage() {
+export const dynamic = 'force-dynamic';
+
+export default async function ContactPage() {
+  await connectToDatabase();
+  const settings = await SiteSettings.find().lean();
+  const settingsMap: Record<string, string> = {};
+  for (const s of settings) {
+    settingsMap[s.settingKey] = s.settingValue;
+  }
+
+  const phoneDisplay = settingsMap.phone_number || '+91 98252 14214';
+  const phoneLink = phoneDisplay.replace(/\s+/g, '');
+  const email = settingsMap.email || 'info@balaenterprise.com';
+  const address = settingsMap.address || 'Bala Enterprise Plant, GIDC Industrial Area, Bhavnagar - 364001, Gujarat, India';
+  const googleMapsUrl = settingsMap.google_maps_url || 'https://maps.google.com/?q=Bhavnagar+GIDC+Gujarat+India';
+
   const contactDetails = [
     {
       icon: <Phone className="h-5 w-5 text-[#D85A30]" />,
       title: 'Call / WhatsApp Sales Desk',
-      details: '+91 98252 14214',
+      details: phoneDisplay,
       sub: 'Mon-Sat, 9:00 AM - 7:00 PM IST',
-      href: 'tel:+919825214214',
+      href: `tel:${phoneLink}`,
     },
     {
       icon: <Mail className="h-5 w-5 text-[#D85A30]" />,
       title: 'Email Support',
-      details: 'info@balaenterprise.com',
+      details: email,
       sub: 'Sales: sales@balaenterprise.com',
-      href: 'mailto:info@balaenterprise.com',
+      href: `mailto:${email}`,
     },
     {
       icon: <MapPin className="h-5 w-5 text-[#D85A30]" />,
       title: 'Factory & Showroom Address',
-      details: 'Bala Enterprise Plant, GIDC Industrial Area, Bhavnagar - 364001, Gujarat, India',
+      details: address,
       sub: 'Prior visit appointment recommended for crane inspections.',
-      href: 'https://maps.google.com/?q=Bhavnagar+GIDC+Gujarat+India',
+      href: googleMapsUrl,
     },
     {
       icon: <Clock className="h-5 w-5 text-[#D85A30]" />,
