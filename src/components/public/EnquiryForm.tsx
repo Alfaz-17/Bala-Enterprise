@@ -25,9 +25,7 @@ export default function EnquiryForm({
     const formData = new FormData(e.currentTarget);
     const body = {
       name: formData.get('name') as string,
-      companyName: formData.get('companyName') as string || undefined,
       phone: formData.get('phone') as string,
-      email: formData.get('email') as string || undefined,
       message: formData.get('message') as string,
       productId,
       sourcePage,
@@ -56,38 +54,25 @@ export default function EnquiryForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 font-sans">
+    <form onSubmit={handleSubmit} className="space-y-4 font-sans text-left">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label htmlFor="form-name" className="label-tech !text-white/80 block mb-1.5">
-            Your Name *
+            Name / Company Name *
           </label>
           <input
             id="form-name"
             name="name"
             required
             suppressHydrationWarning
-            placeholder="Enter your name"
-            className="w-full min-h-12 px-4 py-2.5 bg-white/5 border border-white/20 text-white placeholder:text-white/40 text-xs font-sans focus:outline-none focus:border-[#D85A30] transition-colors"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="form-company" className="label-tech !text-white/80 block mb-1.5">
-            Company Name
-          </label>
-          <input
-            id="form-company"
-            name="companyName"
-            suppressHydrationWarning
-            placeholder="Enter company name (optional)"
-            className="w-full min-h-12 px-4 py-2.5 bg-white/5 border border-white/20 text-white placeholder:text-white/40 text-xs font-sans focus:outline-none focus:border-[#D85A30] transition-colors"
+            placeholder="Enter your name or company"
+            className="w-full min-h-12 px-4 py-2.5 bg-[#1e1e1c] border border-white/20 text-white placeholder:text-white/30 text-xs font-sans focus:outline-none focus:border-[#D85A30] transition-colors rounded-none"
           />
         </div>
 
         <div>
           <label htmlFor="form-phone" className="label-tech !text-white/80 block mb-1.5">
-            Mobile / Phone *
+            Contact Number *
           </label>
           <input
             id="form-phone"
@@ -95,22 +80,8 @@ export default function EnquiryForm({
             required
             suppressHydrationWarning
             type="tel"
-            placeholder="Enter mobile number"
-            className="w-full min-h-12 px-4 py-2.5 bg-white/5 border border-white/20 text-white placeholder:text-white/40 text-xs font-sans focus:outline-none focus:border-[#D85A30] transition-colors"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="form-email" className="label-tech !text-white/80 block mb-1.5">
-            Email Address
-          </label>
-          <input
-            id="form-email"
-            name="email"
-            type="email"
-            suppressHydrationWarning
-            placeholder="Enter email address (optional)"
-            className="w-full min-h-12 px-4 py-2.5 bg-white/5 border border-white/20 text-white placeholder:text-white/40 text-xs font-sans focus:outline-none focus:border-[#D85A30] transition-colors"
+            placeholder="Enter contact/mobile number"
+            className="w-full min-h-12 px-4 py-2.5 bg-[#1e1e1c] border border-white/20 text-white placeholder:text-white/30 text-xs font-sans focus:outline-none focus:border-[#D85A30] transition-colors rounded-none"
           />
         </div>
       </div>
@@ -127,7 +98,7 @@ export default function EnquiryForm({
           rows={4}
           defaultValue={defaultMessage}
           placeholder="Describe your lifting requirement..."
-          className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder:text-white/40 text-xs font-sans focus:outline-none focus:border-[#D85A30] transition-colors resize-y"
+          className="w-full px-4 py-3 bg-[#1e1e1c] border border-white/20 text-white placeholder:text-white/30 text-xs font-sans focus:outline-none focus:border-[#D85A30] transition-colors resize-y rounded-none"
         />
       </div>
 
@@ -136,7 +107,7 @@ export default function EnquiryForm({
           type="submit"
           disabled={loading}
           suppressHydrationWarning
-          className="w-full sm:w-auto min-h-12 px-8 py-3 bg-[#D85A30] text-white text-xs font-bold uppercase tracking-widest hover:bg-[#c24a24] transition-colors disabled:opacity-50 shadow-md"
+          className="w-full sm:w-auto min-h-12 px-8 py-3 bg-[#D85A30] text-white text-xs font-bold uppercase tracking-widest hover:bg-[#c24a24] transition-colors disabled:opacity-50 shadow-md rounded-none"
         >
           {loading ? 'Submitting...' : 'Submit Price Enquiry'}
         </button>
