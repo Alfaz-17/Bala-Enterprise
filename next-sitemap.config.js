@@ -67,11 +67,26 @@ async function getSitemapDataCache() {
       sitemapCache.products.set(`/products/${p.slug}`, {
         name: p.name,
         shortDescription: p.shortDescription || p.name,
-        images: productImages.map(img => ({
-          loc: img.url,
-          title: `${p.name}${capacityInfo}`,
-          caption: p.shortDescription || p.name,
-        })),
+        images: productImages.map(img => {
+          const imgUrl = img.url;
+          if (!imgUrl) return null;
+          
+          // Ensure absolute URL
+          const absoluteUrl = imgUrl.startsWith('http')
+            ? imgUrl
+            : `https://www.balaenterprise.in${imgUrl.startsWith('/') ? '' : '/'}${imgUrl}`;
+          
+          try {
+            return {
+              loc: new URL(absoluteUrl),
+              title: `${p.name}${capacityInfo}`,
+              caption: p.shortDescription || p.name,
+            };
+          } catch (e) {
+            console.error(`Invalid URL for product image: ${absoluteUrl}`, e);
+            return null;
+          }
+        }).filter(Boolean),
       });
     }
   } catch (err) {

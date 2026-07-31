@@ -20,6 +20,8 @@ const settingFields = [
   { key: 'facebook_url', label: 'Facebook URL', placeholder: 'https://facebook.com/...' },
   { key: 'tradeindia_url', label: 'TradeIndia Profile URL', placeholder: 'https://www.tradeindia.com/bala-enterprise-24235777/' },
   { key: 'indiamart_url', label: 'IndiaMART Profile URL', placeholder: 'https://www.indiamart.com/balaenterprises-gujarat/profile.html' },
+  { key: 'google_site_verification', label: 'Google Site Verification Code', placeholder: 'google1a9235a9002fce74 or meta content value' },
+  { key: 'bing_site_verification', label: 'Bing Site Verification Code', placeholder: 'msvalidate.01 content value' },
 ];
 
 export default function AdminSettingsPage() {

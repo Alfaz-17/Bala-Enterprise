@@ -8,6 +8,7 @@ import { ProductImage } from '@/models/ProductImage';
 import { Project } from '@/models/Project';
 import { ProjectImage } from '@/models/ProjectImage';
 import { Testimonial } from '@/models/Testimonial';
+import { SiteSettings } from '@/models/SiteSettings';
 import ProductCard from '@/components/public/ProductCard';
 import FactoryGallery from '@/components/public/FactoryGallery';
 import HeroCategoriesBento from '@/components/public/HeroCategoriesBento';
@@ -17,6 +18,18 @@ export const metadata: Metadata = {
   title: 'Bala Enterprise | Cranes, Hoists & Winches in Bhavnagar',
   description:
     'GST certified manufacturer of cranes, hoists, winches, stackers, pallet trucks, and industrial lifting equipment for factories across Gujarat.',
+  keywords: [
+    'Bala Enterprise',
+    'Bala Enterprises',
+    'Bala Enterprise Bhavnagar',
+    'Bala Enterprise Gujarat',
+    'Bala Enterprise India',
+    'Overhead Cranes Bhavnagar',
+    'Wire Rope Hoists Gujarat',
+    'Electric Winches Manufacturer',
+    'Industrial Lifting Equipment Bhavnagar',
+    'GST Certified Crane Manufacturer'
+  ],
   alternates: {
     canonical: '/',
   },
@@ -42,12 +55,18 @@ export const dynamic = 'force-dynamic';
 async function getHomePageData() {
   await connectToDatabase();
 
-  const [categories, featuredProducts, projects, testimonials] = await Promise.all([
+  const [categories, featuredProducts, projects, testimonials, settings] = await Promise.all([
     Category.find({ status: 'active' }).sort({ sortOrder: 1 }).limit(50).lean(),
     Product.find({ status: 'active', featured: true }).limit(6).lean(),
     Project.find({ status: 'active' }).sort({ completedDate: -1, createdAt: -1 }).limit(3).lean(),
     Testimonial.find({ status: 'active' }).sort({ createdAt: -1 }).limit(4).lean(),
+    SiteSettings.find().lean(),
   ]);
+
+  const settingsMap: Record<string, string> = {};
+  for (const s of settings) {
+    settingsMap[s.settingKey] = s.settingValue;
+  }
 
   // Attach main thumbnail image to each product
   const productIds = featuredProducts.map((p) => p._id);
@@ -85,11 +104,21 @@ async function getHomePageData() {
     products: mappedProducts,
     projects: mappedProjects,
     testimonials: testimonials.map((t) => ({ ...t, _id: String(t._id) })),
+    settings: settingsMap,
   };
 }
 
 export default async function HomePage() {
-  const { categories, products, testimonials } = await getHomePageData();
+  const { categories, products, testimonials, settings } = await getHomePageData();
+
+  const sameAsLinks = [
+    settings.tradeindia_url || 'https://www.tradeindia.com/bala-enterprise-24235777/',
+    settings.indiamart_url || 'https://www.indiamart.com/balaenterprises-gujarat/profile.html?srsltid=AfmBOoo-CME_id8olb_pyMrBd8IurDJTfC_G5k_UzNsao729y8RASlvF',
+  ];
+  if (settings.facebook_url) sameAsLinks.push(settings.facebook_url);
+  if (settings.instagram_url) sameAsLinks.push(settings.instagram_url);
+  if (settings.linkedin_url) sameAsLinks.push(settings.linkedin_url);
+  if (settings.youtube_url) sameAsLinks.push(settings.youtube_url);
 
   const localBusinessSchema = {
     '@context': 'https://schema.org',
@@ -101,11 +130,11 @@ export default async function HomePage() {
     image: 'https://www.balaenterprise.in/Images_Factory/inside_factory.png',
     description:
       'GST certified manufacturer of overhead cranes, wire rope hoists, winches, stackers, pallet trucks, and industrial lifting equipment in Bhavnagar GIDC, Gujarat.',
-    telephone: '+919825214214',
-    email: 'info@balaenterprise.com',
+    telephone: settings.phone_number || '+919825214214',
+    email: settings.email || 'info@balaenterprise.com',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Bala Enterprise Factory, Bhavnagar GIDC Industrial Area',
+      streetAddress: settings.address || 'Bala Enterprise Factory, Bhavnagar GIDC Industrial Area',
       addressLocality: 'Bhavnagar',
       addressRegion: 'Gujarat',
       postalCode: '364001',
@@ -116,10 +145,7 @@ export default async function HomePage() {
       latitude: '21.752',
       longitude: '72.1009',
     },
-    sameAs: [
-      'https://www.tradeindia.com/bala-enterprise-24235777/',
-      'https://www.indiamart.com/balaenterprises-gujarat/profile.html?srsltid=AfmBOoo-CME_id8olb_pyMrBd8IurDJTfC_G5k_UzNsao729y8RASlvF',
-    ],
+    sameAs: sameAsLinks,
   };
 
   return (

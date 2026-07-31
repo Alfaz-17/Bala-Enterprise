@@ -10,10 +10,18 @@
  *   node scrape-images.js
  */
 
+
+
 const axios = require("axios");
 const cheerio = require("cheerio");
 const fs = require("fs-extra");
 const path = require("path");
+
+
+
+
+
+
 
 // Map each category page to a folder name for organizing downloads
 const CATEGORY_PAGES = [
@@ -39,6 +47,13 @@ async function downloadImage(imageUrl, filepath) {
     console.error(`❌ Failed: ${imageUrl} — ${err.message}`);
   }
 }
+
+
+
+
+
+
+
 
 // Turns "Electric Winch 1 Ton" into "electric-winch-1-ton" for clean SEO filenames
 function slugify(text) {

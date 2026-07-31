@@ -104,5 +104,5 @@ export const updateEnquiryStatusSchema = z.object({
 // ---------------------------------------------------------------------------
 export const updateSiteSettingsSchema = z.object({
   settingKey: z.string().min(1),
-  settingValue: z.string().min(1),
+  settingValue: z.string(),
 });
