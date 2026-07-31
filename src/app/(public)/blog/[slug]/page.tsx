@@ -23,6 +23,8 @@ async function getBlogPostDetails(slug: string) {
   };
 }
 
+export const revalidate = 3600;
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const post = await getBlogPostDetails(slug);
@@ -33,9 +35,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  const description = post.metaDescription || `Read the complete article: ${post.title}`;
+
   return {
     title: `${post.title} | Bala Enterprise Resources`,
-    description: post.metaDescription || `Read the complete article: ${post.title}`,
+    description,
+    alternates: {
+      canonical: `https://www.balaenterprise.in/blog/${post.slug}`,
+    },
+    openGraph: {
+      title: post.title,
+      description,
+      url: `https://www.balaenterprise.in/blog/${post.slug}`,
+      type: 'article',
+      publishedTime: post.publishedAt,
+      images: post.featuredImage ? [{ url: post.featuredImage }] : undefined,
+    },
   };
 }
 
@@ -47,8 +62,71 @@ export default async function BlogDetailPage({ params }: PageProps) {
     notFound();
   }
 
+  const currentUrl = `https://www.balaenterprise.in/blog/${post.slug}`;
+
+  // Article / BlogPosting schema
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.metaDescription || post.title,
+    image: post.featuredImage ? [post.featuredImage] : [],
+    datePublished: post.publishedAt,
+    author: {
+      '@type': 'Organization',
+      name: 'Bala Enterprise',
+      url: 'https://www.balaenterprise.in',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Bala Enterprise',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://www.balaenterprise.in/logo.png',
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': currentUrl,
+    },
+  };
+
+  // Breadcrumb schema
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://www.balaenterprise.in',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: 'https://www.balaenterprise.in/blog',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: post.title,
+        item: currentUrl,
+      },
+    ],
+  };
+
   return (
     <div className="bg-[#F7EBDD] min-h-screen text-[#131312] relative overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       {/* Engineering blueprint dot grid */}
       <div 
         className="absolute inset-0 opacity-40 pointer-events-none" 

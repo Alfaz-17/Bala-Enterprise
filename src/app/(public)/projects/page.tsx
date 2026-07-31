@@ -7,11 +7,37 @@ export const metadata: Metadata = {
   title: 'Workshop & Factory Photos | Bala Enterprise',
   description:
     'Take a virtual tour of our heavy-duty crane manufacturing plant, assembly bays, test rigs, and watch customer feedback in Bhavnagar GIDC.',
+  alternates: {
+    canonical: '/projects',
+  },
 };
 
 export default async function FactoryTourPage() {
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://www.balaenterprise.in',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Factory Tour',
+        item: 'https://www.balaenterprise.in/projects',
+      },
+    ],
+  };
+
   return (
     <div className="bg-[#F7EBDD] min-h-screen text-[#131312] relative overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       {/* Engineering blueprint dot grid */}
       <div 
         className="absolute inset-0 opacity-40 pointer-events-none" 

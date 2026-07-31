@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   title: 'Industrial Cranes & Hoists Catalog | Bala Enterprise',
   description:
     'Browse wire rope hoists, chain blocks, stackers, pallet trucks, winches, cranes, and industrial lifting equipment from Bala Enterprise.',
+  alternates: {
+    canonical: '/products',
+  },
 };
 
 interface ProductsPageProps {
@@ -74,8 +77,31 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   const { category, search } = await searchParams;
   const { categories, products } = await getProductsCatalogData(category, search);
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://www.balaenterprise.in',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Products',
+        item: 'https://www.balaenterprise.in/products',
+      },
+    ],
+  };
+
   return (
     <div className="bg-[#F7EBDD] min-h-screen text-[#131312] relative overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       {/* Engineering blueprint dot grid */}
       <div 
         className="absolute inset-0 opacity-40 pointer-events-none" 

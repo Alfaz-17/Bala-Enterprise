@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: 'Contact Our Sales Desk & Factory | Bala Enterprise',
   description:
     'Contact Bala Enterprise at Bhavnagar GIDC, Gujarat. Request custom gantry crane quotes, EOT drawing layouts, and pricing details from our engineering desk.',
+  alternates: {
+    canonical: '/contact',
+  },
 };
 
 export const dynamic = 'force-dynamic';
@@ -57,8 +60,57 @@ export default async function ContactPage() {
     },
   ];
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://www.balaenterprise.in',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Contact Us',
+        item: 'https://www.balaenterprise.in/contact',
+      },
+    ],
+  };
+
+  const contactPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: 'Contact Bala Enterprise',
+    description: 'Contact details, phone number, email, and GIDC factory address of Bala Enterprise in Bhavnagar, Gujarat.',
+    url: 'https://www.balaenterprise.in/contact',
+    mainEntity: {
+      '@type': 'LocalBusiness',
+      name: 'Bala Enterprise',
+      telephone: phoneDisplay,
+      email: email,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: address,
+        addressLocality: 'Bhavnagar',
+        addressRegion: 'Gujarat',
+        postalCode: '364001',
+        addressCountry: 'IN',
+      },
+    },
+  };
+
   return (
     <div className="bg-[#F7EBDD] min-h-screen text-[#131312] relative overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema) }}
+      />
       {/* Engineering blueprint dot grid */}
       <div 
         className="absolute inset-0 opacity-40 pointer-events-none" 

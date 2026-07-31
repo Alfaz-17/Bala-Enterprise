@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: 'About Our Factory & Manufacturing Process | Bala Enterprise',
   description:
     'ISO 9001:2015 certified manufacturer of overhead cranes, wire rope hoists, and electric winches in Bhavnagar GIDC, Gujarat. Learn how we build and test your heavy lifting machines.',
+  alternates: {
+    canonical: '/about',
+  },
 };
 
 export const dynamic = 'force-dynamic';
@@ -114,8 +117,31 @@ export default async function AboutPage() {
     'Custom size and capacity made as per your factory layout.',
   ];
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://www.balaenterprise.in',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'About Us',
+        item: 'https://www.balaenterprise.in/about',
+      },
+    ],
+  };
+
   return (
     <div className="bg-[#F7EBDD] min-h-screen text-[#131312] relative overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       {/* Engineering blueprint dot grid */}
       <div 
         className="absolute inset-0 opacity-40 pointer-events-none" 

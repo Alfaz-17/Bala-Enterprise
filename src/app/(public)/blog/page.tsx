@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: 'Blog & Articles | Bala Enterprise',
   description:
     'Read expert articles, crane maintenance checklists, safety guidelines, and industrial material handling updates from Bala Enterprise.',
+  alternates: {
+    canonical: '/blog',
+  },
 };
 
 async function getBlogPosts() {
@@ -29,8 +32,31 @@ async function getBlogPosts() {
 export default async function BlogIndexPage() {
   const posts = await getBlogPosts();
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://www.balaenterprise.in',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: 'https://www.balaenterprise.in/blog',
+      },
+    ],
+  };
+
   return (
     <div className="bg-[#F7EBDD] min-h-screen text-[#131312] relative overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       {/* Engineering blueprint dot grid */}
       <div 
         className="absolute inset-0 opacity-40 pointer-events-none" 

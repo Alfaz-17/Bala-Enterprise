@@ -17,6 +17,24 @@ export const metadata: Metadata = {
   title: 'Bala Enterprise | Cranes, Hoists & Winches in Bhavnagar',
   description:
     'GST certified manufacturer of cranes, hoists, winches, stackers, pallet trucks, and industrial lifting equipment for factories across Gujarat.',
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: 'Bala Enterprise | Cranes, Hoists & Winches in Bhavnagar',
+    description:
+      'GST certified manufacturer of cranes, hoists, winches, stackers, pallet trucks, and industrial lifting equipment for factories across Gujarat.',
+    url: 'https://www.balaenterprise.in',
+    type: 'website',
+    images: [
+      {
+        url: '/Images_Factory/inside_factory.png',
+        width: 1200,
+        height: 630,
+        alt: 'Bala Enterprise Factory Workshop',
+      },
+    ],
+  },
 };
 
 export const dynamic = 'force-dynamic';
@@ -73,8 +91,43 @@ async function getHomePageData() {
 export default async function HomePage() {
   const { categories, products, testimonials } = await getHomePageData();
 
+  const localBusinessSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    '@id': 'https://www.balaenterprise.in/#organization',
+    name: 'Bala Enterprise',
+    url: 'https://www.balaenterprise.in',
+    logo: 'https://www.balaenterprise.in/logo.png',
+    image: 'https://www.balaenterprise.in/Images_Factory/inside_factory.png',
+    description:
+      'GST certified manufacturer of overhead cranes, wire rope hoists, winches, stackers, pallet trucks, and industrial lifting equipment in Bhavnagar GIDC, Gujarat.',
+    telephone: '+919825214214',
+    email: 'info@balaenterprise.com',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Bala Enterprise Factory, Bhavnagar GIDC Industrial Area',
+      addressLocality: 'Bhavnagar',
+      addressRegion: 'Gujarat',
+      postalCode: '364001',
+      addressCountry: 'IN',
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: '21.752',
+      longitude: '72.1009',
+    },
+    sameAs: [
+      'https://www.tradeindia.com/bala-enterprise-24235777/',
+      'https://www.indiamart.com/balaenterprises-gujarat/profile.html?srsltid=AfmBOoo-CME_id8olb_pyMrBd8IurDJTfC_G5k_UzNsao729y8RASlvF',
+    ],
+  };
+
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+      />
       
       {/* 01. HERO SECTION */}
       <section className="relative min-h-screen lg:h-screen lg:min-h-[620px] flex items-center bg-[#131312] text-white overflow-hidden border-b border-white/10">
