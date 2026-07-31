@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import AdminCrudTable from '@/components/admin/AdminCrudTable';
+import toast from 'react-hot-toast';
 
 interface ProductRow {
   _id: string;
@@ -24,6 +25,7 @@ export default function AdminProductsPage() {
   const [categories, setCategories] = useState<CategoryItem[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [loading, setLoading] = useState(true);
+  const [syncing, setSyncing] = useState(false);
 
   // Fetch categories once on mount
   useEffect(() => {
@@ -67,8 +69,58 @@ export default function AdminProductsPage() {
     setProducts((prev) => prev.filter((p) => p._id !== id));
   }
 
+  async function handleSync() {
+    setSyncing(true);
+    const loadingToast = toast.loading('Syncing products with TradeIndia profile...');
+
+    try {
+      const res = await fetch('/api/admin/scrape-tradeindia', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'profile',
+          url: 'https://www.tradeindia.com/bala-enterprise-24235777/'
+        }),
+      });
+
+      const json = await res.json();
+      toast.dismiss(loadingToast);
+
+      if (!res.ok || !json.success) {
+        toast.error(json.error?.message || 'Sync failed.');
+        return;
+      }
+
+      const added = json.data?.addedCount ?? json.addedCount ?? 0;
+      const updated = json.data?.updatedCount ?? json.updatedCount ?? 0;
+      const total = json.data?.importedTotal ?? json.importedTotal ?? 0;
+
+      toast.success(
+        `Sync completed! Processed ${total} products (${added} added, ${updated} updated).`,
+        { duration: 5000 }
+      );
+
+      // Refresh list
+      setLoading(true);
+      const query = selectedCategory
+        ? `/api/products?all=true&limit=100&category=${selectedCategory}`
+        : '/api/products?all=true&limit=100';
+
+      const refreshRes = await fetch(query);
+      const refreshJson = await refreshRes.json();
+      setProducts(refreshJson.data?.data || []);
+      setLoading(false);
+    } catch (err: any) {
+      toast.dismiss(loadingToast);
+      toast.error(err.message || 'Sync failed.');
+      setLoading(false);
+    } finally {
+      setSyncing(false);
+    }
+  }
+
   const filterSection = (
-    <div className="flex items-center gap-4 bg-card border border-border p-4">
+    <div className="flex items-center justify-between gap-4 bg-card border border-border p-4 flex-wrap">
       <div className="flex flex-col gap-1.5 w-64">
         <label htmlFor="categoryFilter" className="text-sm font-medium text-foreground">
           Filter by Category
@@ -86,6 +138,18 @@ export default function AdminProductsPage() {
             </option>
           ))}
         </select>
+      </div>
+
+      <div className="flex flex-col gap-1.5 justify-end">
+        <label className="text-sm font-medium opacity-0">Sync Actions</label>
+        <button
+          type="button"
+          onClick={handleSync}
+          disabled={syncing}
+          className="px-5 py-2 bg-[#D85A30] hover:bg-[#c24a24] text-white text-xs font-bold uppercase tracking-wider transition-colors disabled:opacity-50 flex items-center gap-1.5 h-[38px] border-none font-sans cursor-pointer"
+        >
+          {syncing ? 'Syncing...' : 'Sync TradeIndia Profile'}
+        </button>
       </div>
     </div>
   );

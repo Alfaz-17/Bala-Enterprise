@@ -34,6 +34,8 @@ export default function NewProductPage() {
   const [categoriesLoading, setCategoriesLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
+  const [tradeIndiaUrl, setTradeIndiaUrl] = useState('');
+  const [fetchingTradeIndia, setFetchingTradeIndia] = useState(false);
 
   // Keep a reference to the first uploaded file for AI analysis
   const [firstFile, setFirstFile] = useState<File | null>(null);
@@ -214,11 +216,52 @@ export default function NewProductPage() {
       } else {
         toast.success('AI auto-filled product details!', { duration: 3000 });
       }
+  // --- TradeIndia Auto-Fill ---
+  async function handleTradeIndiaAutofill() {
+    if (!tradeIndiaUrl) {
+      toast.error('Please enter a TradeIndia product URL first');
+      return;
+    }
+
+    setFetchingTradeIndia(true);
+    const loadingToast = toast.loading('Fetching details from TradeIndia...');
+
+    try {
+      const res = await fetch('/api/admin/scrape-tradeindia', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'product', url: tradeIndiaUrl }),
+      });
+
+      const json = await res.json();
+      toast.dismiss(loadingToast);
+
+      if (!res.ok || !json.success) {
+        toast.error(json.error?.message || 'Failed to fetch details from TradeIndia');
+        return;
+      }
+
+      const data = json.data;
+      if (data.name) {
+        setName(data.name);
+        setSlug(data.name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''));
+      }
+      if (data.modelNumber) setModelNumber(data.modelNumber);
+      if (data.capacity) setCapacity(data.capacity);
+      if (data.shortDescription) setShortDescription(data.shortDescription);
+      if (data.fullDescription) setFullDescription(data.fullDescription);
+      if (data.categoryId) setCategoryId(data.categoryId);
+      if (data.image) {
+        setImages([data.image]);
+        setImageFiles([null]);
+      }
+
+      toast.success('Form autofilled successfully!');
     } catch (err: any) {
-      console.error('AI analysis error:', err);
-      toast.error(err.message || 'AI analysis failed');
+      toast.dismiss(loadingToast);
+      toast.error(err.message || 'Error fetching TradeIndia details');
     } finally {
-      setAnalyzing(false);
+      setFetchingTradeIndia(false);
     }
   }
 
@@ -233,6 +276,35 @@ export default function NewProductPage() {
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-6 bg-card border border-border p-6">
+          {/* TradeIndia Auto-Fill */}
+          <div className="p-4 bg-muted/40 border border-border space-y-3">
+            <div>
+              <p className="text-sm font-semibold text-foreground">
+                📦 Import from TradeIndia
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Enter any TradeIndia product page URL to automatically fetch and fill the form details
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <input
+                type="url"
+                placeholder="https://www.tradeindia.com/products/..."
+                value={tradeIndiaUrl}
+                onChange={(e) => setTradeIndiaUrl(e.target.value)}
+                className="flex-1 px-3 py-1.5 border border-input bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+              <button
+                type="button"
+                onClick={handleTradeIndiaAutofill}
+                disabled={fetchingTradeIndia}
+                className="px-4 py-1.5 bg-[#D85A30] hover:bg-[#c24a24] text-white text-xs font-bold uppercase tracking-wider transition-colors disabled:opacity-50 flex items-center gap-1.5 shrink-0"
+              >
+                {fetchingTradeIndia ? 'Fetching...' : 'Autofill Form'}
+              </button>
+            </div>
+          </div>
+
           {/* AI Auto-Fill Banner */}
           <div className="flex items-center justify-between p-3 bg-primary/5 border border-primary/20">
             <div>
