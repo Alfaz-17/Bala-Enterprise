@@ -184,16 +184,19 @@ export default async function HomePage() {
         <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 pt-28 sm:pt-32 lg:pt-40 pb-16 flex items-center">
           <div className="max-w-md text-left space-y-2.5">
             <span className="label-tech !text-[9px] sm:!text-[10px] tracking-[0.2em] block drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] text-[#D85A30]">
-              Industrial Cranes & Hoists
+              Bala Enterprise | Industrial Cranes & Hoists
             </span>
             
             <h1 className="font-heading uppercase text-white font-black tracking-tight text-xl sm:text-2xl md:text-3xl leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
-              Cranes, Hoists & Winches <br />
+              Bala Enterprise <br />
+              <span className="text-base sm:text-lg md:text-xl block text-white/90 font-medium normal-case tracking-tight mt-1 mb-2">
+                Cranes, Hoists & Winches
+              </span>
               <span className="text-[#D85A30] italic font-medium">Built Heavy for Factory Work.</span>
             </h1>
             
             <p className="font-sans text-xs sm:text-sm text-white/90 font-medium leading-relaxed max-w-sm drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
-              Strong overhead cranes, wire rope hoists & lifting machinery made in Bhavnagar, Gujarat. Built for heavy factory work.
+              Bala Enterprise is a leading manufacturer of strong overhead cranes, wire rope hoists & lifting machinery in Bhavnagar, Gujarat. Built for heavy factory work.
             </p>
 
             <div className="flex flex-wrap items-center gap-2.5 pt-2">
