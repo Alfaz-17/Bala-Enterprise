@@ -213,9 +213,15 @@ export default function NewProductPage() {
             { duration: 5000 }
           );
         }
-      } else {
-        toast.success('AI auto-filled product details!', { duration: 3000 });
       }
+    } catch (err: any) {
+      console.error(err);
+      toast.error(err.message || 'AI analysis failed');
+    } finally {
+      setAnalyzing(false);
+    }
+  }
+
   // --- TradeIndia Auto-Fill ---
   async function handleTradeIndiaAutofill() {
     if (!tradeIndiaUrl) {

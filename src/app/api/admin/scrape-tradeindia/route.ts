@@ -5,7 +5,7 @@ import { Category } from '@/models/Category';
 import { ProductImage } from '@/models/ProductImage';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import { successResponse, errorResponse, unauthorizedResponse } from '@/lib/api-response';
+import { successResponse, errorResponse, unauthorizedError } from '@/lib/api-response';
 import * as cheerio from 'cheerio';
 
 function slugify(text: string): string {
@@ -115,14 +115,14 @@ export async function POST(request: NextRequest) {
     // 1. Authenticate Request
     const session = await getServerSession(authOptions);
     if (!session) {
-      return unauthorizedResponse('You must be logged in as an administrator');
+      return unauthorizedError('You must be logged in as an administrator');
     }
 
     const body = await request.json();
     const { type, url } = body;
 
     if (!url) {
-      return errorResponse('Missing tradeindia URL parameter', 400);
+      return errorResponse('Missing tradeindia URL parameter', 'BAD_REQUEST', 400);
     }
 
     await connectToDatabase();
@@ -137,19 +137,19 @@ export async function POST(request: NextRequest) {
       });
 
       if (!res.ok) {
-        return errorResponse(`Failed to fetch TradeIndia profile page: ${res.statusText}`, 500);
+        return errorResponse(`Failed to fetch TradeIndia profile page: ${res.statusText}`, 'FETCH_ERROR', 500);
       }
 
       const html = await res.text();
       const match = html.match(/<script id="__NEXT_DATA__" type="application\/json">([^<]+)<\/script>/);
       if (!match) {
-        return errorResponse('Could not parse Next.js state structure from TradeIndia profile.', 500);
+        return errorResponse('Could not parse Next.js state structure from TradeIndia profile.', 'PARSE_ERROR', 500);
       }
 
       const nextData = JSON.parse(match[1]);
       const sellerRes = nextData.props?.pageProps?.initialState?.sellerProfile?.seller_profile?.seller_profile_res;
       if (!sellerRes) {
-        return errorResponse('Seller catalog details not found in TradeIndia response.', 500);
+        return errorResponse('Seller catalog details not found in TradeIndia response.', 'NOT_FOUND', 500);
       }
 
       const rawProducts: any[] = [];
@@ -164,7 +164,7 @@ export async function POST(request: NextRequest) {
       };
 
       if (Array.isArray(sellerRes.buy_online_data)) {
-        sellerRes.buy_online_data.forEach(p => addRawProduct(p));
+        sellerRes.buy_online_data.forEach((p: any) => addRawProduct(p));
       }
       if (Array.isArray(sellerRes.product_services_data)) {
         sellerRes.product_services_data.forEach((cat: any) => {
@@ -174,7 +174,7 @@ export async function POST(request: NextRequest) {
         });
       }
       if (Array.isArray(sellerRes.view_more_products)) {
-        sellerRes.view_more_products.forEach(p => addRawProduct(p));
+        sellerRes.view_more_products.forEach((p: any) => addRawProduct(p));
       }
 
       // Load active categories map
@@ -276,7 +276,7 @@ export async function POST(request: NextRequest) {
       });
 
       if (!res.ok) {
-        return errorResponse(`Failed to fetch TradeIndia product page: ${res.statusText}`, 500);
+        return errorResponse(`Failed to fetch TradeIndia product page: ${res.statusText}`, 'FETCH_ERROR', 500);
       }
 
       const html = await res.text();
@@ -365,9 +365,9 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    return errorResponse('Invalid scrape type specified', 400);
+    return errorResponse('Invalid scrape type specified', 'BAD_REQUEST', 400);
   } catch (err: any) {
     console.error('Error during scraping operation:', err);
-    return errorResponse(err.message || 'Scraping operation failed', 500);
+    return errorResponse(err.message || 'Scraping operation failed', 'SCRAPE_FAILED', 500);
   }
 }

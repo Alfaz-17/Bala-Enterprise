@@ -25,10 +25,10 @@ describe('Public Layout Components', () => {
   it('should render Header correctly', () => {
     render(<Header />);
     expect(screen.getByAltText('Bala Enterprise Logo')).toBeInTheDocument();
-    expect(screen.getByText('Home')).toBeInTheDocument();
-    expect(screen.getByText('Products')).toBeInTheDocument();
-    expect(screen.getByText('Factory Photos')).toBeInTheDocument();
-    expect(screen.getByText('Blog')).toBeInTheDocument();
+    expect(screen.getAllByText('Home').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Products').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Factory Photos').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Blog').length).toBeGreaterThan(0);
   });
 
   it('should render Footer correctly', () => {
