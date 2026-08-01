@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { CheckCircle2 } from 'lucide-react';
 
 interface EnquiryFormProps {
   sourcePage: string;
@@ -17,6 +18,7 @@ export default function EnquiryForm({
   onSuccess,
 }: EnquiryFormProps) {
   const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -45,12 +47,29 @@ export default function EnquiryForm({
 
       toast.success('We received your request! Our team will call you back shortly.');
       e.currentTarget.reset();
+      setSubmitted(true);
       if (onSuccess) onSuccess();
     } catch (err: any) {
       toast.error(err.message || 'Something went wrong. Please try again.');
     } finally {
       setLoading(false);
     }
+  }
+
+  if (submitted) {
+    return (
+      <div className="p-8 bg-[#1e1e1c] border border-green-500/30 text-center space-y-4 font-sans">
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-green-500/10 text-[#D85A30]">
+          <CheckCircle2 className="h-7 w-7 text-green-500" />
+        </div>
+        <div className="space-y-1">
+          <h3 className="text-white text-base font-bold uppercase tracking-wider">Enquiry Submitted!</h3>
+          <p className="text-white/70 text-xs leading-relaxed max-w-sm mx-auto">
+            We have successfully received your price request. Our sales desk will call you back shortly.
+          </p>
+        </div>
+      </div>
+    );
   }
 
   return (

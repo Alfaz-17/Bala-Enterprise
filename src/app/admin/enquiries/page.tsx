@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
+import { Trash2 } from 'lucide-react';
 
 interface EnquiryRow {
   _id: string;
@@ -69,6 +70,32 @@ export default function AdminEnquiriesPage() {
     }
   }
 
+  async function deleteEnquiry(id: string) {
+    if (!confirm('Are you sure you want to delete this enquiry? This action cannot be undone.')) {
+      return;
+    }
+
+    const promise = fetch(`/api/enquiries/${id}`, {
+      method: 'DELETE',
+    }).then(async (res) => {
+      const json = await res.json();
+      if (!json.success) throw new Error(json.error?.message || 'Failed to delete enquiry');
+    });
+
+    toast.promise(promise, {
+      loading: 'Deleting enquiry...',
+      success: 'Enquiry deleted successfully',
+      error: (err) => err.message || 'Failed to delete enquiry',
+    });
+
+    try {
+      await promise;
+      setEnquiries((prev) => prev.filter((e) => e._id !== id));
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
@@ -105,12 +132,13 @@ export default function AdminEnquiriesPage() {
                 <th className="text-left px-4 py-3 font-medium text-muted-foreground">Source</th>
                 <th className="text-left px-4 py-3 font-medium text-muted-foreground">Date</th>
                 <th className="text-left px-4 py-3 font-medium text-muted-foreground w-36">Status</th>
+                <th className="text-right px-4 py-3 font-medium text-muted-foreground w-20">Actions</th>
               </tr>
             </thead>
             <tbody>
               {enquiries.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="text-center py-12 text-muted-foreground">
+                  <td colSpan={7} className="text-center py-12 text-muted-foreground">
                     No enquiries found
                   </td>
                 </tr>
@@ -147,6 +175,15 @@ export default function AdminEnquiriesPage() {
                         <option value="converted">Converted</option>
                         <option value="closed">Closed</option>
                       </select>
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      <button
+                        onClick={() => deleteEnquiry(enq._id)}
+                        className="p-1 hover:text-red-500 text-muted-foreground transition-colors inline-flex items-center"
+                        title="Delete Enquiry"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
                     </td>
                   </tr>
                 ))
