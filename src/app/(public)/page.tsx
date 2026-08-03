@@ -15,9 +15,9 @@ import HeroCategoriesBento from '@/components/public/HeroCategoriesBento';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Bala Enterprise | Cranes, Hoists & Winches in Bhavnagar',
+  title: 'Bala Enterprise | EOT Crane Manufacturer & Material Handling Equipment India',
   description:
-    'GST certified manufacturer of cranes, hoists, winches, stackers, pallet trucks, and industrial lifting equipment for factories across Gujarat.',
+    'Bala Enterprise is a manufacturer of EOT Cranes, Gantry Cranes, Jib Cranes, Wire Rope Hoists and Material Handling Equipment across India.',
   keywords: [
     'Bala Enterprise',
     'Bala Enterprises',
@@ -34,9 +34,9 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: 'Bala Enterprise | Cranes, Hoists & Winches in Bhavnagar',
+    title: 'Bala Enterprise | EOT Crane Manufacturer & Material Handling Equipment India',
     description:
-      'GST certified manufacturer of cranes, hoists, winches, stackers, pallet trucks, and industrial lifting equipment for factories across Gujarat.',
+      'Bala Enterprise is a manufacturer of EOT Cranes, Gantry Cranes, Jib Cranes, Wire Rope Hoists and Material Handling Equipment across India.',
     url: 'https://www.balaenterprise.in',
     type: 'website',
     images: [

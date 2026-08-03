@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { connectToDatabase } from '@/lib/mongoose';
 import { BlogPost } from '@/models/BlogPost';
 import { createBlogPostSchema } from '@/lib/validations';
@@ -68,6 +69,13 @@ export async function POST(request: NextRequest) {
       ...rest,
       publishedAt: publishedAt ? new Date(publishedAt) : undefined,
     });
+
+    try {
+      revalidatePath('/blog');
+      revalidatePath(`/blog/${post.slug}`);
+    } catch (e) {
+      console.error('Revalidation failed:', e);
+    }
 
     return createdResponse(post);
   } catch (error) {

@@ -14,6 +14,8 @@ export const metadata: Metadata = {
   },
 };
 
+export const revalidate = 3600; // Revalidate at most every hour
+
 async function getBlogPosts() {
   await connectToDatabase();
 

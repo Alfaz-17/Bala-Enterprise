@@ -11,7 +11,8 @@
     "test": "jest",
     "seed:real": "npx ts-node --compiler-options \"{\\\"module\\\":\\\"CommonJS\\\"}\" src/scripts/seed-real-data.ts",
     "seed:admin": "npx ts-node --compiler-options \"{\\\"module\\\":\\\"CommonJS\\\"}\" src/scripts/seed-admin.ts",
-    "seed:tradeindia": "npx tsx src/scripts/seed-tradeindia-products.ts"
+    "seed:tradeindia": "npx tsx src/scripts/seed-tradeindia-products.ts",
+    "seed:blogs": "npx tsx src/scripts/seed-blogs.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",

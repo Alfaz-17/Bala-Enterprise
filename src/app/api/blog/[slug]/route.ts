@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import mongoose from 'mongoose';
 import { connectToDatabase } from '@/lib/mongoose';
 import { BlogPost } from '@/models/BlogPost';
@@ -78,6 +79,13 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
       return notFoundError('Blog post not found');
     }
 
+    try {
+      revalidatePath('/blog');
+      revalidatePath(`/blog/${post.slug}`);
+    } catch (e) {
+      console.error('Revalidation failed:', e);
+    }
+
     return successResponse(post);
   } catch (error) {
     console.error('PUT /api/blog/[slug] error:', error);
@@ -101,6 +109,13 @@ export async function DELETE(_request: NextRequest, { params }: RouteParams) {
 
     if (!post) {
       return notFoundError('Blog post not found');
+    }
+
+    try {
+      revalidatePath('/blog');
+      revalidatePath(`/blog/${post.slug}`);
+    } catch (e) {
+      console.error('Revalidation failed:', e);
     }
 
     return successResponse({ message: 'Blog post deleted' });
