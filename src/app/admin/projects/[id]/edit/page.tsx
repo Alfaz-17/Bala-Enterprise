@@ -91,12 +91,12 @@ export default function EditProjectPage() {
 
     try {
       const uploadedUrls = [...images];
-      for (let i = 0; i < imageFiles.length; i++) {
-        const file = imageFiles[i];
+      const uploadPromises = imageFiles.map(async (file, i) => {
         if (file) {
           uploadedUrls[i] = await uploadImage(file);
         }
-      }
+      });
+      await Promise.all(uploadPromises);
 
       const body = {
         title,
