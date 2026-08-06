@@ -41,7 +41,10 @@ export async function proxy(request: NextRequest) {
     // Exception: GET/POST /api/auth/* is public (next-auth calls)
     const isAuthApi = pathname.startsWith('/api/auth');
 
-    if ((isWriteRequest || isEnquiryGetOrPatch) && !isPublicEnquiryPost && !isAuthApi) {
+    // Exception: POST /api/revalidate is public (it does its own query secret validation)
+    const isRevalidateApi = pathname === '/api/revalidate';
+
+    if ((isWriteRequest || isEnquiryGetOrPatch) && !isPublicEnquiryPost && !isAuthApi && !isRevalidateApi) {
       const token = await getToken({
         req: request,
         secret: process.env.NEXTAUTH_SECRET,

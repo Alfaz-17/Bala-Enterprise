@@ -26,6 +26,7 @@ export default function AdminProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
+  const [togglingIds, setTogglingIds] = useState<Set<string>>(new Set());
 
   // Fetch categories once on mount
   useEffect(() => {
@@ -67,6 +68,53 @@ export default function AdminProductsPage() {
     }
     
     setProducts((prev) => prev.filter((p) => p._id !== id));
+  }
+
+  async function handleToggleMainProduct(product: ProductRow) {
+    const newFeatured = !product.featured;
+
+    // Optimistic update
+    setTogglingIds((prev) => new Set(prev).add(product._id));
+    setProducts((prev) =>
+      prev.map((p) => (p._id === product._id ? { ...p, featured: newFeatured } : p))
+    );
+
+    try {
+      const res = await fetch(`/api/products/${product._id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ featured: newFeatured }),
+      });
+
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        // Revert on failure
+        setProducts((prev) =>
+          prev.map((p) => (p._id === product._id ? { ...p, featured: !newFeatured } : p))
+        );
+        toast.error(json.error?.message || 'Failed to update product');
+        return;
+      }
+
+      toast.success(
+        newFeatured
+          ? `"${product.name}" added to Main Products`
+          : `"${product.name}" removed from Main Products`,
+        { duration: 2000 }
+      );
+    } catch (err: any) {
+      // Revert on error
+      setProducts((prev) =>
+        prev.map((p) => (p._id === product._id ? { ...p, featured: !newFeatured } : p))
+      );
+      toast.error(err.message || 'Failed to update product');
+    } finally {
+      setTogglingIds((prev) => {
+        const next = new Set(prev);
+        next.delete(product._id);
+        return next;
+      });
+    }
   }
 
   async function handleSync() {
@@ -193,19 +241,34 @@ export default function AdminProductsPage() {
         { header: 'Slug', accessor: 'slug', className: 'text-muted-foreground' },
         { header: 'Capacity', accessor: 'capacity' },
         {
-          header: 'Featured',
+          header: 'Main Product',
           accessor: (row) => (
-            <span
-              className={`text-xs px-2 py-0.5 font-medium ${
-                row.featured
-                  ? 'bg-primary/10 text-primary'
-                  : 'bg-muted text-muted-foreground'
-              }`}
+            <button
+              type="button"
+              role="switch"
+              aria-checked={row.featured}
+              aria-label={`Toggle main product for ${row.name}`}
+              disabled={togglingIds.has(row._id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleToggleMainProduct(row);
+              }}
+              className={`
+                relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out
+                focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
+                ${togglingIds.has(row._id) ? 'opacity-50 cursor-wait' : 'cursor-pointer'}
+                ${row.featured ? 'bg-[#D85A30]' : 'bg-gray-300 dark:bg-gray-600'}
+              `}
             >
-              {row.featured ? 'Yes' : 'No'}
-            </span>
+              <span
+                className={`
+                  inline-block h-4 w-4 rounded-full bg-white shadow-sm transform transition-transform duration-200 ease-in-out
+                  ${row.featured ? 'translate-x-6' : 'translate-x-1'}
+                `}
+              />
+            </button>
           ),
-          className: 'w-24',
+          className: 'w-28',
         },
         {
           header: 'Status',
@@ -227,3 +290,4 @@ export default function AdminProductsPage() {
     />
   );
 }
+

@@ -57,7 +57,7 @@ async function getHomePageData() {
 
   const [categories, featuredProducts, projects, testimonials, settings] = await Promise.all([
     Category.find({ status: 'active' }).sort({ sortOrder: 1 }).limit(50).lean(),
-    Product.find({ status: 'active', featured: true }).limit(6).lean(),
+    Product.find({ status: 'active', featured: true }).sort({ createdAt: -1 }).lean(),
     Project.find({ status: 'active' }).sort({ completedDate: -1, createdAt: -1 }).limit(3).lean(),
     Testimonial.find({ status: 'active' }).sort({ createdAt: -1 }).limit(4).lean(),
     SiteSettings.find().lean(),

@@ -103,6 +103,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 
     // Trigger on-demand revalidation of catalog and detail page
     try {
+      revalidatePath('/');
       revalidatePath('/products');
       revalidatePath(`/products/${product.slug}`);
     } catch (revalError) {
@@ -139,6 +140,7 @@ export async function DELETE(_request: NextRequest, { params }: RouteParams) {
 
     // Trigger on-demand revalidation of catalog and detail page
     try {
+      revalidatePath('/');
       revalidatePath('/products');
       revalidatePath(`/products/${product.slug}`);
     } catch (revalError) {

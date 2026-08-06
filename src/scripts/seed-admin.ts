@@ -8,6 +8,9 @@
  *   "seed:admin": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' src/scripts/seed-admin.ts"
  */
 
+
+
+
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import fs from 'fs';

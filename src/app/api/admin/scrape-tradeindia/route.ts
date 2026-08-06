@@ -7,6 +7,7 @@ import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { successResponse, errorResponse, unauthorizedError } from '@/lib/api-response';
 import * as cheerio from 'cheerio';
+import { revalidatePath } from 'next/cache';
 
 function slugify(text: string): string {
   return text
@@ -256,6 +257,13 @@ export async function POST(request: NextRequest) {
 
           addedCount++;
         }
+      }
+      
+      try {
+        revalidatePath('/');
+        revalidatePath('/products');
+      } catch (revalError) {
+        console.error('Revalidation error after bulk sync:', revalError);
       }
 
       return successResponse({

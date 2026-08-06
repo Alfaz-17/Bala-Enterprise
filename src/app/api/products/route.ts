@@ -128,6 +128,7 @@ export async function POST(request: NextRequest) {
 
     // Trigger on-demand revalidation of catalog and detail page
     try {
+      revalidatePath('/');
       revalidatePath('/products');
       revalidatePath(`/products/${product.slug}`);
     } catch (revalError) {
