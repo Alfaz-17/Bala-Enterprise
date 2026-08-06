@@ -165,10 +165,9 @@ export default async function HomePage() {
             loop
             muted
             playsInline
-            className="w-full h-full object-cover opacity-85 filter brightness-100 contrast-105 pointer-events-none"
+            className="w-full h-full object-cover opacity-90 filter brightness-105 contrast-105 pointer-events-none"
           />
-          <div className="absolute inset-0 bg-[#D85A30]/5 mix-blend-multiply pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#131312]/20 via-[#131312]/40 to-[#131312]/80 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#131312]/10 via-[#131312]/25 to-[#131312]/60 pointer-events-none" />
         </div>
 
         {/* Blueprint Dot Grid */}

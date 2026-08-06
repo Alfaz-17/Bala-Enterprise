@@ -5,19 +5,6 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight, Layers } from 'lucide-react';
 
-const category3DImages: Record<string, string> = {
-  'wire-rope-hoist': '/Categories_3d/0a4d7a0d-e724-4c3d-b5e3-d3020ba287bf.webp',
-  'chain-block': '/Categories_3d/Chain_Block.webp',
-  'manual-stacker': '/Categories_3d/Stacker.webp',
-  'hand-pallet-truck': '/Categories_3d/35e73dd5-60db-4891-8715-b6c2ed715917.webp',
-  'manual-geared-trolley': '/Categories_3d/Geared_Trolley.webp',
-  'hydraulic-scissor-lift-table': '/Categories_3d/Scissor Lift Table.webp',
-  'hydraulic-floor-crane': '/Categories_3d/Floor crane.webp',
-  'electric-winch': '/Categories_3d/837efcf2-bdd8-4892-8868-267e6b22ca49.webp',
-  'hand-winch': '/Categories_3d/Hand_winch.webp',
-  'motors-and-accessories': 'https://tiimg.tistatic.com/fp/10/010/213/crane-motor-989.jpg',
-};
-
 interface CategoryItem {
   _id: string;
   name: string;
@@ -31,47 +18,10 @@ interface HeroCategoriesBentoProps {
 }
 
 export default function HeroCategoriesBento({ categories }: HeroCategoriesBentoProps) {
-  const orderOfSlugs = [
-    'wire-rope-hoist',
-    'chain-block',
-    'manual-stacker',
-    'hand-pallet-truck',
-    'manual-geared-trolley',
-    'hydraulic-floor-crane',
-    'electric-winch',
-    'hand-winch'
-  ];
-
-  const getNormalizedIndex = (slug: string) => {
-    const s = slug.toLowerCase().replace(/[^a-z0-9]/g, '');
-    if (s.includes('wireropehoist') || s.includes('ropehoist')) return 0;
-    if (s.includes('chainblock')) return 1;
-    if (s.includes('stacker')) return 2;
-    if (s.includes('pallet') || s.includes('pullet')) return 3;
-    if (s.includes('trolley')) return 4;
-    if (s.includes('floorcrane') || s.includes('crane')) {
-      if (s.includes('hoist')) return 0;
-      return 5;
-    }
-    if (s.includes('electricwinch')) return 6;
-    if (s.includes('handwinch') || s.includes('clutchwinch') || s.includes('winch')) {
-      if (s.includes('electric')) return 6;
-      return 7;
-    }
-    
-    return orderOfSlugs.findIndex(os => os.replace(/[^a-z0-9]/g, '') === s);
-  };
-
-  const sortedCategories = [...categories].sort((a, b) => {
-    const idxA = getNormalizedIndex(a.slug);
-    const idxB = getNormalizedIndex(b.slug);
-    if (idxA === -1 && idxB === -1) {
-      return (a.sortOrder ?? 0) - (b.sortOrder ?? 0);
-    }
-    if (idxA === -1) return 1;
-    if (idxB === -1) return -1;
-    return idxA - idxB;
-  });
+  // Sort by sortOrder from database (set in admin panel)
+  const sortedCategories = [...categories].sort(
+    (a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0)
+  );
 
   const marqueeItems = [...sortedCategories, ...sortedCategories, ...sortedCategories];
 
@@ -130,27 +80,8 @@ export default function HeroCategoriesBento({ categories }: HeroCategoriesBentoP
           }}
         >
           {marqueeItems.map((cat, index) => {
-            // Resolve 3D image based on normalized slug mapping
-            const get3DImage = (slug: string) => {
-              const s = slug.toLowerCase().replace(/[^a-z0-9]/g, '');
-              if (s.includes('wireropehoist') || s.includes('ropehoist')) return category3DImages['wire-rope-hoist'];
-              if (s.includes('chainblock')) return category3DImages['chain-block'];
-              if (s.includes('stacker')) return category3DImages['manual-stacker'];
-              if (s.includes('pallet') || s.includes('pullet')) return category3DImages['hand-pallet-truck'];
-              if (s.includes('trolley')) return category3DImages['manual-geared-trolley'];
-              if (s.includes('floorcrane') || s.includes('crane')) {
-                if (s.includes('hoist')) return category3DImages['wire-rope-hoist'];
-                return category3DImages['hydraulic-floor-crane'];
-              }
-              if (s.includes('electricwinch')) return category3DImages['electric-winch'];
-              if (s.includes('handwinch') || s.includes('clutchwinch') || s.includes('winch')) {
-                if (s.includes('electric')) return category3DImages['electric-winch'];
-                return category3DImages['hand-winch'];
-              }
-              return null;
-            };
-
-            const image = get3DImage(cat.slug) || cat.imageUrl || '/logo.png';
+            // Use imageUrl from database (uploaded via admin panel)
+            const image = cat.imageUrl || '/logo.png';
 
             return (
               <Link
@@ -158,7 +89,7 @@ export default function HeroCategoriesBento({ categories }: HeroCategoriesBentoP
                 href={`/products?category=${cat.slug}`}
                 className="group flex flex-col items-center justify-center p-2 w-36 sm:w-48 md:w-52 h-44 sm:h-56 shrink-0 text-center transition-all duration-300"
               >
-                {/* Floating 3D Image Preview */}
+                {/* Floating Image Preview */}
                 <div className="relative w-full h-32 sm:h-44 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-1">
                   <Image
                     src={image}
