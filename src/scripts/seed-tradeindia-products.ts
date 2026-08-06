@@ -349,7 +349,7 @@ async function seedTradeIndiaProducts() {
       shortDescription: shortDescription.replace(/<br\s*\/?>/gi, ' '),
       fullDescription: fullDescription,
       specifications: specs,
-      featured: true,
+      featured: false,
       category: targetCategory._id,
       status: 'active',
     });

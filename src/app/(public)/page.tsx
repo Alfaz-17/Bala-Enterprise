@@ -57,7 +57,7 @@ async function getHomePageData() {
 
   const [categories, featuredProducts, projects, testimonials, settings] = await Promise.all([
     Category.find({ status: 'active' }).sort({ sortOrder: 1 }).limit(50).lean(),
-    Product.find({ status: 'active', featured: true }).sort({ createdAt: -1 }).lean(),
+    Product.find({ status: 'active', featured: true }).populate('category', 'name slug').sort({ createdAt: -1 }).limit(6).lean(),
     Project.find({ status: 'active' }).sort({ completedDate: -1, createdAt: -1 }).limit(3).lean(),
     Testimonial.find({ status: 'active' }).sort({ createdAt: -1 }).limit(4).lean(),
     SiteSettings.find().lean(),
@@ -79,7 +79,9 @@ async function getHomePageData() {
   const mappedProducts = featuredProducts.map((p) => ({
     ...p,
     _id: String(p._id),
-    category: String(p.category),
+    category: p.category && typeof p.category === 'object'
+      ? { name: (p.category as any).name, slug: (p.category as any).slug }
+      : String(p.category),
     thumbnail: prodThumbMap.get(String(p._id)) || undefined,
   }));
 

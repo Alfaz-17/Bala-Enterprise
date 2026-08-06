@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get('search');
     const all = searchParams.get('all') === 'true';
     const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
-    const limit = Math.min(50, Math.max(1, parseInt(searchParams.get('limit') || '10', 10)));
+    const limit = Math.min(200, Math.max(1, parseInt(searchParams.get('limit') || '10', 10)));
 
     // Build filter
     const filter: Record<string, any> = {};

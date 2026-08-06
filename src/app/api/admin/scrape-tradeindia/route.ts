@@ -243,7 +243,7 @@ export async function POST(request: NextRequest) {
             shortDescription: shortDescription.replace(/<br\s*\/?>/gi, ' '),
             fullDescription,
             specifications: specs,
-            featured: true,
+            featured: false,
             category: targetCategory._id,
             status: 'active',
           });
